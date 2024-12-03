@@ -4,8 +4,6 @@ import streamlit as st
 import datetime as dt
 import time
 
-
-
 cluster = ''
 consent = ''
 district = ''
@@ -382,7 +380,7 @@ if age >14:
         col,col2 = st.columns(2)
         col1.write('**No option chosen for DM screening**')
         with col2.expander('**CLICK HERE TO SEE THE CODES**'):
-            st.image(r'1.jpg', caption='-')
+            st.image(r'2.jpg', caption='-')
         st.stop()
     elif not AS:
         col,col2 = st.columns(2)
@@ -393,6 +391,8 @@ if age >14:
     elif not MH:
         col,col2 = st.columns(2)
         col1.write('**No option chosen for Mental Healthe assesment**')
+        with col2.expander('**CLICK HERE TO SEE THE CODES**'):
+            st.image(r'2.jpg', caption='-')
         st.stop()
     if AS == 'NOT DONE':
         if 'SUBSTANCE ABUSE (eg ALCOHOL, TOBACCO)' in socials:
@@ -503,6 +503,7 @@ elif ellig == 'YES':
             elif pos =='YES':
                 pos = 1
             elif pos == 'NO':
+                linked = 0 
                 pos = 0
         elif tested >1:
              pos = col2.number_input(f'**OF THE {tested}, HOW MANY ARE POS**', min_value=0, value=None)
