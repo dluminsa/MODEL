@@ -10,6 +10,7 @@ district = ''
 facility = ''
 partners = ''
 age = ''
+name = ''
 htn = ''
 dm = ''
 AS = ''
@@ -634,7 +635,7 @@ else:
 
 st.divider()
 col1,col2 = st.columns([1,2])
-name = col1.text_input('**Name of HW that did this visit **')
+name = col1.text_input('**Name of the HW who did this visit**')
 if not name:
     st.stop()
 else:
