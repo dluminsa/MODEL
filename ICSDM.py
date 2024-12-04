@@ -8,6 +8,7 @@ cluster = ''
 consent = ''
 district = ''
 facility = ''
+partners = ''
 age = ''
 htn = ''
 dm = ''
@@ -470,10 +471,13 @@ elif age>14:
         st.write('YOU SELECTED MULTIPLE SEXUAL PARTNERS, IN SOCIAL ISSUES, SO ELICIT SOME PARTNERS')
     col1,col2 = st.columns(2)
     partners = col1.number_input('**No. OF SEXUAL PARTNERS ELICITED**', min_value=0, value=None)
-    if not partners:
+    if partners ==0:
+        pass
+    elif not partners:
         st.stop()
     elif partners >0:
         st.markdown(f'**An update on the partners elicited will be needed, note them in the APN register**')
+        
 st.divider()
 st.write('**INDEX BIOLOGICAL TESTING**')
 col1, col2 = st.columns(2)
