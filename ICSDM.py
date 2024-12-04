@@ -494,6 +494,7 @@ elif ellig == 'YES':
         st.stop()
     if not chid:
         st.stop()
+    col1,col2 = st.columns(2)
     tested = col1.number_input(f'**OF THE {chid}, HOW MANY HAVE YOU TESTED**', min_value=0, value=None)
     if not tested:
         st.stop()
