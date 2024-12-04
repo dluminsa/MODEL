@@ -629,6 +629,12 @@ else:
     col2.write('**CLIENT IS NOT YET DUE FOR REBLEEDING**')
 
 st.divider()
+name = col1.text_input('**Name of HW that did this visit **')
+if not name:
+    st.stop()
+else:
+    pass 
+st.divider()
 col1,col2,col3 = st.columns([1,1,2])
 
 col3.write('**SUMMARY**')
@@ -704,7 +710,7 @@ if len(otherprev) ==0:
     pass
 else:
     otherprev = ','.join(otherprev)
-    st.write(f'**Other services provided are {otherprev}**')
+    st.write(f'**Other services provided are: {otherprev}**')
 
 col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
@@ -712,7 +718,7 @@ submit = col3.button('**SUBMIT**')
 if not submit:
     st.stop()
 else:
-    st.success('THANK YOU')
+    st.success(f'THANK YOU {name}')
     time.sleep(3)
     st.markdown("""
              <meta http-equiv="refresh" content="0">
