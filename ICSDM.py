@@ -683,8 +683,8 @@ if age > 14:
     col1.markdown(f'**MH : {MH}**')
     col2.markdown(f'**AS : {AS}**')
     st.divider()
-    col1,col2 = st.columns([2,1])
-    col1.write(f'**You ellicited {partners} partners who are to be followed up**')
+    # col1,col2 = st.columns([2,1])
+    # col1.write(f'**You ellicited {partners} partners who are to be followed up**')
 if ellig == 'YES':
     if chid ==1:
         st.write(f'In addition, there was {chid} elligible child, you tested {tested}, and found {pos} positive and hence linked {linked} to care')
