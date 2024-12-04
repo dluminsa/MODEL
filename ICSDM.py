@@ -556,6 +556,7 @@ if screened or screened ==0:
                 st.warning("**PRESUMED CAN'T BE GREATER THAN SCREENED**")
                 st.stop()
             else:
+                col1, col2 = st.columns(2)
                 picked =col1.number_input('**TOTAL SPUTUM SAMPLES PICKED**', min_value=0, value=None)
                 if picked or picked ==0:
                     if picked ==0:
