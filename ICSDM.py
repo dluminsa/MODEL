@@ -519,6 +519,7 @@ elif ellig == 'YES':
             if pos > tested:
                 st.warning("**THE POS CAN'T BE MORE THAN THOSE TESTED**")
                 st.stop()
+            col1, col2 = st.columns(2)    
             linked = col1.number_input(f'**TOTAL LINKED TO CARE**', min_value=0, value=None)
             if linked or linked==0:
                 if linked>=0 :
