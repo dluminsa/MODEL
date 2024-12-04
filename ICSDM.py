@@ -633,6 +633,7 @@ else:
     col2.write('**CLIENT IS NOT YET DUE FOR REBLEEDING**')
 
 st.divider()
+col1,col2 = st.columns([1,2])
 name = col1.text_input('**Name of HW that did this visit **')
 if not name:
     st.stop()
