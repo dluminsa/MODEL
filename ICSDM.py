@@ -700,7 +700,7 @@ if age > 14:
 else:
     pass
 if screened >0:
-    st.write(f'**Yo screened {screened} or TB, prseumed {presumed} and picked {picked} samples that should be followed up**')
+    st.write(f'**Yo screened {screened} for TB, prseumed {presumed} and picked {picked} samples that should be followed up**')
 else:
     st.write(f'**Yo did not screen any for TB**')
 
