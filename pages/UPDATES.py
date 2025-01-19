@@ -39,9 +39,7 @@ else:
 
 # Call the function and store the coordinates
 #latitude, longitude = get_user_location()
-st.write(lat)
-st.write(lat)
-st.stop()
+
 
 
 
