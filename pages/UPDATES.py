@@ -116,4 +116,4 @@ st.components.v1.html(
 )
 
 # Run the listener to handle geolocation
-st.experimental_get_query_params()
+st.query_params
