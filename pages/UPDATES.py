@@ -16,8 +16,59 @@ st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
     )
+from streamlit.components.v1 import html
+
+st.title("Dynamic Location Tracker")
+st.write("Your location will update as you move (if location services are enabled).")
+
+location_js = """
+<script>
+let locationDiv = document.getElementById("location-data");
+function updateLocation(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    locationDiv.innerText = `${lat},${lon}`;
+}
+function errorCallback(error) {
+    locationDiv.innerText = `Error: ${error.message}`;
+}
+navigator.geolocation.watchPosition(updateLocation, errorCallback);
+</script>
+<div id="location-data">Fetching location...</div>
+"""
+
+html(location_js)
+
+# Add a Streamlit component to retrieve the coordinates dynamically
+location = st.text_input("Live Location Data (lat, lon):", "Waiting for location...")
+
+if location != "Waiting for location...":
+    try:
+        lat, lon = map(float, location.split(","))
+        st.write(f"Latitude: {lat}")
+        st.write(f"Longitude: {lon}")
+    except ValueError:
+        st.write("Error: Unable to parse location data.")
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+st.stop()
 st.write("Please turn on your location services.")
 confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'])
 
