@@ -18,6 +18,7 @@ st.set_page_config(
     )
 import json
 
+# JavaScript code to capture geolocation and fetch reverse geocoding data
 get_location_script = """
 <script>
 const button = document.querySelector('button');
@@ -50,12 +51,12 @@ button.addEventListener("click", () => {
 """
 
 # Streamlit layout and display
-st.title("Field Member Location App")
+st.title("Field Member Location Appu")
 st.write("Please click the button to capture your location.")
 
 # Hidden input fields to store latitude and longitude
-st.markdown('<input type="text" id="latitude" style="display:none;">', unsafe_allow_html=True)
-st.markdown('<input type="text" id="longitude" style="display:none;">', unsafe_allow_html=True)
+lat_input = st.text_input("Latitude", key="latitude", value="")
+long_input = st.text_input("Longitude", key="longitude", value="")
 
 # Button to trigger the geolocation request
 if st.button("Get Location"):
