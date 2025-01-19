@@ -31,6 +31,9 @@ components.html("""
     </script>
 """, height=0)
 
+# Create an HTML component to extract location data from sessionStorage
+st.write("Fetching location...")
+
 # Retrieve coordinates from session state after getting them from JavaScript
 if "latitude" in st.session_state and "longitude" in st.session_state:
     lat = st.session_state["latitude"]
