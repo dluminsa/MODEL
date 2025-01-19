@@ -1,6 +1,26 @@
-import json
 import streamlit as st
 import streamlit.components.v1 as components
+import json
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# Authenticate and access the Google Sheets API
+def authenticate_google_sheets():
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    client = gspread.authorize(creds)
+    return client
+
+# Save coordinates to Google Sheets
+def save_to_google_sheets(latitude, longitude):
+    # Authenticate and get the Google Sheets client
+    client = authenticate_google_sheets()
+
+    # Open the Google Sheet by name or ID (replace with your own Google Sheet name or URL)
+    sheet = client.open("GeolocationData").sheet1  # Ensure this is the name of your sheet
+    
+    # Append new coordinates to the sheet
+    sheet.append_row([latitude, longitude])
 
 # HTML/JavaScript component for getting browser geolocation and sending it to Python via postMessage
 geolocation_html = """
@@ -42,13 +62,12 @@ def handle_message(event):
         lat = event['data']['latitude']
         lon = event['data']['longitude']
         
-        # Store the geolocation in session state (you could also write it to a file if needed)
+        # Store the geolocation in session state
         st.session_state['geolocation'] = {"latitude": lat, "longitude": lon}
         st.success(f"Latitude: {lat}, Longitude: {lon}")
-        
-        # Optionally, save to a JSON file
-        with open('geolocation_data.json', 'w') as json_file:
-            json.dump({"latitude": lat, "longitude": lon}, json_file)
+
+        # Save to Google Sheets
+        save_to_google_sheets(lat, lon)
 
 # Initialize session state if not already present
 if 'geolocation' not in st.session_state:
@@ -56,10 +75,3 @@ if 'geolocation' not in st.session_state:
 
 # Render the HTML/JS component in Streamlit
 components.html(geolocation_html)
-
-# Display stored geolocation data if it exists
-if 'geolocation' in st.session_state and isinstance(st.session_state['geolocation'], dict):
-    geolocation = st.session_state['geolocation']
-    st.write(f"Stored Latitude: {geolocation['latitude']}, Longitude: {geolocation['longitude']}")
-else:
-    st.write("Geolocation data not yet available.")
