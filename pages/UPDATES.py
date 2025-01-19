@@ -43,7 +43,7 @@ components.html(geolocation_html, height=100)
 # Inform users about the accuracy
 st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
 
-# Use session state to capture coordinates after user grants permission
+# Initialize session state for location
 if "location" not in st.session_state:
     st.session_state.location = None
 
@@ -88,25 +88,19 @@ def update_google_sheet(client_id, lat, lon):
     except Exception as e:
         st.error(f"Error updating Google Sheet: {e}")
 
-# Function to handle JavaScript listener
-def js_listener():
-    if "location" in st.session_state and st.session_state.location:
-        lat, lon = st.session_state.location
-        st.write(f"Geolocation: Latitude: {lat}, Longitude: {lon}")
-
-        # Update Google Sheets with Client ID and geolocation
-        update_google_sheet(client_id, lat, lon)
-    else:
-        st.write("Waiting for geolocation data...")
-
 # Listen for messages from JavaScript component
-st.components.v1.html(
+components.html(
     """
     <script>
         window.addEventListener('message', (event) => {
-            // Check if we have geolocation data
+            // Ensure the received data contains latitude and longitude
             if (event.data.lat && event.data.lon) {
+                // Send data to Streamlit
                 const location = { lat: event.data.lat, lon: event.data.lon };
+                const outputElement = document.getElementById("output");
+                if (outputElement) {
+                    outputElement.value = `${location.lat},${location.lon}`;
+                }
                 window.parent.postMessage(location, "*");
             }
         });
@@ -115,5 +109,16 @@ st.components.v1.html(
     height=0,
 )
 
-# Run the listener to handle geolocation
-st.query_params
+# Button to fetch and update location data
+if st.button("Fetch Location"):
+    if st.session_state.location:
+        lat, lon = st.session_state.location
+        st.write(f"Geolocation: Latitude: {lat}, Longitude: {lon}")
+
+        # Update Google Sheets with Client ID and geolocation
+        update_google_sheet(client_id, lat, lon)
+    else:
+        st.write("Waiting for geolocation data...")
+
+# Debugging: Print query parameters (optional)
+st.write(st.query_params)
