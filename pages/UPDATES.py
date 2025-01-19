@@ -1,77 +1,79 @@
-import pandas as pd 
-import streamlit as st 
-import os
-import requests
-import gspread
-from pathlib import Path
-import random
-import plotly.express as px
-import plotly.graph_objects as go
-import traceback
-import geocoder
-import time
-from streamlit_gsheets import GSheetsConnection
-from datetime import datetime 
-
-st.set_page_config(
-    page_title = 'NS TRACKER',
-    page_icon =":bar_chart"
-    )
-import json
+import streamlit as st
 import streamlit.components.v1 as components
 
-# HTML with JavaScript to capture geolocation
-def get_user_location():
-    location_script = """
-    <script>
-    // Function to get geolocation and send it back to Streamlit
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    const data = JSON.stringify({latitude, longitude});
-                    // Send the data back to Streamlit
-                    document.getElementById("location-data").value = data;
-                    document.getElementById("send-data").click();
-                },
-                function(error) {
-                    console.error("Error getting location: ", error.message);
-                    alert("Unable to retrieve your location. Please allow location access.");
-                }
-            );
-        } else {
-            alert("Geolocation is not supported by your browser.");
-        }
+# HTML/JavaScript component for getting browser geolocation
+geolocation_html = """
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        window.parent.postMessage("Geolocation is not supported by this browser.", "*");
     }
-    </script>
-    <button onclick="getLocation()">Get Location</button>
-    <form action="#" method="get">
-        <input type="hidden" id="location-data" name="location" />
-        <button id="send-data" type="submit" style="display:none;"></button>
-    </form>
-    """
-    components.html(location_script, height=100)
+}
 
-# Streamlit app
-st.title("Real-Time Location Capture")
-st.write("Click the button below to get your current location:")
+function showPosition(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    const location = `${lat},${lon}`;
+    window.parent.postMessage(location, "*");
+}
 
-# Call JavaScript to get the location
-get_user_location()
+function showError(error) {
+    let message;
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            message = "User denied the request for Geolocation.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            message = "Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            message = "The request to get user location timed out.";
+            break;
+        case error.UNKNOWN_ERROR:
+            message = "An unknown error occurred.";
+            break;
+    }
+    window.parent.postMessage(message, "*");
+}
 
-# Capture the location sent back from JavaScript
-query_params = st.query_params
-if "location" in query_params:
-    location_data = query_params["location"][0]
+getLocation();
+</script>
+"""
+
+# Streamlit app logic
+st.title("Precise Geolocation App")
+
+# Create an empty container to display the location or errors
+geolocation_container = st.empty()
+
+# Inject the JavaScript into the app
+components.html(geolocation_html, height=200)
+
+# Use Streamlit's session state to capture location data
+if "geolocation" not in st.session_state:
+    st.session_state.geolocation = None
+
+# JavaScript-to-Python communication listener
+def js_listener():
+    from streamlit.runtime.scriptrunner import RerunException, StopException
+    import streamlit.runtime.runtime_util as util
     try:
-        # Parse the latitude and longitude
-        location = eval(location_data)
-        latitude = location.get("latitude")
-        longitude = location.get("longitude")
-        st.success(f"Your location: Latitude {latitude}, Longitude {longitude}")
-    except:
-        st.error("Error retrieving location data.")
+        data = util.get_query_string_params().get('message')
+        if data:
+            st.session_state.geolocation = data
+            raise RerunException()
+    except StopException:
+        pass
+
+# Call the listener
+js_listener()
+
+# Add a callback to handle the geolocation data
+if st.session_state.geolocation:
+    geolocation_container.write(f"Location: {st.session_state.geolocation}")
 else:
-    st.info("Your location will appear here after allowing access.")
+    geolocation_container.write("Waiting for geolocation data...")
+
+st.write("Ensure your browser allows location access for this app.")
