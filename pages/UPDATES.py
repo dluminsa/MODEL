@@ -47,4 +47,5 @@ components.html(geolocation_html)
 
 # Listen for the geolocation data in Streamlit
 if 'latitude' in st.session_state and 'longitude' in st.session_state:
+    st.write('HELLO')
     st.write(f"Latitude: {st.session_state.latitude}, Longitude: {st.session_state.longitude}")
