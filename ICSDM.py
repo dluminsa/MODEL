@@ -413,13 +413,13 @@ if age >14:
         if len(psychs)>1:
             if 'NO ISSUE' not in psychs:
                 st.write('**Yo selected some psychological issues above, so this client needs a Mental Health screening**')
-    if htn is in ['2', '3','4','5', '6']:
+    if htn in ['2', '3','4','5', '6']:
         st.warning('THIS CLIENT SHOULD BE REFERRED FOR HTN MANAGEMENT')
-    if dm is in ['2', '3','4','5', '6']:
+    if dm in ['2', '3','4','5', '6']:
         st.warning('THIS CLIENT SHOULD BE REFERRED FOR DIABETES MANAGEMENT')
-    if MH is in ['2', '3','4','5', '6']:
+    if MH in ['2', '3','4','5', '6']:
         st.warning('THIS CLIENT SHOULD BE REFERRED FOR MENTAL HEALTH MANAGEMENT')
-    if AS is in ['2', '3','4','5', '6']:
+    if AS in ['2', '3','4','5', '6']:
         st.warning('THIS CLIENT SHOULD BE REFERRED FOR  SUBSTANCE ABUSE MANAGEMENT')
 
 else:
