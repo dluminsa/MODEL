@@ -17,44 +17,44 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 
-def get_location():
-    get_location_js = """
-    <script>
-    async function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    const location = { latitude, longitude };
-                    document.getElementById('location-output').value = JSON.stringify(location);
-                },
-                (error) => {
-                    alert("Unable to retrieve your location. Please allow location access in your browser.");
-                }
-            );
+get_location_script = """
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const location = { latitude, longitude };
+                const locationData = JSON.stringify(location);
+                // Send location data back to Streamlit
+                const streamlitLocationData = document.getElementById("location-data");
+                streamlitLocationData.value = locationData;
+                streamlitLocationData.dispatchEvent(new Event("input", { bubbles: true }));
+            },
+            (error) => {
+                alert("Unable to retrieve your location. Please allow location access in your browser.");
+            }
+        );
         } else {
-            alert("Geolocation is not supported by your browser.");
-        }
+        alert("Geolocation is not supported by your browser.");
     }
-    </script>
-    <input type="hidden" id="location-output" name="location-output">
-    <button onclick="getLocation()">Get Location</button>
-    """
-    return get_location_js
-
+}
+</script>
+"""
+# Display the app title and instructions
 st.title("Field Member Location App")
 st.write("Please switch on your location and click YES to confirm.")
 
-# Ask user to confirm they want to provide their location
 if st.button("YES"):
-    st.markdown(get_location(), unsafe_allow_html=True)
-    
-    # Capture and display location
-    location_data = st.text_input("Captured Location Data", "", key="location_data")
-    if location_data:
-        st.success(f"Captured Location: {location_data}")
-        st.write(location_data)
+    st.markdown(get_location_script, unsafe_allow_html=True)
+    st.markdown('<input type="hidden" id="location-data" name="location-data">', unsafe_allow_html=True)
+    st.markdown('<script>getLocation();</script>', unsafe_allow_html=True)
+
+# Display captured location from JavaScript
+location_data = st.text_input("Captured Location Data", "", key="location_data")
+if location_data:
+    st.success(f"Captured Location: {location_data}")
 
 
 
