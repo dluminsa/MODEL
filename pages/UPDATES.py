@@ -17,6 +17,8 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 
+
+# Embed JavaScript to capture location
 get_location_script = """
 <script>
 function getLocation() {
@@ -36,16 +38,18 @@ function getLocation() {
                 alert("Unable to retrieve your location. Please allow location access in your browser.");
             }
         );
-        } else {
+    } else {
         alert("Geolocation is not supported by your browser.");
     }
 }
 </script>
 """
+
 # Display the app title and instructions
 st.title("Field Member Location App")
 st.write("Please switch on your location and click YES to confirm.")
 
+# Button to confirm and capture location
 if st.button("YES"):
     st.markdown(get_location_script, unsafe_allow_html=True)
     st.markdown('<input type="hidden" id="location-data" name="location-data">', unsafe_allow_html=True)
@@ -55,11 +59,6 @@ if st.button("YES"):
 location_data = st.text_input("Captured Location Data", "", key="location_data")
 if location_data:
     st.success(f"Captured Location: {location_data}")
-
-
-
-
-
 
 
 
