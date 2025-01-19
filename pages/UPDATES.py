@@ -17,59 +17,44 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 import json
+import streamlit.components.v1 as components
 
-# JavaScript code to capture geolocation
-get_location_script = """
+# JavaScript code to get user's location
+geo_location_js = """
 <script>
-    // Function to get the geolocation data
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    
-                    // Updating Streamlit hidden input fields with lat and long values
-                    document.getElementById("latitude").value = latitude;
-                    document.getElementById("longitude").value = longitude;
-
-                    // Trigger input event to send data to Streamlit
-                    document.getElementById("latitude").dispatchEvent(new Event("input", { bubbles: true }));
-                    document.getElementById("longitude").dispatchEvent(new Event("input", { bubbles: true }));
-                },
-                (error) => {
-                    alert("Unable to retrieve your location. Please allow location access in your browser.");
-                }
-            );
-        } else {
-            alert("Geolocation is not supported by your browser.");
-        }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            window.parent.postMessage({
+                lat: position.coords.latitude,
+                long: position.coords.longitude
+            }, "*");
+        }, function() {
+            alert("Geolocation is not supported by this browser.");
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
     }
-
-    // Call the function on button click
-    getLocation();
 </script>
 """
 
-# Streamlit layout and display
-st.title("Field Member LocationOO App")
-st.write("Please click the button to capture your location.")
+# Embed JavaScript into the app
+components.html(geo_location_js, height=0, width=0)
 
-# Hidden input fields to store latitude and longitude
-st.markdown('<input type="text" id="latitude" style="display:none;">', unsafe_allow_html=True)
-st.markdown('<input type="text" id="longitude" style="display:none;">', unsafe_allow_html=True)
+# Function to capture latitude and longitude
+def get_location():
+    lat = None
+    long = None
+    
+    # JavaScript posts the location to the parent window (Streamlit app)
+    st.session_state.lat = lat
+    st.session_state.long = long
 
-# Button to trigger the geolocation request
-if st.button("Get Location"):
-    # Embed the JavaScript that gets the location
-    st.markdown(get_location_script, unsafe_allow_html=True)
+    return lat, long
 
-# Display the latitude and longitude after they are fetched
-lat = st.session_state.get("latitude", "")
-long = st.session_state.get("longitude", "")
-
-if lat and long:
-    st.write(f"Latitude: {lat}")
-    st.write(f"Longitude: {long}")
-else:
-    st.info("Click 'Get Location' and allow location access in your browser.")
+# Trigger location capture and display
+if st.button('Get Location'):
+    lat, long = get_location()
+    if lat and long:
+        st.write(f'Latitude: {lat}, Longitude: {long}')
+    else:
+        st.write("Location not available.")
