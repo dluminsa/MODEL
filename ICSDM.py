@@ -413,6 +413,14 @@ if age >14:
         if len(psychs)>1:
             if 'NO ISSUE' not in psychs:
                 st.write('**Yo selected some psychological issues above, so this client needs a Mental Health screening**')
+    if htn is in ['2', '3','4','5', '6']:
+        st.warning('THIS CLIENT SHOULD BE REFERRED FOR HTN MANAGEMENT')
+    if dm is in ['2', '3','4','5', '6']:
+        st.warning('THIS CLIENT SHOULD BE REFERRED FOR DIABETES MANAGEMENT')
+    if MH is in ['2', '3','4','5', '6']:
+        st.warning('THIS CLIENT SHOULD BE REFERRED FOR MENTAL HEALTH MANAGEMENT')
+    if AS is in ['2', '3','4','5', '6']:
+        st.warning('THIS CLIENT SHOULD BE REFERRED FOR  SUBSTANCE ABUSE MANAGEMENT')
 
 else:
     pass
@@ -433,7 +441,7 @@ if cd =='CD4 SAMPLE PICKED':
     st.info('The picked sampe should be followed up and an update be made in the update section of this form')
 elif cd =='VISITECT USED':
     vist =st.radio('**VISTECT RESULTS**', options =['ABOVE REFERENCE', 'BELOW REFERENCE'], horizontal=True, index=None)
-    if age< 9:
+    if age < 10:
          if  vist == 'BELOW REFERENCE':
             st.info('TB LAM AND SERUM CRAG ARE NOT DONE IN CHILDREN <10 YEARS, FOR AHD SCREENING, USE SYMPTOMATIC SCREENING LIKE ICF GUIDE, OR PICK A SMAPLE FOR CRP')
          else:
@@ -587,7 +595,7 @@ st.divider()
 st.write('**OTHER PREVENTION SERVICES GIVEN TO THIS CLIENT OR MEMBERS OF THE HOUSEHOLD**')
 
 col1,col2 = st.columns(2)
-prev = ['CONDOMS','REFERED FOR VMMC', 'OFFERED PREP', 'NO SERVICE']
+prev = ['CONDOMS','REFERED FOR VMMC', 'OFFERED PREP', 'GBV SCREENING','NO SERVICE']
 
 prevs = []
 for option in prev:
@@ -649,6 +657,11 @@ st.divider()
 col1,col2 = st.columns([1,2])
 name = col1.text_input('**Name of the HW who did this visit**')
 if not name:
+    st.stop()
+else:
+    pass 
+name2 = col2.text_input('**Name of the CHW for this NS**')
+if not name2:
     st.stop()
 else:
     pass 
