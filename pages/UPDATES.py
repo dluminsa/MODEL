@@ -17,12 +17,10 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 
+print("Please turn on your location services.")
+confirm = input("Have you turned on your location? (yes/no): ").strip().lower()
 
-def get_user_location():
-    print("Please turn on your location services.")
-    confirm = input("Have you turned on your location? (yes/no): ").strip().lower()
-
-    if confirm == 'yes':
+if confirm == 'yes':
         try:
             # Automatically capture the user's location
             g = geocoder.ip('me')  # This fetches the location using IP
@@ -35,7 +33,7 @@ def get_user_location():
                 print("Unable to capture location. Please try again.")
         except Exception as e:
             print(f"An error occurred: {e}")
-    else:
+else:
         print("Location access not granted. Please enable it and try again.")
         return None, None
 
