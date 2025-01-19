@@ -16,13 +16,6 @@ st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
     )
-ChatGPT
-
-You said:
-Write a code to embed a program that captures the users current location in terms of coordinates, the code tells the user to turn on their location, then they confirm with a yes and then automatically captures the coordinates and stores the longitude in variable long and latitude in variable lat
-ChatGPT said:
-ChatGPT
-Here's a Python script that uses the geopy and geocoder libraries to capture a user's current location in terms of latitude and longitude. The code also includes a prompt for the user to confirm location access. Note that this script must be run in an environment where the user's location services are available, such as a web application or with proper permissions.
 
 
 def get_user_location():
