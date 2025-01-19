@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 
 geolocation_html = """
 <script>
