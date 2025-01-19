@@ -18,6 +18,7 @@ st.set_page_config(
     )
 import json
 
+# JavaScript code to capture geolocation
 get_location_script = """
 <script>
     // Function to get the geolocation data
