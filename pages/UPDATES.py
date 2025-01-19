@@ -9,14 +9,15 @@ if "geolocation" not in st.session_state:
 def update_geolocation(data):
     st.session_state.geolocation = data
 
-# HTML/JavaScript to get geolocation
+# HTML/JavaScript to get geolocation and update a hidden input field
 geolocation_html = """
 <script>
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        window.parent.postMessage("Geolocation is not supported by this browser.", "*");
+        document.getElementById("geolocationData").value = "Geolocation is not supported by this browser.";
+        Streamlit.setComponentValue(document.getElementById("geolocationData").value);
     }
 }
 
@@ -24,7 +25,8 @@ function showPosition(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     const location = `${lat},${lon}`;
-    window.parent.postMessage(location, "*");
+    document.getElementById("geolocationData").value = location;
+    Streamlit.setComponentValue(document.getElementById("geolocationData").value);
 }
 
 function showError(error) {
@@ -43,34 +45,26 @@ function showError(error) {
             message = "An unknown error occurred.";
             break;
     }
-    window.parent.postMessage(message, "*");
+    document.getElementById("geolocationData").value = message;
+    Streamlit.setComponentValue(document.getElementById("geolocationData").value);
 }
 
 getLocation();
 </script>
+<input type="hidden" id="geolocationData" value="">
 """
 
 # Inject the HTML/JavaScript into the Streamlit app
 components.html(geolocation_html, height=200)
 
-# Add a listener for the JavaScript postMessage
-st.components.v1.html("""
-<script>
-window.addEventListener('message', function(event) {
-    if (event.origin !== window.location.origin) {
-        return; // Ignore the message if it's from an untrusted source
-    }
-    const geolocationData = event.data;
-    // Send geolocation data back to Streamlit
-    Streamlit.setComponentValue(geolocationData);
-});
-</script>
-""", height=0)
+# Get the geolocation data from the hidden input field
+geolocation = st.text_input("Geolocation Data", "", key="geolocation_data")
 
-# Get the geolocation data from the JS side and update Streamlit session state
-if "geolocation" in st.session_state:
-    st.write(f"Location: {st.session_state.geolocation}")
-else:
-    st.write("Waiting for geolocation data...")
+# Update session state if geolocation data is available
+if geolocation:
+    st.session_state.geolocation = geolocation
+
+# Display the geolocation result
+st.write(f"Location: {st.session_state.geolocation}")
 
 st.write("Ensure your browser allows location access for this app.")
