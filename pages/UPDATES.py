@@ -17,8 +17,8 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 
-print("Please turn on your location services.")
-confirm = input("Have you turned on your location? (yes/no): ").strip().lower()
+st.write("Please turn on your location services.")
+confirm = st.radio("Have you turned on your location? options=['YES', 'NO'], index=None)
 
 if confirm == 'yes':
         try:
@@ -27,13 +27,13 @@ if confirm == 'yes':
             if g.ok:
                 lat = g.latlng[0]
                 long = g.latlng[1]
-                print(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
+                st.write(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
             else:
-                print("Unable to capture location. Please try again.")
+                st.write("Unable to capture location. Please try again.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            st.write(f"An error occurred: {e}")
 else:
-        print("Location access not granted. Please enable it and try again.")
+        st.write("Location access not granted. Please enable it and try again.")
 
 # Call the function and store the coordinates
 latitude, longitude = get_user_location()
