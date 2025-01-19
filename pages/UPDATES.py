@@ -28,7 +28,6 @@ if confirm == 'yes':
                 lat = g.latlng[0]
                 long = g.latlng[1]
                 print(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
-                return lat, long
             else:
                 print("Unable to capture location. Please try again.")
         except Exception as e:
