@@ -8,4 +8,6 @@ git+https://github.com/streamlit/gsheets-connection
 streamlit
 pandas
 numpy
+geopy
+geocoder
 
