@@ -18,39 +18,42 @@ st.set_page_config(
     )
 from streamlit.components.v1 import html
 
-st.title("Dynamic Location Tracker")
-st.write("Your location will update as you move (if location services are enabled).")
+st.title("Capture Your Current Location")
+st.write("Click the button below to get your current location.")
 
 location_js = """
 <script>
-let locationDiv = document.getElementById("location-data");
-function updateLocation(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    locationDiv.innerText = `${lat},${lon}`;
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const locationInput = document.getElementById("location-input");
+            locationInput.value = `${lat},${lon}`;
+            locationInput.dispatchEvent(new Event("input"));
+        },
+        (error) => {
+            alert("Error fetching location: " + error.message);
+        }
+    );
 }
-function errorCallback(error) {
-    locationDiv.innerText = `Error: ${error.message}`;
-}
-navigator.geolocation.watchPosition(updateLocation, errorCallback);
 </script>
-<div id="location-data">Fetching location...</div>
+<button onclick="getLocation()">Get Current Location</button>
+<input type="text" id="location-input" style="display:none">
 """
-
+# Embed the JavaScript in Streamlit
 html(location_js)
 
-# Add a Streamlit component to retrieve the coordinates dynamically
-location = st.text_input("Live Location Data (lat, lon):", "Waiting for location...")
+# Text input to receive the location data from JavaScript
+location = st.text_input("Your Current Location (Latitude, Longitude):")
 
-if location != "Waiting for location...":
+if location:
     try:
         lat, lon = map(float, location.split(","))
-        st.write(f"Latitude: {lat}")
-        st.write(f"Longitude: {lon}")
+        st.write(f"**Latitude:** {lat}")
+        st.write(f"**Longitude:** {lon}")
     except ValueError:
-        st.write("Error: Unable to parse location data.")
-
-
+        st.error("Invalid location data received.")
 
 
 
