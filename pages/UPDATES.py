@@ -19,7 +19,7 @@ st.set_page_config(
 import json
 import streamlit.components.v1 as components
 
-# JavaScript code to get user's location
+# JavaScript code to get user's geolocation
 geo_location_js = """
 <script>
     if (navigator.geolocation) {
@@ -28,11 +28,15 @@ geo_location_js = """
                 lat: position.coords.latitude,
                 long: position.coords.longitude
             }, "*");
-        }, function() {
-            alert("Geolocation is not supported by this browser.");
+        }, function(error) {
+            window.parent.postMessage({
+                error: error.message
+            }, "*");
         });
     } else {
-        alert("Geolocation is not supported by this browser.");
+        window.parent.postMessage({
+            error: "Geolocation is not supported by this browser."
+        }, "*");
     }
 </script>
 """
@@ -44,17 +48,23 @@ components.html(geo_location_js, height=0, width=0)
 def get_location():
     lat = None
     long = None
-    
-    # JavaScript posts the location to the parent window (Streamlit app)
-    st.session_state.lat = lat
-    st.session_state.long = long
+
+    # Get values from JavaScript
+    if "lat" in st.session_state and "long" in st.session_state:
+        lat = st.session_state["lat"]
+        long = st.session_state["long"]
 
     return lat, long
 
 # Trigger location capture and display
-if st.button('Get Location'):
+if st.button("Get Location"):
+    # Capture location
+    st.session_state["lat"] = None
+    st.session_state["long"] = None
+    components.html(geo_location_js, height=0, width=0)  # Re-trigger JavaScript
+
     lat, long = get_location()
     if lat and long:
-        st.write(f'Latitude: {lat}, Longitude: {long}')
+        st.write(f"Latitude: {lat}, Longitude: {long}")
     else:
         st.write("Location not available.")
