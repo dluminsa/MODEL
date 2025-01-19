@@ -16,125 +16,45 @@ st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
     )
-from streamlit.components.v1 import html
 
-st.title("Capture Your Current Location")
-st.write("Click the button below to get your current location.")
-
-location_js = """
-<script>
-function getLocation() {
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const locationInput = document.getElementById("location-input");
-            locationInput.value = `${lat},${lon}`;
-            locationInput.dispatchEvent(new Event("input"));
-        },
-        (error) => {
-            alert("Error fetching location: " + error.message);
+def get_location():
+    get_location_js = """
+    <script>
+    async function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const location = { latitude, longitude };
+                    document.getElementById('location-output').value = JSON.stringify(location);
+                },
+                (error) => {
+                    alert("Unable to retrieve your location. Please allow location access in your browser.");
+                }
+            );
+        } else {
+            alert("Geolocation is not supported by your browser.");
         }
-    );
-}
-</script>
-<button onclick="getLocation()">Get Current Location</button>
-<input type="text" id="location-input" style="display:none">
-"""
-# Embed the JavaScript in Streamlit
-html(location_js)
+    }
+    </script>
+    <input type="hidden" id="location-output" name="location-output">
+    <button onclick="getLocation()">Get Location</button>
+    """
+    return get_location_js
 
-# Text input to receive the location data from JavaScript
-location = st.text_input("Your Current Location (Latitude, Longitude):")
+st.title("Field Member Location App")
+st.write("Please switch on your location and click YES to confirm.")
 
-if location:
-    try:
-        lat, lon = map(float, location.split(","))
-        st.write(f"**Latitude:** {lat}")
-        st.write(f"**Longitude:** {lon}")
-    except ValueError:
-        st.error("Invalid location data received.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-st.stop()
-st.write("Please turn on your location services.")
-confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'])
-
-if confirm == 'NO':
-    st.stop()
-
-if confirm == 'YES':
-    try:
-        # Automatically capture the user's location
-        g = geocoder.ip('me')  # Fetches location using IP
-        if g.ok:
-            lat, long = g.latlng
-            st.write(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
-            st.write(f"Latitude: {lat}")
-            st.write(f"Longitude: {long}")
-        else:
-            st.write("Unable to capture location. Please try again.")
-    except Exception as e:
-        st.write(f"An error occurred: {e}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-st.stop()
-st.write("Please turn on your location services.")
-confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'], index=None)
-if not confirm:
-    st.stop()
-
-if confirm == 'yes':
-        try:
-            # Automatically capture the user's location
-            g = geocoder.ip('me')  # This fetches the location using IP
-            if g.ok:
-                lat = g.latlng[0]
-                long = g.latlng[1]
-                st.write(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
-            else:
-                st.write("Unable to capture location. Please try again.")
-        except Exception as e:
-            st.write(f"An error occurred: {e}")
-else:
-        st.write("Location access not granted. Please enable it and try again.")
-
-# Call the function and store the coordinates
-#latitude, longitude = get_user_location()
-
-
-
-
-
+# Ask user to confirm they want to provide their location
+if st.button("YES"):
+    st.markdown(get_location(), unsafe_allow_html=True)
+    
+    # Capture and display location
+    location_data = st.text_input("Captured Location Data", "", key="location_data")
+    if location_data:
+        st.success(f"Captured Location: {location_data}"
+        st.write(location_data)
 
 
 
