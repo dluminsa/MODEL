@@ -17,108 +17,78 @@ function getLocation() {
 function showPosition(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    document.getElementById("output").value = `${lat},${lon}`;
-    // Send the location back to the parent window (Streamlit)
+
+    // Send the location back to Streamlit using postMessage
     window.parent.postMessage({ lat: lat, lon: lon }, "*");
 }
 
 function showError(error) {
-    alert("Error retrieving geolocation.");
+    alert("Error retrieving geolocation: " + error.message);
 }
 
 getLocation();
 </script>
-<input id="output" type="text" readonly>
 """
 
-# Streamlit App
+# Streamlit app
 st.title("Precise Geolocation App")
-
-# Get Client ID input
-client_id = st.number_input("Enter Client ID", min_value=1)
 
 # Display geolocation component
 components.html(geolocation_html, height=100)
-
-# Inform users about the accuracy
-st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
 
 # Initialize session state for location
 if "location" not in st.session_state:
     st.session_state.location = None
 
-# Credentials setup from secrets
-secrets = st.secrets["connections"]["gsheets"]
+# JavaScript Listener for geolocation
+geo_listener = """
+<script>
+window.addEventListener('message', (event) => {
+    // Check if the message contains geolocation data
+    if (event.data.lat && event.data.lon) {
+        const location = { lat: event.data.lat, lon: event.data.lon };
 
-# Prepare the credentials dictionary
-credentials_info = {
-    "type": secrets["type"],
-    "project_id": secrets["project_id"],
-    "private_key_id": secrets["private_key_id"],
-    "private_key": secrets["private_key"],
-    "client_email": secrets["client_email"],
-    "client_id": secrets["client_id"],
-    "auth_uri": secrets["auth_uri"],
-    "token_uri": secrets["token_uri"],
-    "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": secrets["client_x509_cert_url"],
-}
+        // Send the location data back to Streamlit via a form
+        const streamlitForm = document.createElement("form");
+        streamlitForm.method = "post";
+        streamlitForm.action = "";
 
-# Function to update Google Sheet with Client ID and geolocation
-def update_google_sheet(client_id, lat, lon):
-    try:
-        # Define the scopes needed for your application
-        scopes = [
-            "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/drive",
-        ]
+        const latInput = document.createElement("input");
+        latInput.type = "hidden";
+        latInput.name = "lat";
+        latInput.value = location.lat;
 
-        # Authenticate with Google Sheets API
-        credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
-        client = gspread.authorize(credentials)
+        const lonInput = document.createElement("input");
+        lonInput.type = "hidden";
+        lonInput.name = "lon";
+        lonInput.value = location.lon;
 
-        # Open the Google Sheet by URL
-        spreadsheet_url = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
-        spreadsheet = client.open_by_url(spreadsheet_url)
-        sheet = spreadsheet.worksheet("LOCATION")
+        streamlitForm.appendChild(latInput);
+        streamlitForm.appendChild(lonInput);
 
-        # Append data to the Google Sheet
-        sheet.append_row([client_id, lat, lon])
-        st.success("Location data successfully sent to Google Sheets.")
-    except Exception as e:
-        st.error(f"Error updating Google Sheet: {e}")
+        document.body.appendChild(streamlitForm);
+        streamlitForm.submit();
+    }
+});
+</script>
+"""
 
-# Listen for messages from JavaScript component
-components.html(
-    """
-    <script>
-        window.addEventListener('message', (event) => {
-            // Ensure the received data contains latitude and longitude
-            if (event.data.lat && event.data.lon) {
-                // Send data to Streamlit
-                const location = { lat: event.data.lat, lon: event.data.lon };
-                const outputElement = document.getElementById("output");
-                if (outputElement) {
-                    outputElement.value = `${location.lat},${location.lon}`;
-                }
-                window.parent.postMessage(location, "*");
-            }
-        });
-    </script>
-    """,
-    height=0,
-)
+components.html(geo_listener, height=0)
 
-# Button to fetch and update location data
-if st.button("Fetch Location"):
+# Capture location from form data
+query_params = st.query_params
+if "lat" in query_params and "lon" in query_params:
+    lat = query_params["lat"][0]
+    lon = query_params["lon"][0]
+    st.session_state.location = (lat, lon)
+
+# Display the location
+if st.session_state.location:
+    st.write(f"Location: Latitude = {st.session_state.location[0]}, Longitude = {st.session_state.location[1]}")
+
+# Add a button to use the location
+if st.button("Use Location"):
     if st.session_state.location:
-        lat, lon = st.session_state.location
-        st.write(f"Geolocation: Latitude: {lat}, Longitude: {lon}")
-
-        # Update Google Sheets with Client ID and geolocation
-        update_google_sheet(client_id, lat, lon)
+        st.success("Using the captured location for further processing.")
     else:
-        st.write("Waiting for geolocation data...")
-
-# Debugging: Print query parameters (optional)
-st.write(st.query_params)
+        st.warning("No location captured yet. Please allow geolocation access.")
