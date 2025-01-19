@@ -3,11 +3,7 @@ import streamlit as st
 
 from datetime import datetime 
 
-st.set_page_config(
-    page_title = 'NS TRACKER',
-    page_icon =":bar_chart"
-    )
-import json
+import streamlit as st
 import streamlit.components.v1 as components
 
 # HTML/JavaScript component for getting browser geolocation
@@ -25,6 +21,9 @@ function showPosition(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     document.getElementById("output").value = `${lat},${lon}`;
+    // Send the location to Streamlit
+    const data = { lat: lat, lon: lon };
+    window.parent.postMessage({ type: 'geolocation', data: data }, '*');
 }
 
 function showError(error) {
@@ -36,8 +35,16 @@ getLocation();
 <input id="output" type="text" readonly>
 """
 
-st.title("Precise Geolocation App")
-st.components.v1.html(geolocation_html, height=100)
+# Function to handle message from JS
+def on_message(event):
+    if event['type'] == 'geolocation':
+        lat, lon = event['data']['lat'], event['data']['lon']
+        st.session_state.latitude = lat
+        st.session_state.longitude = lon
 
-# Inform users about the accuracy
-st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
+# Render the HTML/JS component
+components.html(geolocation_html)
+
+# Listen for the geolocation data in Streamlit
+if 'latitude' in st.session_state and 'longitude' in st.session_state:
+    st.write(f"Latitude: {st.session_state.latitude}, Longitude: {st.session_state.longitude}")
