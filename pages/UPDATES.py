@@ -18,28 +18,36 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 import json
-def get_location():
-    try:
-        # You can use any geolocation API. Here we're using ip-api as an example
-        response = requests.get('http://ip-api.com/json')
-        data = response.json()
-        lat = data['lat']
-        long = data['lon']
-        return lat, long
-    except Exception as e:
-        st.error(f"Error retrieving location: {e}")
-        return None, None
+import streamlit.components.v1 as components
 
-# Streamlit App Layout
-st.title("Get Your Location")
+# HTML/JavaScript component for getting browser geolocation
+geolocation_html = """
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
 
-# Button to fetch the location
-if st.button("Get Location"):
-    lat, long = get_location()
-    
-    if lat and long:
-        st.session_state.lat = lat
-        st.session_state.long = long
-        st.write(f"Latitude: {lat}, Longitude: {long}")
-    else:
-        st.write("Location not available.")
+function showPosition(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    document.getElementById("output").value = `${lat},${lon}`;
+}
+
+function showError(error) {
+    alert("Error retrieving geolocation.");
+}
+
+getLocation();
+</script>
+<input id="output" type="text" readonly>
+"""
+
+st.title("Precise Geolocation App")
+st.components.v1.html(geolocation_html, height=100)
+
+# Inform users about the accuracy
+st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
