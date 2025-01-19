@@ -19,8 +19,8 @@ components.html("""
         // Function to initialize the Google API client
         function initClient() {
             gapi.client.init({
-                apiKey: 'AIzaSyD2d5Nf_T8Bh4GhQoFE0sZ6V0CpCDR90qE',  // Replace with your API Key
-                clientId: '115904525169801082180',  // Replace with your Client ID
+                apiKey: 'AIzaSyAO5vJ44e5AYp7N6wxl6r9tmJj_3pS7q0k',  // Your API Key
+                clientId: '115904525169801082180',  // Your Client ID
                 scope: 'https://www.googleapis.com/auth/spreadsheets',
                 discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
             });
@@ -28,8 +28,8 @@ components.html("""
 
         // Function to capture and send coordinates to Google Sheets
         function sendLocationToSheet(latitude, longitude) {
-            const spreadsheetId = '1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo';  // Spreadsheet ID
-            const range = 'location!A1:B1';  // Range in the sheet
+            const spreadsheetId = '1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo';  // Your Spreadsheet ID
+            const range = 'LOCATION!A1:B1';  // Replace with the range where you want to write data
             const values = [
                 [latitude, longitude]
             ];
