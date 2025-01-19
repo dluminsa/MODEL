@@ -1,35 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
-from googleapiclient.discovery import build
+import gspread
 from google.oauth2.service_account import Credentials
-
-# Function to authenticate and access Google Sheets
-def authenticate_google_sheets():
-    credentials = Credentials.from_service_account_file(
-        'path/to/your/credentials.json', 
-        scopes=['https://www.googleapis.com/auth/spreadsheets']
-    )
-    service = build('sheets', 'v4', credentials=credentials)
-    return service.spreadsheets()
-
-# Function to update Google Sheet with Client ID and geolocation
-def update_google_sheet(client_id, lat, lon):
-    spreadsheet_id = 'YOUR_SPREADSHEET_ID'  # Replace with your Google Sheets ID
-    range_ = 'Sheet1!A1'  # Adjust as needed
-    
-    values = [
-        [client_id, lat, lon]
-    ]
-    
-    body = {
-        'values': values
-    }
-    
-    service = authenticate_google_sheets()
-    service.values().append(
-        spreadsheetId=spreadsheet_id, range=range_,
-        valueInputOption="RAW", body=body
-    ).execute()
 
 # HTML/JavaScript component for getting browser geolocation
 geolocation_html = """
@@ -62,7 +34,7 @@ getLocation();
 # Streamlit App
 st.title("Precise Geolocation App")
 
-# Client ID input
+# Get Client ID input
 client_id = st.number_input("Enter Client ID", min_value=1)
 
 # Display geolocation component
@@ -71,39 +43,77 @@ components.html(geolocation_html, height=100)
 # Inform users about the accuracy
 st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
 
-# Use session_state to capture coordinates after user grants permission
+# Use session state to capture coordinates after user grants permission
 if "location" not in st.session_state:
     st.session_state.location = None
 
-# Message listener for geolocation data
+# Credentials setup from secrets
+secrets = st.secrets["connections"]["gsheets"]
+
+# Prepare the credentials dictionary
+credentials_info = {
+    "type": secrets["type"],
+    "project_id": secrets["project_id"],
+    "private_key_id": secrets["private_key_id"],
+    "private_key": secrets["private_key"],
+    "client_email": secrets["client_email"],
+    "client_id": secrets["client_id"],
+    "auth_uri": secrets["auth_uri"],
+    "token_uri": secrets["token_uri"],
+    "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": secrets["client_x509_cert_url"],
+}
+
+# Function to update Google Sheet with Client ID and geolocation
+def update_google_sheet(client_id, lat, lon):
+    try:
+        # Define the scopes needed for your application
+        scopes = [
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive",
+        ]
+
+        # Authenticate with Google Sheets API
+        credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
+        client = gspread.authorize(credentials)
+
+        # Open the Google Sheet by URL
+        spreadsheet_url = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
+        spreadsheet = client.open_by_url(spreadsheet_url)
+        sheet = spreadsheet.worksheet("LOCATION")
+
+        # Append data to the Google Sheet
+        sheet.append_row([client_id, lat, lon])
+        st.success("Location data successfully sent to Google Sheets.")
+    except Exception as e:
+        st.error(f"Error updating Google Sheet: {e}")
+
+# Function to handle JavaScript listener
 def js_listener():
     if "location" in st.session_state and st.session_state.location:
         lat, lon = st.session_state.location
         st.write(f"Geolocation: Latitude: {lat}, Longitude: {lon}")
-        
+
         # Update Google Sheets with Client ID and geolocation
         update_google_sheet(client_id, lat, lon)
-        st.success("Location data successfully sent to Google Sheets.")
     else:
         st.write("Waiting for geolocation data...")
 
-# Function to receive the coordinates from JavaScript
-def receive_coordinates(event):
-    if event.data:
-        st.session_state.location = (event.data["lat"], event.data["lon"])
-        js_listener()
-
-# Listen for messages from the JavaScript component
-st.components.v1.html("""
+# Listen for messages from JavaScript component
+st.components.v1.html(
+    """
     <script>
         window.addEventListener('message', (event) => {
             // Check if we have geolocation data
             if (event.data.lat && event.data.lon) {
-                window.parent.postMessage({ lat: event.data.lat, lon: event.data.lon }, "*");
+                const location = { lat: event.data.lat, lon: event.data.lon };
+                window.parent.postMessage(location, "*");
             }
         });
     </script>
-""", height=0)
+    """,
+    height=0,
+)
 
 # Run the listener to handle geolocation
-st.query_params
+st.experimental_get_query_params()
