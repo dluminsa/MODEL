@@ -57,8 +57,8 @@ if st.button("YES"):
     st.markdown('<script>getLocation();</script>', unsafe_allow_html=True)
 
 # Capture query parameters
-query_params = st.experimental_get_query_params()
-query_params = st.query_params()
+#query_params = st.experimental_get_query_params()
+query_params = st.query_params
 location_data = query_params.get("location", [None])[0]
 
 if location_data:
