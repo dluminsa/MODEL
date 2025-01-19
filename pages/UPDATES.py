@@ -1,44 +1,73 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Embed JavaScript to automatically get the user's location when the app loads
+# Embed JavaScript to capture location and write it to Google Sheets
 components.html("""
+    <script src="https://apis.google.com/js/api.js"></script>
     <script>
+        // Function to authenticate with Google Sheets API
+        function authenticate() {
+            return new Promise(function(resolve, reject) {
+                gapi.auth2.getAuthInstance().signIn().then(function() {
+                    resolve();
+                }, function(error) {
+                    reject(error);
+                });
+            });
+        }
+
+        // Function to initialize the Google API client
+        function initClient() {
+            gapi.client.init({
+                apiKey: 'AIzaSyD2d5Nf_T8Bh4GhQoFE0sZ6V0CpCDR90qE',  // Replace with your API Key
+                clientId: '115904525169801082180',  // Replace with your Client ID
+                scope: 'https://www.googleapis.com/auth/spreadsheets',
+                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
+            });
+        }
+
+        // Function to capture and send coordinates to Google Sheets
+        function sendLocationToSheet(latitude, longitude) {
+            const spreadsheetId = '1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo';  // Spreadsheet ID
+            const range = 'location!A1:B1';  // Range in the sheet
+            const values = [
+                [latitude, longitude]
+            ];
+
+            const body = {
+                values: values
+            };
+
+            gapi.client.sheets.spreadsheets.values.update({
+                spreadsheetId: spreadsheetId,
+                range: range,
+                valueInputOption: 'RAW',
+                resource: body
+            }).then((response) => {
+                console.log('Location written to Google Sheets:', response);
+            }, function(error) {
+                console.log('Error writing to Google Sheets:', error);
+            });
+        }
+
+        // Capture the user's location and send it to Google Sheets
         window.onload = function() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        // Capture latitude and longitude
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
 
-                        // Store coordinates in session storage for later use
-                        window.sessionStorage.setItem("latitude", latitude);
-                        window.sessionStorage.setItem("longitude", longitude);
-
-                        // Send coordinates back to Streamlit using postMessage
-                        const locationData = {latitude: latitude, longitude: longitude};
-                        window.parent.postMessage(locationData, "*");
-                    },
-                    function(error) {
-                        alert("Error: " + error.message);
-                    }
-                );
+                    authenticate().then(function() {
+                        initClient().then(function() {
+                            sendLocationToSheet(latitude, longitude);
+                        });
+                    });
+                }, function(error) {
+                    alert('Error getting location: ' + error.message);
+                });
             } else {
-                alert("Geolocation is not supported by this browser.");
+                alert('Geolocation is not supported by this browser.');
             }
         };
     </script>
 """, height=0)
-
-# Create an HTML component to extract location data from sessionStorage
-st.write("Fetching location...")
-
-# Retrieve coordinates from session state after getting them from JavaScript
-if "latitude" in st.session_state and "longitude" in st.session_state:
-    lat = st.session_state["latitude"]
-    long = st.session_state["longitude"]
-    st.write(f"Latitude: {lat}")
-    st.write(f"Longitude: {long}")
-else:
-    st.write("Waiting for location data...")
