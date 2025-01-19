@@ -1,7 +1,3 @@
-import streamlit as st
-import streamlit.components.v1 as components
-
-# Embed JavaScript to capture location and write it to Google Sheets
 components.html("""
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
@@ -29,7 +25,7 @@ components.html("""
         // Function to capture and send coordinates to Google Sheets
         function sendLocationToSheet(latitude, longitude) {
             const spreadsheetId = '1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo';  // Your Spreadsheet ID
-            const range = 'LOCATION!A1:B1';  // Replace with the range where you want to write data
+            const range = 'LOCATION!A1:B1';  // Range to write data
             const values = [
                 [latitude, longitude]
             ];
@@ -37,6 +33,8 @@ components.html("""
             const body = {
                 values: values
             };
+
+            console.log('Sending location:', latitude, longitude);  // Debugging line
 
             gapi.client.sheets.spreadsheets.values.update({
                 spreadsheetId: spreadsheetId,
