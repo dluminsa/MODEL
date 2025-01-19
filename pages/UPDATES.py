@@ -1,47 +1,24 @@
 import streamlit as st
-import streamlit.components.v1 as components
+from geopy.geocoders import Nominatim
 
-# Create a button for the user to get their location
-if st.button('Get My Location'):
-    # Embed JavaScript to get location when the button is clicked
-    components.html("""
-        <script>
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function(position) {
-                            const latitude = position.coords.latitude;
-                            const longitude = position.coords.longitude;
-                            // Store the coordinates in the window's session storage
-                            window.sessionStorage.setItem("lat", latitude);
-                            window.sessionStorage.setItem("long", longitude);
+# Create a geolocator object
+geolocator = Nominatim(user_agent="streamlit-location-app")
 
-                            // Send the coordinates back to Streamlit using postMessage
-                            window.parent.postMessage({latitude: latitude, longitude: longitude}, "*");
-                        },
-                        function(error) {
-                            alert("Error: " + error.message);
-                        }
-                    );
-                } else {
-                    alert("Geolocation is not supported by this browser.");
-                }
-            }
-            getLocation();
-        </script>
-    """, height=0)
-    
-    # Wait for the location data
-    st.write("Fetching location...")
+# Function to get coordinates from address
+def get_coordinates(address):
+    location = geolocator.geocode(address)
+    if location:
+        return location.latitude, location.longitude
+    else:
+        return None, None
 
-else:
-    st.write("Click the button to get your location.")
+# User input for address
+address = st.text_input("Enter your address:")
 
-# To get the location data, retrieve from session state
-if 'lat' in st.session_state and 'long' in st.session_state:
-    lat = st.session_state['lat']
-    long = st.session_state['long']
-    st.write(f"Latitude: {lat}")
-    st.write(f"Longitude: {long}")
-else:
-    st.write("Waiting for location data...")
+if address:
+    lat, long = get_coordinates(address)
+    if lat and long:
+        st.write(f"Latitude: {lat}")
+        st.write(f"Longitude: {long}")
+    else:
+        st.write("Address not found. Please try again.")
