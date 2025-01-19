@@ -16,9 +16,9 @@ st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
     )
+import json
 
-
-# Embed JavaScript to capture location
+# JavaScript code to capture geolocation and send it to Streamlit
 get_location_script = """
 <script>
 function getLocation() {
@@ -29,10 +29,10 @@ function getLocation() {
                 const longitude = position.coords.longitude;
                 const location = { latitude, longitude };
                 const locationData = JSON.stringify(location);
-                // Send location data back to Streamlit
-                const streamlitLocationData = document.getElementById("location-data");
-                streamlitLocationData.value = locationData;
-                streamlitLocationData.dispatchEvent(new Event("input", { bubbles: true }));
+                // Redirect to Streamlit with query parameters
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set("location", locationData);
+                window.location.href = currentUrl;
             },
             (error) => {
                 alert("Unable to retrieve your location. Please allow location access in your browser.");
@@ -49,17 +49,29 @@ function getLocation() {
 st.title("Field Member Location App")
 st.write("Please switch on your location and click YES to confirm.")
 
-# Button to confirm and capture location
+# Inject JavaScript into the app
+st.markdown(get_location_script, unsafe_allow_html=True)
+
+# Add a button to trigger the JavaScript function
 if st.button("YES"):
-    st.markdown(get_location_script, unsafe_allow_html=True)
-    st.markdown('<input type="hidden" id="location-data" name="location-data">', unsafe_allow_html=True)
     st.markdown('<script>getLocation();</script>', unsafe_allow_html=True)
 
-# Display captured location from JavaScript
-location_data = st.text_input("Captured Location Data", "", key="location_data")
-if location_data:
-    st.success(f"Captured Location: {location_data}")
+# Capture query parameters
+query_params = st.experimental_get_query_params()
+query_params = st.query_params()
+location_data = query_params.get("location", [None])[0]
 
+if location_data:
+    try:
+        # Parse the JSON data
+        location = json.loads(location_data)
+        latitude = location.get("latitude")
+        longitude = location.get("longitude")
+        st.success(f"Captured Location:\n- Latitude: {latitude}\n- Longitude: {longitude}")
+    except (json.JSONDecodeError, TypeError):
+        st.error("Failed to decode location data. Please try again.")
+else:
+    st.info("Waiting for location data... Please allow location access in your browser.")
 
 
 
