@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st 
 import os
 import gspread
-from pathlib import Path
+fro m pathlib import Path
 import random
 import plotly.express as px
 import plotly.graph_objects as go
