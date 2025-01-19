@@ -733,12 +733,55 @@ else:
 
 col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
+row1 = [cluster, district, facility]
 
 if not submit:
     st.stop()
 else:
     st.success(f'THANK YOU {name}')
-    time.sleep(3)
-    st.markdown("""
+    secrets = st.secrets["connections"]["gsheets"]
+                    
+        # Prepare the credentials dictionary
+    credentials_info = {
+            "type": secrets["type"],
+            "project_id": secrets["project_id"],
+            "private_key_id": secrets["private_key_id"],
+            "private_key": secrets["private_key"],
+            "client_email": secrets["client_email"],
+            "client_id": secrets["client_id"],
+            "auth_uri": secrets["auth_uri"],
+            "token_uri": secrets["token_uri"],
+            "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
+            "client_x509_cert_url": secrets["client_x509_cert_url"]
+        }
+            
+    try:
+        # Define the scopes needed for your application
+        scopes = ["https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/drive"]
+        
+         
+        credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
+            
+            # Authorize and access Google Sheets
+        client = gspread.authorize(credentials)
+            
+            # Open the Google Sheet by URL
+        spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
+        spreadsheet = client.open_by_url(spreadsheetu)
+        sheet1 = spreadsheet.worksheet("ICSDM")
+        st.write(sheet1)
+        st.write(row1)
+        sheet1.append_row(row1, value_input_option='RAW')
+        time.sleep(3)
+        st.markdown("""
              <meta http-equiv="refresh" content="0">
                    """, unsafe_allow_html=True)
+    except Exception as e:
+            # Log the error message
+        st.write(f"CHECK: {e}")
+        st.write(traceback.format_exc())
+        st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
+        st.stop()
+    
+
