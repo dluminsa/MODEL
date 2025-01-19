@@ -19,6 +19,8 @@ st.set_page_config(
 
 st.write("Please turn on your location services.")
 confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'], index=None)
+if not confirm:
+    st.stop()
 
 if confirm == 'yes':
         try:
@@ -37,8 +39,8 @@ else:
 
 # Call the function and store the coordinates
 #latitude, longitude = get_user_location()
-st.write(latitude)
-st.write(longitude)
+st.write(lat)
+st.write(lat)
 st.stop()
 
 
