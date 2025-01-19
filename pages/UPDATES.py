@@ -1,73 +1,51 @@
 import streamlit as st
-import streamlit.components.v1 as components
-components.html("""
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script>
-        // Function to authenticate with Google Sheets API
-        function authenticate() {
-            return new Promise(function(resolve, reject) {
-                gapi.auth2.getAuthInstance().signIn().then(function() {
-                    resolve();
-                }, function(error) {
-                    reject(error);
-                });
-            });
-        }
 
-        // Function to initialize the Google API client
-        function initClient() {
-            gapi.client.init({
-                apiKey: 'AIzaSyAO5vJ44e5AYp7N6wxl6r9tmJj_3pS7q0k',  // Your API Key
-                clientId: '115904525169801082180',  // Your Client ID
-                scope: 'https://www.googleapis.com/auth/spreadsheets',
-                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
-            });
-        }
+geolocation_html = """
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
 
-        // Function to capture and send coordinates to Google Sheets
-        function sendLocationToSheet(latitude, longitude) {
-            const spreadsheetId = '1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo';  // Your Spreadsheet ID
-            const range = 'LOCATION!A1:B1';  // Range to write data
-            const values = [
-                [latitude, longitude]
-            ];
+function showPosition(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    document.getElementById("output").value = `${lat},${lon}`;
+    // Send coordinates to Python using JavaScript's postMessage API
+    window.parent.postMessage({ latitude: lat, longitude: lon }, '*'); 
+}
 
-            const body = {
-                values: values
-            };
+function showError(error) {
+    alert("Error retrieving geolocation.");
+}
 
-            console.log('Sending location:', latitude, longitude);  // Debugging line
+getLocation();
+</script>
 
-            gapi.client.sheets.spreadsheets.values.update({
-                spreadsheetId: spreadsheetId,
-                range: range,
-                valueInputOption: 'RAW',
-                resource: body
-            }).then((response) => {
-                console.log('Location written to Google Sheets:', response);
-            }, function(error) {
-                console.log('Error writing to Google Sheets:', error);
-            });
-        }
+<input id="output" type="text" readonly>
+"""
 
-        // Capture the user's location and send it to Google Sheets
-        window.onload = function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
+st.title("Precise Geolocation App")
+st.components.v1.html(geolocation_html, height=100)
 
-                    authenticate().then(function() {
-                        initClient().then(function() {
-                            sendLocationToSheet(latitude, longitude);
-                        });
-                    });
-                }, function(error) {
-                    alert('Error getting location: ' + error.message);
-                });
-            } else {
-                alert('Geolocation is not supported by this browser.');
-            }
-        };
-    </script>
-""", height=0)
+# Receive coordinates from JavaScript
+lat = None
+lon = None
+
+def receive_coordinates(message):
+    global lat, lon
+    if "latitude" in message.data:
+        lat = message.data["latitude"]
+        lon = message.data["longitude"]
+
+st.session_state.receive_coordinates = receive_coordinates
+
+st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
+
+# Display coordinates in Python
+if lat and lon:
+    st.write(f"Latitude: {lat}")
+    st.write(f"Longitude: {lon}") 
