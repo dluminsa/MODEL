@@ -18,7 +18,7 @@ st.set_page_config(
     )
 
 st.write("Please turn on your location services.")
-confirm = st.radio("Have you turned on your location? options=['YES', 'NO'], index=None)
+confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'], index=None)
 
 if confirm == 'yes':
         try:
