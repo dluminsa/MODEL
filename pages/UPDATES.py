@@ -17,54 +17,28 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 import json
-import streamlit.components.v1 as components
-
-# JavaScript code to get user's geolocation
-geo_location_js = """
-<script>
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            window.parent.postMessage({
-                lat: position.coords.latitude,
-                long: position.coords.longitude
-            }, "*");
-        }, function(error) {
-            window.parent.postMessage({
-                error: error.message
-            }, "*");
-        });
-    } else {
-        window.parent.postMessage({
-            error: "Geolocation is not supported by this browser."
-        }, "*");
-    }
-</script>
-"""
-
-# Embed JavaScript into the app
-components.html(geo_location_js, height=0, width=0)
-
-# Function to capture latitude and longitude
 def get_location():
-    lat = None
-    long = None
+    try:
+        # You can use any geolocation API. Here we're using ip-api as an example
+        response = requests.get('http://ip-api.com/json')
+        data = response.json()
+        lat = data['lat']
+        long = data['lon']
+        return lat, long
+    except Exception as e:
+        st.error(f"Error retrieving location: {e}")
+        return None, None
 
-    # Get values from JavaScript
-    if "lat" in st.session_state and "long" in st.session_state:
-        lat = st.session_state["lat"]
-        long = st.session_state["long"]
+# Streamlit App Layout
+st.title("Get Your Location")
 
-    return lat, long
-
-# Trigger location capture and display
+# Button to fetch the location
 if st.button("Get Location"):
-    # Capture location
-    st.session_state["lat"] = None
-    st.session_state["long"] = None
-    components.html(geo_location_js, height=0, width=0)  # Re-trigger JavaScript
-
     lat, long = get_location()
+    
     if lat and long:
+        st.session_state.lat = lat
+        st.session_state.long = long
         st.write(f"Latitude: {lat}, Longitude: {long}")
     else:
         st.write("Location not available.")
