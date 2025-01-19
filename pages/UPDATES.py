@@ -1,6 +1,6 @@
+import json
 import streamlit as st
 import streamlit.components.v1 as components
-import json
 
 # HTML/JavaScript component for getting browser geolocation and sending it to Python via postMessage
 geolocation_html = """
@@ -58,6 +58,8 @@ if 'geolocation' not in st.session_state:
 components.html(geolocation_html)
 
 # Display stored geolocation data if it exists
-if 'geolocation' in st.session_state and st.session_state['geolocation']:
+if 'geolocation' in st.session_state and isinstance(st.session_state['geolocation'], dict):
     geolocation = st.session_state['geolocation']
     st.write(f"Stored Latitude: {geolocation['latitude']}, Longitude: {geolocation['longitude']}")
+else:
+    st.write("Geolocation data not yet available.")
