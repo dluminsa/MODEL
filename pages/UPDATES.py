@@ -18,7 +18,7 @@ st.set_page_config(
     )
 import json
 
-# JavaScript code to capture geolocation and send it to Streamlit
+# JavaScript code to get exact geolocation
 get_location_script = """
 <script>
 function getLocation() {
@@ -28,7 +28,7 @@ function getLocation() {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-                // Send latitude and longitude to Streamlit
+                // Pass latitude and longitude to Streamlit
                 const streamlitLatitude = document.getElementById("latitude");
                 const streamlitLongitude = document.getElementById("longitude");
                 
@@ -49,20 +49,20 @@ function getLocation() {
 </script>
 """
 
-# Display the JavaScript and hidden input fields
+# Add the JavaScript and hidden fields to the Streamlit app
 st.markdown(get_location_script, unsafe_allow_html=True)
 st.markdown('<input type="text" id="latitude" style="display:none;">', unsafe_allow_html=True)
 st.markdown('<input type="text" id="longitude" style="display:none;">', unsafe_allow_html=True)
 
-# Add a button to trigger location capture
+# Add a button to trigger the location prompt
 if st.button("Get Location"):
     st.markdown('<script>getLocation();</script>', unsafe_allow_html=True)
 
-# Capture location data using Streamlit's session state
-lat = st.text_input("Latitude", key="latitude", value="")
-long = st.text_input("Longitude", key="longitude", value="")
+# Capture latitude and longitude
+lat = st.session_state.get("latitude", "")
+long = st.session_state.get("longitude", "")
 
-# Display latitude and longitude if available
+# Display latitude and longitude
 if lat and long:
     st.write(f"Latitude: {lat}")
     st.write(f"Longitude: {long}")
