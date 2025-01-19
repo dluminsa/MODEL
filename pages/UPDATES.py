@@ -4,7 +4,7 @@ import os
 import gspread
 from pathlib import Path
 import random
-imp ort plotly.express as px
+import plotly.express as px
 import plotly.graph_objects as go
 import traceback
 import geocoder
