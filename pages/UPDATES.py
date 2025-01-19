@@ -1,3 +1,5 @@
+import streamlit as st
+import streamlit.components.v1 as components
 components.html("""
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
