@@ -1,76 +1,63 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import json
 
-# Initialize session state for geolocation
-if "geolocation" not in st.session_state:
-    st.session_state.geolocation = "Waiting for geolocation data..."
-
-# Function to update the geolocation state
-def update_geolocation(data):
-    st.session_state.geolocation = data
-
-# HTML/JavaScript to get geolocation
+# HTML/JavaScript component for getting browser geolocation and sending it to Python via postMessage
 geolocation_html = """
 <script>
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        window.parent.postMessage("Geolocation is not supported by this browser.", "*");
+        alert("Geolocation is not supported by this browser.");
     }
 }
 
 function showPosition(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    const location = `${lat},${lon}`;
-    window.parent.postMessage(location, "*");
+
+    // Create a JSON object to store lat and lon
+    const geolocationData = {
+        "latitude": lat,
+        "longitude": lon
+    };
+
+    // Send the geolocation data to Streamlit (Python backend)
+    window.parent.postMessage({ type: 'geolocation', data: geolocationData }, '*');
 }
 
 function showError(error) {
-    let message;
-    switch (error.code) {
-        case error.PERMISSION_DENIED:
-            message = "User denied the request for Geolocation.";
-            break;
-        case error.POSITION_UNAVAILABLE:
-            message = "Location information is unavailable.";
-            break;
-        case error.TIMEOUT:
-            message = "The request to get user location timed out.";
-            break;
-        case error.UNKNOWN_ERROR:
-            message = "An unknown error occurred.";
-            break;
-    }
-    window.parent.postMessage(message, "*");
+    alert("Error retrieving geolocation.");
 }
 
 getLocation();
 </script>
 """
 
-# Inject the HTML/JavaScript into the Streamlit app
-components.html(geolocation_html, height=200)
+# Function to handle message from JavaScript in the Streamlit app
+def handle_message(event):
+    if event['type'] == 'geolocation':
+        # Get latitude and longitude
+        lat = event['data']['latitude']
+        lon = event['data']['longitude']
+        
+        # Store the geolocation in session state (you could also write it to a file if needed)
+        st.session_state['geolocation'] = {"latitude": lat, "longitude": lon}
+        st.success(f"Latitude: {lat}, Longitude: {lon}")
+        
+        # Optionally, save to a JSON file
+        with open('geolocation_data.json', 'w') as json_file:
+            json.dump({"latitude": lat, "longitude": lon}, json_file)
 
-# Add a listener for the JavaScript postMessage
-st.components.v1.html("""
-<script>
-window.addEventListener('message', function(event) {
-    if (event.origin !== window.location.origin) {
-        return; // Ignore the message if it's from an untrusted source
-    }
-    const geolocationData = event.data;
-    // Send geolocation data back to Streamlit
-    Streamlit.setComponentValue(geolocationData);
-});
-</script>
-""", height=0)
+# Initialize session state if not already present
+if 'geolocation' not in st.session_state:
+    st.session_state['geolocation'] = {}
 
-# Get the geolocation data from the JS side and update Streamlit session state
-if "geolocation" in st.session_state:
-    st.write(f"Location: {st.session_state.geolocation}")
-else:
-    st.write("Waiting for geolocation data...")
+# Render the HTML/JS component in Streamlit
+components.html(geolocation_html)
 
-st.write("Ensure your browser allows location access for this app.")
+# Display stored geolocation data if it exists
+if 'geolocation' in st.session_state and st.session_state['geolocation']:
+    geolocation = st.session_state['geolocation']
+    st.write(f"Stored Latitude: {geolocation['latitude']}, Longitude: {geolocation['longitude']}")
