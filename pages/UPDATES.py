@@ -18,8 +18,8 @@ st.set_page_config(
     )
 import json
 
-# JavaScript code to capture geolocation and send it to Streamlit
-get_location_script = """
+# JavaScript code for prompting location access
+prompt_location_script = """
 <script>
 function getLocation() {
     if (navigator.geolocation) {
@@ -29,13 +29,28 @@ function getLocation() {
                 const longitude = position.coords.longitude;
                 const location = { latitude, longitude };
                 const locationData = JSON.stringify(location);
-                // Redirect to Streamlit with query parameters
-                const currentUrl = new URL(window.location.href);
-                currentUrl.searchParams.set("location", locationData);
-                window.location.href = currentUrl;
+                console.log(locationData);  // Debugging
+                alert(`Location:\nLatitude: ${latitude}\nLongitude: ${longitude}`);
+                // Send location data back to Streamlit
+                const streamlitLocationData = document.getElementById("location-data");
+                streamlitLocationData.value = locationData;
+                streamlitLocationData.dispatchEvent(new Event("input", { bubbles: true }));
             },
             (error) => {
-                alert("Unable to retrieve your location. Please allow location access in your browser.");
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("Location access denied. Please allow location access.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("The request to get your location timed out.");
+                        break;
+                    default:
+                        alert("An unknown error occurred.");
+                        break;
+                }
             }
         );
     } else {
@@ -45,35 +60,23 @@ function getLocation() {
 </script>
 """
 
-# Display the app title and instructions
-st.title("Field Member Location App")
-st.write("Please switch on your location and click YES to confirm.")
+# Inject JavaScript for location access
+st.markdown(prompt_location_script, unsafe_allow_html=True)
 
-# Inject JavaScript into the app
-st.markdown(get_location_script, unsafe_allow_html=True)
-
-# Add a button to trigger the JavaScript function
-if st.button("YES"):
+# Button to trigger location prompt
+if st.button("Get Location"):
+    st.markdown('<input type="hidden" id="location-data">', unsafe_allow_html=True)
     st.markdown('<script>getLocation();</script>', unsafe_allow_html=True)
 
-# Capture query parameters
-#query_params = st.experimental_get_query_params()
-query_params = st.query_params
-location_data = query_params.get("location", [None])[0]
-
+# Display location data
+location_data = st.text_input("Captured Location Data", "", key="location_data")
 if location_data:
+    import json
     try:
-        # Parse the JSON data
         location = json.loads(location_data)
-        latitude = location.get("latitude")
-        longitude = location.get("longitude")
-        st.success(f"Captured Location:\n- Latitude: {latitude}\n- Longitude: {longitude}")
-    except (json.JSONDecodeError, TypeError):
-        st.error("Failed to decode location data. Please try again.")
-else:
-    st.info("Waiting for location data... Please allow location access in your browser.")
-
-
+        st.success(f"Captured Location:\n- Latitude: {location['latitude']}\n- Longitude: {location['longitude']}")
+    except json.JSONDecodeError:
+        st.error("Failed to decode location data.")
 
 
 
