@@ -7,6 +7,7 @@ import random
 import plotly.express as px
 import plotly.graph_objects as go
 import traceback
+import geocoder
 import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
@@ -15,7 +16,66 @@ st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
     )
+ChatGPT
 
+You said:
+Write a code to embed a program that captures the users current location in terms of coordinates, the code tells the user to turn on their location, then they confirm with a yes and then automatically captures the coordinates and stores the longitude in variable long and latitude in variable lat
+ChatGPT said:
+ChatGPT
+Here's a Python script that uses the geopy and geocoder libraries to capture a user's current location in terms of latitude and longitude. The code also includes a prompt for the user to confirm location access. Note that this script must be run in an environment where the user's location services are available, such as a web application or with proper permissions.
+
+
+def get_user_location():
+    print("Please turn on your location services.")
+    confirm = input("Have you turned on your location? (yes/no): ").strip().lower()
+
+    if confirm == 'yes':
+        try:
+            # Automatically capture the user's location
+            g = geocoder.ip('me')  # This fetches the location using IP
+            if g.ok:
+                lat = g.latlng[0]
+                long = g.latlng[1]
+                print(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
+                return lat, long
+            else:
+                print("Unable to capture location. Please try again.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+    else:
+        print("Location access not granted. Please enable it and try again.")
+        return None, None
+
+# Call the function and store the coordinates
+latitude, longitude = get_user_location()
+st.write(latitude)
+st.write(longitude)
+st.stop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+st.stop()
 #st.header('CODE UNDER MAINTENANCE, TRY AGAIN TOMORROW')
 #st.stop()
 cola,colb,colc = st.columns([1,3,1])
