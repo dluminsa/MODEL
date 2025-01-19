@@ -1,8 +1,9 @@
 import pandas as pd 
 import streamlit as st 
 import os
+xxc
 import gspread
-fro m pathlib import Path
+from pathlib import Path
 import random
 import plotly.express as px
 import plotly.graph_objects as go
