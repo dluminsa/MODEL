@@ -52,7 +52,7 @@ get_location_script = """
 """
 
 # Streamlit layout and display
-st.title("Field Member Location App")
+st.title("Field Member LocationOO App")
 st.write("Please click the button to capture your location.")
 
 # Hidden input fields to store latitude and longitude
