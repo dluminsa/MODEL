@@ -66,7 +66,7 @@ st.title("Precise Geolocation App")
 client_id = st.number_input("Enter Client ID", min_value=1)
 
 # Display geolocation component
-components.v1.html(geolocation_html, height=100)
+components.html(geolocation_html, height=100)
 
 # Inform users about the accuracy
 st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
