@@ -17,6 +17,43 @@ st.set_page_config(
     page_icon =":bar_chart"
     )
 
+
+st.write("Please turn on your location services.")
+confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'])
+
+if confirm == 'NO':
+    st.stop()
+
+if confirm == 'YES':
+    try:
+        # Automatically capture the user's location
+        g = geocoder.ip('me')  # Fetches location using IP
+        if g.ok:
+            lat, long = g.latlng
+            st.write(f"Location captured successfully: Latitude: {lat}, Longitude: {long}")
+            st.write(f"Latitude: {lat}")
+            st.write(f"Longitude: {long}")
+        else:
+            st.write("Unable to capture location. Please try again.")
+    except Exception as e:
+        st.write(f"An error occurred: {e}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+st.stop()
 st.write("Please turn on your location services.")
 confirm = st.radio("Have you turned on your location?", options=['YES', 'NO'], index=None)
 if not confirm:
