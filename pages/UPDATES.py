@@ -18,48 +18,49 @@ st.set_page_config(
     )
 import json
 
-# JavaScript code to capture geolocation and fetch reverse geocoding data
 get_location_script = """
 <script>
-const button = document.querySelector('button');
+    // Function to get the geolocation data
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    
+                    // Updating Streamlit hidden input fields with lat and long values
+                    document.getElementById("latitude").value = latitude;
+                    document.getElementById("longitude").value = longitude;
 
-button.addEventListener("click", () => {
-    navigator.geolocation.getCurrentPosition(position => {
-        // Getting latitude and longitude from position object
-        const { latitude, longitude } = position.coords;
+                    // Trigger input event to send data to Streamlit
+                    document.getElementById("latitude").dispatchEvent(new Event("input", { bubbles: true }));
+                    document.getElementById("longitude").dispatchEvent(new Event("input", { bubbles: true }));
+                },
+                (error) => {
+                    alert("Unable to retrieve your location. Please allow location access in your browser.");
+                }
+            );
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
 
-        // Reverse geocoding using OpenStreetMap API
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                // Storing latitude and longitude in hidden inputs for Streamlit
-                document.getElementById("latitude").value = latitude;
-                document.getElementById("longitude").value = longitude;
-
-                // Trigger input event to pass data to Streamlit
-                document.getElementById("latitude").dispatchEvent(new Event("input", { bubbles: true }));
-                document.getElementById("longitude").dispatchEvent(new Event("input", { bubbles: true }));
-            })
-            .catch(() => {
-                console.log("Error fetching data from API");
-            });
-    });
-});
+    // Call the function on button click
+    getLocation();
 </script>
 """
 
 # Streamlit layout and display
-st.title("Field Member Location Appu")
+st.title("Field Member Location App")
 st.write("Please click the button to capture your location.")
 
 # Hidden input fields to store latitude and longitude
-lat_input = st.text_input("Latitude", key="latitude", value="")
-long_input = st.text_input("Longitude", key="longitude", value="")
+st.markdown('<input type="text" id="latitude" style="display:none;">', unsafe_allow_html=True)
+st.markdown('<input type="text" id="longitude" style="display:none;">', unsafe_allow_html=True)
 
 # Button to trigger the geolocation request
 if st.button("Get Location"):
+    # Embed the JavaScript that gets the location
     st.markdown(get_location_script, unsafe_allow_html=True)
 
 # Display the latitude and longitude after they are fetched
