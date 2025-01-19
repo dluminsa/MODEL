@@ -18,8 +18,8 @@ st.set_page_config(
     )
 import json
 
-# JavaScript code for prompting location access
-prompt_location_script = """
+# JavaScript code to capture geolocation and send it to Streamlit
+get_location_script = """
 <script>
 function getLocation() {
     if (navigator.geolocation) {
@@ -27,28 +27,19 @@ function getLocation() {
             (position) => {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                const locationData = { latitude, longitude };
 
-                // Pass data back to Streamlit
-                const streamlitLocationData = document.getElementById("location-data");
-                streamlitLocationData.textContent = JSON.stringify(locationData);
-                streamlitLocationData.dispatchEvent(new Event("input", { bubbles: true }));
+                // Send latitude and longitude to Streamlit
+                const streamlitLatitude = document.getElementById("latitude");
+                const streamlitLongitude = document.getElementById("longitude");
+                
+                streamlitLatitude.value = latitude;
+                streamlitLongitude.value = longitude;
+
+                streamlitLatitude.dispatchEvent(new Event("input", { bubbles: true }));
+                streamlitLongitude.dispatchEvent(new Event("input", { bubbles: true }));
             },
             (error) => {
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        alert("Location access denied. Please allow location access.");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert("Location information is unavailable.");
-                        break;
-                    case error.TIMEOUT:
-                        alert("The request to get your location timed out.");
-                        break;
-                    default:
-                        alert("An unknown error occurred.");
-                        break;
-                }
+                alert("Error getting location: " + error.message);
             }
         );
     } else {
@@ -58,27 +49,22 @@ function getLocation() {
 </script>
 """
 
-# Inject JavaScript and a hidden element for location data
-st.markdown(prompt_location_script, unsafe_allow_html=True)
-st.markdown('<div id="location-data" style="display:none;"></div>', unsafe_allow_html=True)
+# Display the JavaScript and hidden input fields
+st.markdown(get_location_script, unsafe_allow_html=True)
+st.markdown('<input type="text" id="latitude" style="display:none;">', unsafe_allow_html=True)
+st.markdown('<input type="text" id="longitude" style="display:none;">', unsafe_allow_html=True)
 
-# Add a button to trigger the location prompt
+# Add a button to trigger location capture
 if st.button("Get Location"):
     st.markdown('<script>getLocation();</script>', unsafe_allow_html=True)
 
-# Display latitude and longitude
-location_data = st.session_state.get("location_data")
-if location_data:
-    import json
-    try:
-        location = json.loads(location_data)
-        lat = location.get("latitude")
-        long = location.get("longitude")
+# Capture location data using Streamlit's session state
+lat = st.text_input("Latitude", key="latitude", value="")
+long = st.text_input("Longitude", key="longitude", value="")
 
-        # Display latitude and longitude
-        st.write(f"Latitude: {lat}")
-        st.write(f"Longitude: {long}")
-    except json.JSONDecodeError:
-        st.error("Failed to decode location data.")
+# Display latitude and longitude if available
+if lat and long:
+    st.write(f"Latitude: {lat}")
+    st.write(f"Longitude: {long}")
 else:
-    st.info("Waiting for location data... Click 'Get Location' to allow access.")
+    st.info("Click 'Get Location' and allow location access in your browser.")
