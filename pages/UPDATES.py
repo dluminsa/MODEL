@@ -16,7 +16,8 @@ function showPosition(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     const location = `${lat},${lon}`;
-    window.parent.postMessage(location, "*");
+    const iframe = window.parent.document.getElementsByTagName('iframe')[0];
+    iframe.contentWindow.postMessage(location, "*");
 }
 
 function showError(error) {
@@ -35,7 +36,8 @@ function showError(error) {
             message = "An unknown error occurred.";
             break;
     }
-    window.parent.postMessage(message, "*");
+    const iframe = window.parent.document.getElementsByTagName('iframe')[0];
+    iframe.contentWindow.postMessage(message, "*");
 }
 
 getLocation();
@@ -45,35 +47,30 @@ getLocation();
 # Streamlit app logic
 st.title("Precise Geolocation App")
 
-# Create an empty container to display the location or errors
-geolocation_container = st.empty()
-
-# Inject the JavaScript into the app
-components.html(geolocation_html, height=200)
-
-# Use Streamlit's session state to capture location data
+# Initialize session state for geolocation
 if "geolocation" not in st.session_state:
-    st.session_state.geolocation = None
+    st.session_state.geolocation = "Waiting for geolocation data..."
 
-# JavaScript-to-Python communication listener
-def js_listener():
-    from streamlit.runtime.scriptrunner import RerunException, StopException
-    import streamlit.runtime.runtime_util as util
-    try:
-        data = util.get_query_string_params().get('message')
-        if data:
-            st.session_state.geolocation = data
-            raise RerunException()
-    except StopException:
-        pass
+# JavaScript communication listener
+def handle_message(msg):
+    if msg.data:
+        st.session_state.geolocation = msg.data
 
-# Call the listener
-js_listener()
+# Embed the HTML/JavaScript and enable message listening
+components.html(
+    f"""
+    <script>
+    {geolocation_html}
+    window.addEventListener('message', (event) => {{
+        const iframe = window.parent.document.getElementsByTagName('iframe')[0];
+        iframe.contentWindow.postMessage(event.data, "*");
+    }});
+    </script>
+    """,
+    height=200,
+)
 
-# Add a callback to handle the geolocation data
-if st.session_state.geolocation:
-    geolocation_container.write(f"Location: {st.session_state.geolocation}")
-else:
-    geolocation_container.write("Waiting for geolocation data...")
+# Display the result
+st.write(st.session_state.geolocation)
 
 st.write("Ensure your browser allows location access for this app.")
