@@ -48,6 +48,8 @@ getLocation();
 
 st.title("Precise Geolocation App")
 st.components.v1.html(geolocation_html, height=100)
+h = geolocation_html
+st.write(h)
 
 # Inform users about the accuracy
 st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
