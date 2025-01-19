@@ -34,7 +34,6 @@ if confirm == 'yes':
             print(f"An error occurred: {e}")
 else:
         print("Location access not granted. Please enable it and try again.")
-        return None, None
 
 # Call the function and store the coordinates
 latitude, longitude = get_user_location()
