@@ -53,7 +53,7 @@ if st.button("YES"):
     # Capture and display location
     location_data = st.text_input("Captured Location Data", "", key="location_data")
     if location_data:
-        st.success(f"Captured Location: {location_data}"
+        st.success(f"Captured Location: {location_data}")
         st.write(location_data)
 
 
