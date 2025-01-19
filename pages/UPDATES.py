@@ -36,7 +36,7 @@ else:
         st.write("Location access not granted. Please enable it and try again.")
 
 # Call the function and store the coordinates
-latitude, longitude = get_user_location()
+#latitude, longitude = get_user_location()
 st.write(latitude)
 st.write(longitude)
 st.stop()
