@@ -62,7 +62,7 @@ st.write("Click the button below to get your current location:")
 get_user_location()
 
 # Capture the location sent back from JavaScript
-query_params = st.query_params()
+query_params = st.query_params
 if "location" in query_params:
     location_data = query_params["location"][0]
     try:
