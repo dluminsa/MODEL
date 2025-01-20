@@ -667,7 +667,7 @@ else:
     pass 
 st.divider()
 st.write('**TO CAPTURE CORDINATES, YOU NEED TO SWITCH ON YOUR LOCATION**')
-allow = st.radio('**IS YOUR LOCATION ON**', options =['YES', 'NO'] index=None, horizontal = True)
+allow = st.radio('**IS YOUR LOCATION ON**', options =['YES', 'NO'], index=None, horizontal = True)
 if not allow:
     st.stop()
 elif allow =='NO':
