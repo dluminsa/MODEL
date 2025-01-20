@@ -72,7 +72,6 @@ dfna = dfn[dfn['FACILITY'] == facility].copy()
 with col3:
     art = st.text_input('**SEARCH ART No.**')
 
-st.stop()
 if not art:
     st.stop()
 else:
