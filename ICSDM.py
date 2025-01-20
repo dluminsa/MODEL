@@ -499,7 +499,7 @@ elif age>14:
 st.divider()
 st.write('**INDEX BIOLOGICAL TESTING**')
 col1, col2 = st.columns(2)
-ellig = col1.radio('**ARE THERE ELLIGIBLE CHILDREN FOR TESTING**', options = ['YES', 'NO'], horizontal=True, index=None)
+ellig = col1.radio('**ARE THERE ELLIGIBLE CHILDREN FOR TESTING IN THE HOUSEHOLD**', options = ['YES', 'NO'], horizontal=True, index=None)
 if not ellig:
     st.stop()
 elif ellig == 'NO':
