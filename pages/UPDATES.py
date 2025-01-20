@@ -29,7 +29,7 @@ others = ''
 otherissue = ''
 adher = ''
 
-st.write('**COMMUNITY CLIENT ENCOUNTER FORM**')
+st.write('**FOLLOW UP SECTION ON AREAS NOT COMPLETED FROM THE FIELD**')
 
 file = r'CLUSTERS.csv'
 dfa = pd.read_csv(file)
