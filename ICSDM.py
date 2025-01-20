@@ -499,13 +499,13 @@ elif age>14:
 st.divider()
 st.write('**INDEX BIOLOGICAL TESTING**')
 ellig = st.radio('**ARE THERE ELLIGIBLE CHILDREN FOR TESTING IN THE HOUSEHOLD**', options = ['YES', 'NO'], horizontal=True, index=None)
-col1, col2 = st.columns(2)
 if not ellig:
     st.stop()
 elif ellig == 'NO':
     pass
 elif ellig == 'YES':
-    chid = col2.number_input('**HOW MANY?**',min_value=0, value=None)
+    col1, col2 = st.columns(2)
+    chid = col1.number_input('**HOW MANY?**',min_value=0, value=None)
     if chid ==0:
         st.warning("**Elligible children can't be zero, choose NO instead**")
         st.stop()
@@ -580,7 +580,7 @@ if screened or screened ==0:
                         st.warning('**ALL PRESUMED CASES SHOULD ACCESS A TB TEST, THIS HAS TO BE FOLLOWED UP**')
                         pass
                     elif picked > presumed:
-                        st.warning("**YOU CAN'T PICK MORE SAMPLES THANTHOSE PRESUMED**")
+                        st.warning("**YOU CAN'T PICK MORE SAMPLES THAN THOSE PRESUMED**")
                         st.stop()
                     else:
                         st.success('PICKED SAMPLES WILL BE FOLLOWED UP AND AN UPDATE MADE IN THE UPDATE SECTION')
