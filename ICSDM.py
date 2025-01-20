@@ -671,6 +671,7 @@ allow = st.radio('**IS YOUR LOCATION ON**', options =['YES', 'NO'], index=None, 
 if not allow:
     st.stop()
 elif allow =='NO':
+        st.warning("** YOU CAN'T PROCEED WITHOUT LOCATION**")
     st.stop()
 elif allow == 'YES':
             # HTML/JavaScript component for getting browser geolocation
