@@ -666,6 +666,46 @@ if not name2:
 else:
     pass 
 st.divider()
+st.write('**TO CAPTURE CORDINATES, YOU NEED TO SWITCH ON YOUR LOCATION**')
+allow = st.radio('**IS YOUR LOCATION ON**', options =['YES', 'NO'] index=None, horizontal = True)
+if not allow:
+    st.stop()
+elif allow =='NO':
+    st.stop()
+elif allow == 'YES':
+            # HTML/JavaScript component for getting browser geolocation
+        geolocation_html = """
+        <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            document.getElementById("output").value = `${lat},${lon}`;
+        }
+        
+        function showError(error) {
+            alert("Error retrieving geolocation.");
+        }
+        
+        getLocation();
+        </script>
+        <input id="output" type="text" readonly>
+        """
+        
+        st.title("Precise Geolocation App")
+        st.components.v1.html(geolocation_html, height=100)
+        
+        # # Inform users about the accuracy
+        # st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
+
+st.divider()
 col1,col2,col3 = st.columns([1,1,2])
 
 col3.write('**SUMMARY**')
