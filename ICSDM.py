@@ -498,8 +498,8 @@ elif age>14:
         
 st.divider()
 st.write('**INDEX BIOLOGICAL TESTING**')
+ellig = st.radio('**ARE THERE ELLIGIBLE CHILDREN FOR TESTING IN THE HOUSEHOLD**', options = ['YES', 'NO'], horizontal=True, index=None)
 col1, col2 = st.columns(2)
-ellig = col1.radio('**ARE THERE ELLIGIBLE CHILDREN FOR TESTING IN THE HOUSEHOLD**', options = ['YES', 'NO'], horizontal=True, index=None)
 if not ellig:
     st.stop()
 elif ellig == 'NO':
@@ -699,7 +699,7 @@ elif allow == 'YES':
         <input id="output" type="text" readonly>
         """
         
-        st.title("Precise Geolocation App")
+        st.write('**HERE IS YOUR CURRENT LOCATION**')
         st.components.v1.html(geolocation_html, height=100)
         
         # # Inform users about the accuracy
