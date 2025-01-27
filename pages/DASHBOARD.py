@@ -10,7 +10,7 @@ import traceback
 import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
-
+sssssss
 st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
