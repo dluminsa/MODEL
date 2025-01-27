@@ -1,4 +1,4 @@
-import p andas as pd 
+import pandas as pd 
 import streamlit as st 
 sssssssss
 import os
