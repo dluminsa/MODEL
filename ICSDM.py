@@ -802,6 +802,7 @@ submit = col3.button('**SUBMIT**')
 dob = str(dob)
 row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher, htn,dm,AS, MH]
 row2 = [facility,art,socialx, econx, healthx, psychx, spirx, otherissue, act, prevx, condoms, vmmc, econix,vl, reason, name, name2]
+row3 = [facility,art,cd, vist, lam, tblam, crag, partners, ellig, chid, tested, pos, linked, post, screened, presumed, picked]
 
 if not submit:
     st.stop()
@@ -838,8 +839,10 @@ else:
     spreadsheet = client.open_by_url(spreadsheetu)
     sheet1 = spreadsheet.worksheet("DEMO")
     sheet2 = spreadsheet.worksheet("ISSUES")
+    sheet3 = spreadsheet.worksheet("TESTS")
     sheet1.append_row(row1, value_input_option='RAW')
     sheet2.append_row(row2, value_input_option='RAW')
+    sheet3.append_row(row3, value_input_option='RAW')
     time.sleep(3)
     st.markdown("""
          <meta http-equiv="refresh" content="0">
