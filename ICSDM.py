@@ -68,7 +68,6 @@ dfn = pd.read_csv(filen)
 
 dfna = dfn[dfn['FACILITY'] == facility].copy()
 
-
 with col3:
     art = st.text_input('**INPUT ART No.**')
 
@@ -246,7 +245,6 @@ with col2:
     for option in econ:
        if st.checkbox(option):#, key =f'{option}')
             econs.append(option)
-
   
 if len(socials) ==0:
     st.warning('**IF NO SOCIAL ISSUE, SELECT NONE**')
@@ -349,7 +347,7 @@ else:
 
 st.divider()
 others = st.radio('**ANY OTHER BARRIER IDENTIFIED BUT NOT CAPTURED ABOVE**', options =['YES', 'NO'], index= None, horizontal=True)
-
+otherissue = ''
 if not others:
     st.stop()
 elif others =='NO':
@@ -531,11 +529,11 @@ elif ellig == 'YES':
                 linked = 0 
                 pos = 0
         elif tested >1:
-             pos = col2.number_input(f'**OF THE {tested}, HOW MANY ARE POS**', min_value=0, value=None)
-             if not pos:
+             post = col2.number_input(f'**OF THE {tested}, HOW MANY ARE POS**', min_value=0, value=None)
+             if not post:
                 st.stop()
-        if pos>0:
-            if pos > tested:
+        if post>0:
+            if post > tested:
                 st.warning("**THE POS CAN'T BE MORE THAN THOSE TESTED**")
                 st.stop()
             col1, col2 = st.columns(2)    
@@ -796,7 +794,7 @@ else:
 
 col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
-row1 = [cluster, district, facility]
+row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adh, htn,dm,AS, MH]
 
 if not submit:
     st.stop()
@@ -832,8 +830,6 @@ else:
         spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
         spreadsheet = client.open_by_url(spreadsheetu)
         sheet1 = spreadsheet.worksheet("ICSDM")
-        # st.write(sheet1)
-        # st.write(row1)
         sheet1.append_row(row1, value_input_option='RAW')
         time.sleep(3)
         st.markdown("""
