@@ -127,6 +127,8 @@ else:
 
 col1, col2,col3 = st.columns([2,1,2])
 age = col1.number_input('AGE', min_value=0, max_value=None, placeholder='Age in years', value=None)
+if not age:
+    st.stop()
 sex = col3.radio('GENDER', options=['Female', 'Male'],index=None, horizontal=True)
 if sex =='Female':
     if age>14:
@@ -694,9 +696,8 @@ elif allow == 'YES':
         
         # # Inform users about the accuracy
         # st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
-st.divider()
 col1,col2 = st.columns([1,2])
-cords = col1.text_input('**PASTE THE CORDINATES HERE**')
+cords = col1.text_input('**PASTE THE ABOVE CORDINATES HERE**')
 if not cords:
     st.stop()
 else:
