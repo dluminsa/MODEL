@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st 
 import os
 import numpy as np
-import gspread
+import g spread
 from openpyxl import load_workbook
 from pathlib import Path
 import traceback
