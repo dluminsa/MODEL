@@ -787,6 +787,7 @@ if len   (econis)==1:
     else:
         pass
 otherprev = econis + prevs
+otherprevx = ','.join(otherprev)
 
 if len(otherprev) ==0:
     pass
@@ -798,7 +799,7 @@ col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
 dob = str(dob)
 row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher, htn,dm,AS, MH]
-row2 = [facility,art,socials, econs, healths, psychs, spirs, others, otherissue, act, prevs, condoms, vmmc,econis]
+row2 = [facility,art,socialx, econx, healthx, psychx, spirx, others, otherissue, act, otherprevx, condoms, vmmc]
 
 if not submit:
     st.stop()
