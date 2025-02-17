@@ -692,6 +692,7 @@ elif allow == 'YES':
         """
         
         st.write('**HERE IS YOUR CURRENT LOCATION, COPY THE CORDINATES AND PASTE THEM BELOW**')
+        st.warning('**May take some time to generate them, please wait**')
         st.components.v1.html(geolocation_html, height=100)
         
         # # Inform users about the accuracy
