@@ -540,10 +540,10 @@ elif ellig == 'YES':
             linked = col1.number_input(f'**TOTAL LINKED TO CARE**', min_value=0, value=None)
             if linked or linked==0:
                 if linked>=0 :
-                    if linked > pos:
+                    if linked > post:
                         st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
                         st.stop()
-                    notlinked = pos - linked
+                    notlinked = post - linked
                     if notlinked >0:
                         if notlinked ==1:
                             st.warning(f'{notlinked} client has not been linked, they have to be followed up')
