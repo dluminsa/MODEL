@@ -829,7 +829,7 @@ else:
         # Open the Google Sheet by URL
     spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
     spreadsheet = client.open_by_url(spreadsheetu)
-    sheet1 = spreadsheet.worksheet("ICSDM")
+    sheet1 = spreadsheet.worksheet("DEMO")
     sheet1.append_row(row1, value_input_option='RAW')
     time.sleep(3)
     st.markdown("""
