@@ -122,12 +122,14 @@ if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
     col1, col2,col3 = st.columns(3)
-    art = col1.number_input('**SEARCH ART No.**')
+    art = col1.number_input('**SEARCH ART No.**', value=None)
+    if not art:
+         st.stop()
     dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
     dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
-    if dfdemochk.shape[0] == 0:
+    if dfdemo.shape[0] == 0:
          st.info(f'**ART NP {art} NOT FOUND IN THE DATA BASE**')
          st.stop()
     else:
