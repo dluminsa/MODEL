@@ -122,7 +122,7 @@ if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
     col1, col2,col3 = st.columns(3)
-    art = col1.number_input('**SEARCH ART No.**', value=None)
+    art = col1.number_input('**SEARCH ART No.**', value=None, step=1)
     if not art:
          st.stop()
     dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
