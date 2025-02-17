@@ -760,7 +760,7 @@ if age > 14:
     # col1.write(f'**You ellicited {partners} partners who are to be followed up**')
 if ellig == 'YES':
     if chid ==1:
-        st.write(f'In addition, there was {chid} elligible child, you tested {tested}, and found {pos} positive and hence linked {linked} to care')
+        st.write(f'In addition, there was {chid} elligible child, you tested {tested}, and found {post} positive and hence linked {linked} to care')
     else:
         st.write(f'In addition, there were {chid} elligible children, you tested {tested}, and found {pos} positive and hence linked {linked} to care')
 else:
