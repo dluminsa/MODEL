@@ -68,7 +68,7 @@ dfn = pd.read_csv(filen)
 
 dfna = dfn[dfn['FACILITY'] == facility].copy()
 
-check = st.pills('**WHAT DO YOU WANT TO DO?**'. options = ['CHECK UPDATE STATUS', 'MAKE UPDATES'])
+check = st.pills('**WHAT DO YOU WANT TO DO?**', options = ['CHECK UPDATE STATUS', 'MAKE UPDATES'])
 with col3:
     art = st.text_input('**SEARCH ART No.**')
 
