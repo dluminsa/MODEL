@@ -788,7 +788,7 @@ if len   (econis)==1:
         pass
 otherprev = econis + prevs
 prevx = ','.join(prevs)
-econix = ','.join(econix)
+econix = ','.join(econis)
 
 if len(otherprev) ==0:
     pass
