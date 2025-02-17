@@ -14,6 +14,7 @@ from datetime import datetime
 import datetime as dt
 
 cluster = ''
+pos = ''
 consent = ''
 district = ''
 facility = ''
