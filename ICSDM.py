@@ -597,6 +597,7 @@ st.write('**OTHER PREVENTION SERVICES GIVEN TO THIS CLIENT OR MEMBERS OF THE HOU
 col1,col2 = st.columns(2)
 prev = ['CONDOMS','REFERED FOR VMMC', 'OFFERED PREP', 'GBV SCREENING','NO SERVICE']
 condoms = ''
+vmmc = ''
 
 prevs = []
 for option in prev:
