@@ -122,11 +122,27 @@ if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
     col1, col2,col3 = st.columns(3)
-    art = col1.text_input('**SEARCH ART No.**')
+    art = col1.number_input('**SEARCH ART No.**')
+    dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
+    dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
+    dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
+    dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
+    if dfdemochk.shape[0] == 0:
+         st.info(f'**ART NP {art} NOT FOUND IN THE DATA BASE**')
+         st.stop()
+    else:
+         pass
+    dftest= dftest[dftest['ART NO'] == art].copy()
+    dfiss = dfiss[dfiss['ART NO'] == art].copy()
+    cola, colb,colc = st.columns(3)
+    st.write('**APN SECTION**")
+     
+     
+
     
 elif check == 'DOWNLOAD FORM':
     col1, col2,col3 = st.columns(3)
-    art = col1.text_input('**SEARCH ART No.**')
+    art = col1.number_input('**SEARCH ART No.**')
 elif check == 'MAKE UPDATES':
     pass
 
