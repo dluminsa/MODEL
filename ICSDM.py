@@ -1,6 +1,5 @@
 import pandas as pd 
 import streamlit as st 
-sssssssss
 import os
 import numpy as np
 import gspread
