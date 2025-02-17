@@ -796,6 +796,7 @@ col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
 dob = str(dob)
 row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher, htn,dm,AS, MH]
+row2 = [facility,art,socials, econs, healths, psychs, spirs, others, otherissue, act, prevs, condoms, vmmc,econis]
 
 if not submit:
     st.stop()
@@ -831,7 +832,9 @@ else:
     spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
     spreadsheet = client.open_by_url(spreadsheetu)
     sheet1 = spreadsheet.worksheet("DEMO")
+    sheet2 = spreadsheet.worksheet("ISSUES")
     sheet1.append_row(row1, value_input_option='RAW')
+    sheet2.append_row(row2, value_input_option='RAW')
     time.sleep(3)
     st.markdown("""
          <meta http-equiv="refresh" content="0">
