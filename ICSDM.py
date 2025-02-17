@@ -2,9 +2,9 @@ import pandas as pd
 import streamlit as st 
 import os
 import numpy as np
-import g spread
+import gspread
 from openpyxl import load_workbook
-from pathlib import Path
+from pathlib import Pathx
 import traceback
 import time
 from google.oauth2.service_account import Credentials
