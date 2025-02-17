@@ -664,7 +664,7 @@ elif allow =='NO':
 elif allow == 'YES':
        st.write('**COPY THESE CORDINATES AND PASTE THEM BELOW**')
             # HTML/JavaScript component for getting browser geolocation
-        geolocation_html = """
+       geolocation_html = """
         <script>
         function getLocation() {
             if (navigator.geolocation) {
