@@ -654,18 +654,6 @@ else:
     col2.write('**CLIENT IS NOT YET DUE FOR REBLEEDING**')
 
 st.divider()
-col1,col2 = st.columns([1,2])
-name = col1.text_input('**Name of the HW who did this visit**')
-if not name:
-    st.stop()
-else:
-    pass 
-name2 = col2.text_input('**Name of the CHW for this NS**')
-if not name2:
-    st.stop()
-else:
-    pass 
-st.divider()
 st.write('**TO CAPTURE CORDINATES, YOU NEED TO SWITCH ON YOUR LOCATION**')
 allow = st.radio('**IS YOUR LOCATION ON**', options =['YES', 'NO'], index=None, horizontal = True)
 if not allow:
@@ -674,6 +662,7 @@ elif allow =='NO':
     st.warning("** YOU CAN'T PROCEED WITHOUT LOCATION**")
     st.stop()
 elif allow == 'YES':
+       st.write('**COPY THESE CORDINATES AND PASTE THEM BELOW**')
             # HTML/JavaScript component for getting browser geolocation
         geolocation_html = """
         <script>
@@ -700,12 +689,30 @@ elif allow == 'YES':
         <input id="output" type="text" readonly>
         """
         
-        st.write('**HERE IS YOUR CURRENT LOCATION**')
+        st.write('**HERE IS YOUR CURRENT LOCATION, COPY THE CORDINATES AND PASTE THEM BELOW**')
         st.components.v1.html(geolocation_html, height=100)
         
         # # Inform users about the accuracy
         # st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
-
+st.divider()
+col1,col2 = st.columns([1,2])
+cords = col1.text_input('**PASTE THE CORDINATES HERE**')
+if not cords:
+    st.stop()
+else:
+    pass                
+st.divider()
+col1,col2 = st.columns([1,2])
+name = col1.text_input('**Name of the HW who did this visit**')
+if not name:
+    st.stop()
+else:
+    pass 
+name2 = col2.text_input('**Name of the CHW for this NS**')
+if not name2:
+    st.stop()
+else:
+    pass 
 st.divider()
 col1,col2,col3 = st.columns([1,1,2])
 
@@ -813,7 +820,6 @@ else:
         # Define the scopes needed for your application
         scopes = ["https://www.googleapis.com/auth/spreadsheets",
                 "https://www.googleapis.com/auth/drive"]
-        
          
         credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
             
