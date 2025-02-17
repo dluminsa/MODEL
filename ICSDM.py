@@ -642,6 +642,7 @@ if len(econis)>1:
 st.divider()
 col1,col2,col3 = st.columns([1,2,1])
 col2.write('**VL SECTION**')
+reason = ''
 if due == 'DUE':
     st.info('**WHEN REBLEEDING NS, TWO PLASMA SAMPLES SHOULD BE PICKED, MAKE SURE YOU REQUEST FOR A DR TEST**')
     vl = st.radio('**HAS THE CLIENT BEEN REBLED FOR VL?**',options = ['YES', 'NO'], horizontal=True, index=None)
