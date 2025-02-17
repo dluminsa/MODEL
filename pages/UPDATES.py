@@ -125,9 +125,9 @@ elif check == 'MAKE UPDATES':
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1)
     if not art:
          st.stop()
-    dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
-    dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
-    dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
+    # dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
+    # dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
+    # dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     st.write(dfdemo)
     dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
     st.write(dfdemo)
