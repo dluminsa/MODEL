@@ -794,6 +794,7 @@ else:
 
 col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
+dob = str(dob)
 row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher, htn,dm,AS, MH]
 
 if not submit:
