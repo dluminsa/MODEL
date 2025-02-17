@@ -681,7 +681,7 @@ elif allow == 'YES':
         }
         
         function showError(error) {
-            alert("Error retrieving geolocation.");
+            alert("Switch on your location.");
         }
         
         getLocation();
@@ -816,30 +816,30 @@ else:
             "client_x509_cert_url": secrets["client_x509_cert_url"]
         }
             
-    try:
-        # Define the scopes needed for your application
-        scopes = ["https://www.googleapis.com/auth/spreadsheets",
-                "https://www.googleapis.com/auth/drive"]
-         
-        credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
-            
-            # Authorize and access Google Sheets
-        client = gspread.authorize(credentials)
-            
-            # Open the Google Sheet by URL
-        spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
-        spreadsheet = client.open_by_url(spreadsheetu)
-        sheet1 = spreadsheet.worksheet("ICSDM")
-        sheet1.append_row(row1, value_input_option='RAW')
-        time.sleep(3)
-        st.markdown("""
-             <meta http-equiv="refresh" content="0">
-                   """, unsafe_allow_html=True)
-    except Exception as e:
-            # Log the error message
-        st.write(f"CHECK: {e}")
-        st.write(traceback.format_exc())
-        st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
-        st.stop()
+    #try:
+    # Define the scopes needed for your application
+    scopes = ["https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive"]
+     
+    credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
+        
+        # Authorize and access Google Sheets
+    client = gspread.authorize(credentials)
+        
+        # Open the Google Sheet by URL
+    spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
+    spreadsheet = client.open_by_url(spreadsheetu)
+    sheet1 = spreadsheet.worksheet("ICSDM")
+    sheet1.append_row(row1, value_input_option='RAW')
+    time.sleep(3)
+    st.markdown("""
+         <meta http-equiv="refresh" content="0">
+               """, unsafe_allow_html=True)
+    # except Exception as e:
+    #         # Log the error message
+    #     st.write(f"CHECK: {e}")
+    #     st.write(traceback.format_exc())
+    #     st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
+    #     st.stop()
     
 
