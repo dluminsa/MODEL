@@ -126,10 +126,10 @@ elif check == 'MAKE UPDATES':
          st.stop()
     # dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
     # dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
-    # dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
+    dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
     if dfdemo.shape[0] == 0:
-         st.info(f'**ART NP {art} NOT FOUND IN THE DATA BASE**')
+         st.info(f'**ART NO {art} NOT FOUND IN THE DATA BASE**')
          st.stop()
     else:
          pass
@@ -138,7 +138,7 @@ elif check == 'MAKE UPDATES':
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,7]
     if partners > 0:
-         #partners = int(0)
+         partners = int(0)
          st.write(f'**Client with ART NO {art} had {partners:,.0f} ellicited**')
          st.write(f'**OF THESE {partners:,.0f}, how many have been:**')
          col1,col2 = st.columns(2)
