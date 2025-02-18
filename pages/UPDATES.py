@@ -172,7 +172,7 @@ elif check == 'MAKE UPDATES':
               elif tested == 0:
                    pass
               else:
-                   st.write(f'**OF THE {tested}, HOW MANY WERE:**')
+                   st.write(f'**OF THE {tested} tested, HOW MANY WERE:**')
                    col1,col2, col3 = st.columns(3) 
                    neg = col1.number_input('**NEGATIVE**', value=None, step=1)
                    pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1)
