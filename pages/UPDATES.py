@@ -151,7 +151,12 @@ elif check == 'MAKE UPDATES':
          else:
               col1,col2 = st.columns(2)
               st.write(f'**OF THE {notif} NOTIFIED, how were:**')
+
               tested = col1.number_input('**TESTED**', value=None, step=1)
+              if not tested:
+                   st.stop()
+               if not alread:
+                    st.stop()
               alread = col2.number_input('**KNOWN POSTIVE**', value=None, step=1)
               checkm = tested + alread
               if checkm > notif:
