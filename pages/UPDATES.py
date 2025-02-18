@@ -174,7 +174,7 @@ elif check == 'MAKE UPDATES':
               else:
                    st.write(f'**OF THE {tested}, HOW MANY WERE:**')
                    col1,col2, col3 = st.columns(3) 
-                   neg = col2.number_input('**NEGATIVE**', value=None, step=1)
+                   neg = col1.number_input('**NEGATIVE**', value=None, step=1)
                    pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1)
                    if pos:
                         linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1)
