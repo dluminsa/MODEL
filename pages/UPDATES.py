@@ -110,7 +110,6 @@ dfiss = dfiss[dfiss['FACILITY'] == facility].copy()
 dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
 dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
 
-
 filen = r'ALL.csv'
 dfn = pd.read_csv(filen)
 
@@ -139,7 +138,7 @@ elif check == 'MAKE UPDATES':
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,7]
     if partners > 0:
-         partners = int(0)
+         #partners = int(0)
          st.write(f'**Client with ART NO {art} had {partners} ellicited**')
          st.write(f'**OF THESE {partners}, how many have been:**')
          col1,col2 = st.columns(2)
