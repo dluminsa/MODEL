@@ -151,6 +151,7 @@ elif check == 'MAKE UPDATES':
          else:
               st.write(f'**OF THE {notif} NOTIFIED, how were (put 0, if none):**')
               col1,col2 = st.columns(2)
+              tested = 0
               tested = col1.number_input('**TESTED**', value=None, step=1)
               if tested or tested >=0:
                    pass
