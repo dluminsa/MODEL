@@ -136,22 +136,50 @@ elif check == 'MAKE UPDATES':
          pass
     dftest= dftest[dftest['ART NO'] == art].copy()
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
-    partners = dftest.iloc[0,7]
     st.write('**APN SECTION**')
-    st.write(f'**Client with ART NO {art} had {partners} ellicited**')
-    st.write(f'**OF THESE {partners}, how many have been:**')
-    col1,col2,col3,col4 = st.columns(4)
-    notif = col1.number_input('**NOTIFIED**', value=None, step=1)
-    tested = col2.number_input('**TESTED**', value=None, step=1)
-    col1,col2, col3 = st.columns(3) 
-    pos = col1.number_input('**HOW MANY WERE NEWLY POSTIVE**', value=None, step=1)
-    alread = col2.number_input('**HOW MANY WERE KNOWN POSTIVE**', value=None, step=1)
-    linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1)
-    st.write(f'**OF THE {pos}, how many have:**')
-    col1,col2, col3 = st.columns(3) 
-    recency = col1.number_input('**RECENCY TEST**', value=None, step=1)
-    alread = col2.number_input('**RECENT RESULT**', value=None, step=1)
-    linked = col3.number_input('**LONGTERM RESULTS**', value=None, step=1)
+    partners = dftest.iloc[0,7]
+    if partners > 0:
+         partners = int(0)
+         st.write(f'**Client with ART NO {art} had {partners} ellicited**')
+         st.write(f'**OF THESE {partners}, how many have been:**')
+         col1,col2 = st.columns(2)
+         notif = col1.number_input('**NOTIFIED**', value=None, step=1)
+         if not notif:
+              st.stop()
+         if notif > partners:
+              st.warning("**YOU CAN'T NOTIFY MORE THAN THOSE ELLICITED**")
+         else:
+              col1,col2 = st.columns(2)
+              st.write(f'**OF THE {notif} NOTIFIED, how were:**')
+              tested = col1.number_input('**TESTED**', value=None, step=1)
+              alread = col2.number_input('**KNOWN POSTIVE**', value=None, step=1)
+              if (tested + alread) > notif:
+                   st.warning("**TESTED AND KNOWN POS ARE MORE THAN THOSE NOTIFIED**")
+                   st.stop()
+              if not tested:
+                   st.stop()
+              elif tested > notif:
+                   st.warning("**YOU CAN'T TEST MORE THAN THOSE NOTIFIED**")
+              elif tested == 0:
+                   pass
+              else:
+                   col1,col2, col3 = st.columns(3) 
+                   pos = col1.number_input('**HOW MANY WERE NEWLY POSTIVE**', value=None, step=1)
+                   linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1)
+                   if linked > pos:
+                        st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
+                        st.stop()
+                    
+                   if not pos:
+                        st.stop()
+                   elif pos ==0:
+                        pass
+                   else:
+                        st.write(f'**OF THE {pos}, how many have:**')
+                        col1,col2, col3 = st.columns(3) 
+                        recency = col1.number_input('**RECENCY TEST**', value=None, step=1)
+                        alread = col2.number_input('**RECENT RESULT**', value=None, step=1)
+                        linked = col3.number_input('**LONGTERM RESULTS**', value=None, step=1)
     
 elif check == 'DOWNLOAD FORM':
     col1, col2,col3 = st.columns(3)
