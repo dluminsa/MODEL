@@ -156,9 +156,11 @@ elif check == 'MAKE UPDATES':
                    pass
               else:
                    st.stop()
-              if not alread:
-                    st.stop()
               alread = col2.number_input('**KNOWN POSTIVE**', value=None, step=1)
+              if alread >=0:
+                   pass
+              else:
+                   st.stop()
               checkm = tested + alread
               if checkm > notif:
                    st.warning("**TESTED AND KNOWN POS ARE MORE THAN THOSE NOTIFIED**")
