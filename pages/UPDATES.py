@@ -126,7 +126,7 @@ elif check == 'MAKE UPDATES':
          st.stop()
     # dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
     # dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
-    dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
+    #dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
     if dfdemo.shape[0] == 0:
          st.info(f'**ART NO {art} NOT FOUND IN THE DATA BASE**')
@@ -134,6 +134,7 @@ elif check == 'MAKE UPDATES':
     else:
          pass
     dftest= dftest[dftest['ART NO'] == art].copy()
+    dfiss['PARTNERS'] = pd.to_numeric(dfiss['PARTNERS'], errors = 'coerce')
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,7]
