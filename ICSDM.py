@@ -15,6 +15,7 @@ import datetime as dt
 
 cluster = ''
 pos = ''
+visit = ''
 consent = ''
 district = ''
 facility = ''
