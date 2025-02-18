@@ -136,7 +136,7 @@ elif check == 'MAKE UPDATES':
          pass
     dftest= dftest[dftest['ART NO'] == art].copy()
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
-    partners = dftest.iloc[0,8]
+    partners = dftest.iloc[0,7]
     st.write('**APN SECTION**')
     st.write(f'**Client with ART NO {art} had {partners} ellicited**')
     st.write(f'**OF THESE {partners}, how many have been:**')
