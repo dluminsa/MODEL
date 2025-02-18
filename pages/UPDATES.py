@@ -172,18 +172,29 @@ elif check == 'MAKE UPDATES':
               elif tested == 0:
                    pass
               else:
+                   st.write(f'**OF THE {tested}, HOW MANY WERE:**')
                    col1,col2, col3 = st.columns(3) 
-                   pos = col1.number_input('**HOW MANY WERE NEWLY POSTIVE**', value=None, step=1)
-                   linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1)
-                   if linked > pos:
-                        st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
-                        st.stop()
+                   neg = col2.number_input('**NEGATIVE**', value=None, step=1)
+                   pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1)
+                   if pos:
+                        linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1)
+                        if linked > pos:
+                             st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
+                             st.stop()
                     
-                   if not pos:
-                        st.stop()
-                   elif pos ==0:
+                   if pos or pos ==0:
                         pass
                    else:
+                        st.stop()
+                   if neg or neg ==0:
+                        pass
+                   else:
+                        st.warning('Number negative is required or put a 0 (zero)**')
+                        st.stop()
+                   if (neg + pos) > tested:
+                        st.warning('**Number positive and negative is greater than number tested**')
+                        st.stop()
+                   if pos:
                         st.write(f'**OF THE {pos}, how many have:**')
                         col1,col2, col3 = st.columns(3) 
                         recency = col1.number_input('**RECENCY TEST**', value=None, step=1)
