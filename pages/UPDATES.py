@@ -134,7 +134,7 @@ elif check == 'MAKE UPDATES':
     else:
          pass
     dftest= dftest[dftest['ART NO'] == art].copy()
-    dfiss['PARTNERS'] = pd.to_numeric(dfiss['PARTNERS'], errors = 'coerce')
+    dftest['PARTNERS'] = pd.to_numeric(dftest['PARTNERS'], errors = 'coerce')
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,7]
