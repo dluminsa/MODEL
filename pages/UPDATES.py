@@ -128,9 +128,7 @@ elif check == 'MAKE UPDATES':
     # dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
     # dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     # dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
-    st.write(dfdemo)
     dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
-    st.write(dfdemo)
     if dfdemo.shape[0] == 0:
          st.info(f'**ART NP {art} NOT FOUND IN THE DATA BASE**')
          st.stop()
