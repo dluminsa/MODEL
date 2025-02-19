@@ -634,6 +634,7 @@ if 'REFERED FOR VMMC' in prevs:
 
 if 'PREP SERVICES' in prevs:
     col1,col2,col3 = st.columns(3)
+    st.write("**Since you clicked PREP SERVICES ABOVE, complete the PREP cascade or unclick it if you didn't offer it**")
     prepsc = col1.number_input('**Number screened for PREP**', value=None, step=1)
     if not prepsc:
         st.stop()
@@ -649,6 +650,12 @@ if 'PREP SERVICES' in prevs:
                 prepnum = col3.number_input('**Number initiated on PREP**', value=None, step=1)
                 if prepnum or prepnum ==0:
                     pass
+                elif prepnum or prepnum ==0:
+                    if prepnum > prepel:
+                        st.warning("**Number initiated can't be greater than number elligible**")
+                        st.stop()
+                    else:
+                        pass
                 else:
                     st.stop()
             else:
