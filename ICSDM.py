@@ -649,8 +649,6 @@ if 'PREP SERVICES' in prevs:
             elif prepel:
                 prepnum = col3.number_input('**Number initiated on PREP**', value=None, step=1)
                 if prepnum or prepnum ==0:
-                    pass
-                elif prepnum or prepnum ==0:
                     if prepnum > prepel:
                         st.warning("**Number initiated can't be greater than number elligible**")
                         st.stop()
