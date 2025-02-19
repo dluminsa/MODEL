@@ -647,12 +647,14 @@ if 'PREP SERVICES' in prevs:
                 st.stop()
             elif prepel:
                 prepnum = col3.number_input('**Number initiated on PREP**', value=None, step=1)
-                if prepnum or prenum ==0:
+                if prepnum or prepnum ==0:
                     pass
                 else:
                     st.stop()
             else:
                 st.stop()
+        else:
+            st.stop()
     
 if len(prevs)==0:
     st.info('CLICK ON NO SERVICE IF NONE WAS GIVEN')
