@@ -443,10 +443,10 @@ else:
 #st.write('**CD-4 TESTING (CLICK ON WHAT IS APPLICABLE)**')
 st.divider()
 if age <5:
-    cd4s = ['CD4 SAMPLE PICKED', 'WAS BLED ALREADY']
+    cd4s = ['CD4 SAMPLE PICKED', 'WAS BLED ALREADY', 'LLV CLIENT']
     st.info('VISITECT IS NOT USED IN CHILDREN <5 YRS, IF NOT ALREADY BLED, PICK A SAMPLE FOR CD4 TESTING')
 else:
-    cd4s = ['CD4 SAMPLE PICKED', 'WAS BLED ALREADY', 'VISITECT USED']
+    cd4s = ['CD4 SAMPLE PICKED', 'WAS BLED ALREADY', 'VISITECT USED', 'LLV CLIENT']
 
 cd = st. pills('**CD-4 TESTING (CLICK ON WHAT IS APPLICABLE)**',options= cd4s)
 if not cd:
@@ -610,9 +610,12 @@ st.divider()
 st.write('**OTHER PREVENTION SERVICES GIVEN TO THIS CLIENT OR MEMBERS OF THE HOUSEHOLD**')
 
 col1,col2 = st.columns(2)
-prev = ['CONDOMS','REFERED FOR VMMC', 'OFFERED PREP', 'GBV SCREENING','NO SERVICE']
+prev = ['CONDOMS','REFERED FOR VMMC', 'PREP SERVICES', 'GBV SCREENING','NO SERVICE']
 condoms = ''
 vmmc = ''
+prepsc = ''
+prepel = ''
+prepnum = ''
 
 prevs = []
 for option in prev:
@@ -628,6 +631,29 @@ if 'REFERED FOR VMMC' in prevs:
         st.stop()
     else:
         col2.info('These will be followed up for circumcision')
+
+if 'PREP SERVICES' in prevs:
+    col1,col2,col3 = st.columns(3)
+    prepsc = col1.number_input('**Number screened for PREP**', value=None, step=1)
+    if not prepsc:
+        st.stop()
+    else:
+        prepel = col2.number_input('**Number elligible for PREP**', value=None, step=1)
+        if prepel or prepel ==0:
+            if prepel == 0:
+                pass
+            elif prepel > prepsc:
+                st.warning("**Number elligible can't be greater than number screened**")
+                st.stop()
+            elif prepel:
+                prepnum = col3.number_input('**Number initiated on PREP**', value=None, step=1)
+                if prepnum or prenum ==0:
+                    pass
+                else:
+                    st.stop()
+            else:
+                st.stop()
+    
 if len(prevs)==0:
     st.info('CLICK ON NO SERVICE IF NONE WAS GIVEN')
     st.stop()
