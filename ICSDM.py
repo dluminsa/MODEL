@@ -383,10 +383,10 @@ st.write('**NCD SCREENING (CHOOSE ONE OPTION FOR EACH, OR CHOOSE NOT DONE)**')
 if age <15:
     st.info('NCD SCREENING STARTS AT 15 YRS, IF THIS CHILD IS DIABETIC, INCLUDE IT IN COMORBITIES UNDER HEALTH ISSUES')
 if age >14:
-    htncodes = ['1', '2', '3','4','5', '6' ,'NOT DONE']
-    DMcodes = ['1', '2', '3','4','5', '6' ,'NOT DONE']
-    AScodes = ['1', '2', '3','4','5', '6', 'NOT DONE']
-    MHcodes = ['1', '2', '3','4','5', '6', 'NOT DONE']
+    htncodes = ['1', '2', '3','4','5', '6' ,7,8,'NOT DONE']
+    DMcodes = ['1', '2', '3','4','5', '6',7,8 ,'NOT DONE']
+    AScodes = ['1', '2', '3','4','5', '6', 7,8,'NOT DONE']
+    MHcodes = ['1', '2', '3','4','5', '6', 7,8,'NOT DONE']
 
     col1, col2, =st.columns(2)
 
