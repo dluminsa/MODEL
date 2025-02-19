@@ -633,8 +633,8 @@ if 'REFERED FOR VMMC' in prevs:
         col2.info('These will be followed up for circumcision')
 
 if 'PREP SERVICES' in prevs:
+    st.write("**complete the PREP cascade, or unclick it if you didn't offer it**")
     col1,col2,col3 = st.columns(3)
-    st.write("**Since you clicked PREP SERVICES ABOVE, complete the PREP cascade or unclick it if you didn't offer it**")
     prepsc = col1.number_input('**Number screened for PREP**', value=None, step=1)
     if not prepsc:
         st.stop()
