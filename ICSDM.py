@@ -504,7 +504,7 @@ elif age>14:
         st.write('YOU SELECTED MULTIPLE SEXUAL PARTNERS, IN SOCIAL ISSUES, SO ELICIT SOME PARTNERS')
     col1,col2 = st.columns(2)
     partners = col1.number_input('**No. OF SEXUAL PARTNERS ELICITED**', min_value=0, value=None)
-    if partners or if partners == 0:
+    if partners or partners == 0:
         if partners >0:
             st.markdown(f'**An update on the partners elicited will be needed, note them in the APN register**')
         elif partners ==0:
@@ -529,7 +529,7 @@ elif ellig == 'YES':
         st.stop()
     col1,col2 = st.columns(2)
     tested = col1.number_input(f'**OF THE {chid}, HOW MANY HAVE YOU TESTED**', min_value=0, value=None)
-    if tested or if tested ==0:
+    if tested or  tested ==0:
         if tested > chid:
             st.warning("YOU CAN'T TEST MORE THAN THOSE ELLIGIBLE")
             st.stop()
