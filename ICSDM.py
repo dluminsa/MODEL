@@ -548,27 +548,28 @@ elif ellig == 'YES':
              post = col2.number_input(f'**OF THE {tested}, HOW MANY ARE POS**', min_value=0, value=None)
              if not post:
                 st.stop()
-        if post>0:
-            if post > tested:
-                st.warning("**THE POS CAN'T BE MORE THAN THOSE TESTED**")
-                st.stop()
-            col1, col2 = st.columns(2)    
-            linked = col1.number_input(f'**TOTAL LINKED TO CARE**', min_value=0, value=None)
-            if linked or linked==0:
-                if linked>=0 :
-                    if linked > post:
-                        st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
-                        st.stop()
-                    notlinked = post - linked
-                    if notlinked >0:
-                        if notlinked ==1:
-                            st.warning(f'{notlinked} client has not been linked, they have to be followed up')
-                        elif notlinked >1:
-                            st.warning(f'{notlinked} clients have not been linked, they have to be followed up')
-                    else:
-                        pass 
-            else:
-                st.stop()
+        if post:         
+            if post>0:
+                if post > tested:
+                    st.warning("**THE POS CAN'T BE MORE THAN THOSE TESTED**")
+                    st.stop()
+                col1, col2 = st.columns(2)    
+                linked = col1.number_input(f'**TOTAL LINKED TO CARE**', min_value=0, value=None)
+                if linked or linked==0:
+                    if linked>=0 :
+                        if linked > post:
+                            st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
+                            st.stop()
+                        notlinked = post - linked
+                        if notlinked >0:
+                            if notlinked ==1:
+                                st.warning(f'{notlinked} client has not been linked, they have to be followed up')
+                            elif notlinked >1:
+                                st.warning(f'{notlinked} clients have not been linked, they have to be followed up')
+                        else:
+                            pass 
+                else:
+                    st.stop()
     else:
         st.stop()
 st.divider()    
