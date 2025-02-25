@@ -854,7 +854,7 @@ else:
 col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
 dob = str(dob)
-row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher, htn,dm,AS, MH]
+row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher,adh, htn,dm,AS, MH]
 row2 = [facility,art,socialx, econx, healthx, psychx, spirx, otherissue, act, prevx, condoms, vmmc, econix,vl, reason, name, name2]
 row3 = [facility,art,cd, vist, lam, tblam, crag, partners, ellig, chid, tested, pos, linked, post, screened, presumed, picked]
 
