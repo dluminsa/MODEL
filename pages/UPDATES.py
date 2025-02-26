@@ -222,7 +222,7 @@ elif check == 'DOWNLOAD FORM':
          st.info('**No forms available for this facility or ART NO selected**')
          st.stop()
     else:
-         pass
+         st.info(f'**{num} forms are available for this facility or ART NO selected**')
     for arty in Arts:
          def create_docx():
               dfdemy = dfdemo[dfdemo['ART NO'] == arty].copy()
@@ -327,7 +327,7 @@ elif check == 'DOWNLOAD FORM':
 
         # Provide a download button
          st.download_button(
-            label=f"FORM FOR ART NO: {arty:,.0f}",
+            label=f"DOWNLOAD FORM FOR ART NO: {arty:,.0f}",
             data=doc_file,
             file_name=f"FORM FOR ART NO: {arty:,.0f}.docx",
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
