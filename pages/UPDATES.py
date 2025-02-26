@@ -330,7 +330,8 @@ elif check == 'DOWNLOAD FORM':
             label=f"FORM FOR ART NO: {art}",
             data=doc_file,
             file_name=f"FORM FOR ART NO: {art}.docx",
-            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            key = art
                )
     
     
