@@ -11,4 +11,5 @@ pandas
 numpy
 geopy
 geocoder
+python-docx
 
