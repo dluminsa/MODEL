@@ -255,11 +255,11 @@ elif check == 'DOWNLOAD FORM':
                    prev = dfisy.iloc[0,9]
                    econ = dfisy.iloc[0,12]
                
-                   cd = dftsty.iloc[0,2]
-                   tb = dftsty.iloc[0,14]
+                   cd = dftesty.iloc[0,2]
+                   tb = dftesty.iloc[0,14]
                    vl = dfisy.iloc[0,13]
                
-                   apn = dftsty.iloc[0,7]
+                   apn = dftesty.iloc[0,7]
                    ht = dfdemy.iloc[0,15]
                    dm = dfdemy.iloc[0,16]
                    mh = dfdemy.iloc[0,18]
