@@ -217,7 +217,7 @@ elif check == 'DOWNLOAD FORM':
          dfisss = dfiss.copy()
          Arts = dfdemo['ART NO'].unique()
 
-    num = dfdem.shape[0]
+    num = dfdemo.shape[0]
     if num ==0:
          st.info('**No forms available for this facility or ART NO selected**')
          st.stop()
