@@ -229,17 +229,17 @@ elif check == 'DOWNLOAD FORM':
               dfisy = dfiss[dfiss['ART NO'] == arty].copy()
               dftsty = dftest[dftest['ART NO'] == arty].copy()            
               a = arty
-              b = dfdem.iloc[0,12]
-              c = dfdem.iloc[0,6]
-              d = dfdem.iloc[0,7]
-              e = dfdem.iloc[0,10]
-              f = dfdem.iloc[0,9]
-              g = dfdem.iloc[0,11]
+              b = dfdemy.iloc[0,12]
+              c = dfdemy.iloc[0,6]
+              d = dfdemy.iloc[0,7]
+              e = dfdemy.iloc[0,10]
+              f = dfdemy.iloc[0,9]
+              g = dfdemy.iloc[0,11]
               dt = dfisy.iloc[0,17]
               sp = ''
-              pm = dfdem.iloc[0,8]
-              dob = dfdem.iloc[0,5]
-              dr = dfdem.iloc[0,4]
+              pm = dfdemy.iloc[0,8]
+              dob = dfdemy.iloc[0,5]
+              dr = dfdemy.iloc[0,4]
           
               a1 = dfisy.iloc[0,2]
               a2 = dfisy.iloc[0,3]
@@ -248,8 +248,8 @@ elif check == 'DOWNLOAD FORM':
               a5 = dfisy.iloc[0,6]
               a6 = dfisy.iloc[0,7]
               bar = f'{a1}, {a2}, {a3}, {a4}, {a5}, {a6}'
-              b1 = dfdem.iloc[0,13]
-              b2 = dfdem.iloc[0,14]
+              b1 = dfdemy.iloc[0,13]
+              b2 = dfdemy.iloc[0,14]
               act = dfisy.iloc[0,8]
               prev = dfisy.iloc[0,9]
               econ = dfisy.iloc[0,12]
@@ -259,10 +259,10 @@ elif check == 'DOWNLOAD FORM':
               vl = dfisy.iloc[0,13]
           
               apn = dftsty.iloc[0,7]
-              ht = dfdem.iloc[0,15]
-              dm = dfdem.iloc[0,16]
-              mh = dfdem.iloc[0,18]
-              As = dfdem.iloc[0,17]
+              ht = dfdemy.iloc[0,15]
+              dm = dfdemy.iloc[0,16]
+              mh = dfdemy.iloc[0,18]
+              As = dfdemy.iloc[0,17]
           
               hw = dfisy.iloc[0,15]
               chw = dfisy.iloc[0,16]
