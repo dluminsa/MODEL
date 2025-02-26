@@ -224,9 +224,10 @@ elif check == 'DOWNLOAD FORM':
     elif artu or num ==1:
               st.info('**1 form is available for this facility or ART NO selected**')
               def create_docx():
-                   # dfdemy = dfdemo[dfdemo['ART NO'] == arty].copy()
-                   # dfisy = dfiss[dfiss['ART NO'] == arty].copy()
-                   # dftsty = dftest[dftest['ART NO'] == arty].copy()
+                   dfdemy= dfdemo.copy()
+                   dftesty = dftest.copy()
+                   dfisy = dfiss.copy()
+                   
                    arty = dfdemy.iloc[0,3]
                    a = arty
                    b = dfdemy.iloc[0,12]
