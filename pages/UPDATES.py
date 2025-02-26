@@ -296,7 +296,7 @@ elif check == 'DOWNLOAD FORM':
                    p = document.add_paragraph('')
                    p.add_run('TESTS DONE').bold=True
                    table2 = document.add_table(rows=3,cols=2, style='Table Grid')
-                   table2.cell(0,0).text = 'VL REBLEED:'
+                   table2.cell(0,0).text = 'REBLED FOR VL?:'
                    table2.cell(0,1).text = f'{vl}'
                    table2.cell(1,0).text = 'CD4 TESTING:'
                    table2.cell(1,1).text = f'{cd}'
