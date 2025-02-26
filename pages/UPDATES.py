@@ -206,7 +206,7 @@ elif check == 'MAKE UPDATES':
     
 elif check == 'DOWNLOAD FORM':
     col1, col2,col3 = st.columns(3)
-    art = col1.number_input('**SEARCH ART No.**')
+    art = col1.number_input('**SEARCH ART No.**', value=None, step=1)
     if art:
          dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
          dftest= dftest[dftest['ART NO'] == art].copy()
@@ -305,7 +305,7 @@ elif check == 'DOWNLOAD FORM':
               p = document.add_paragraph('')
               p.add_run('APN, NCD CODES').bold=True
               table2 = document.add_table(rows=1,cols=5, style='Table Grid')
-              table2.cell(0,0).text = f'Partners: {apn}'
+              table2.cell(0,0).text = f'Partners: {apn:,.0f}'
               table2.cell(0,1).text = f'HTN: {ht}'
               table2.cell(0,2).text = f'DM: {dm}'
               table2.cell(0,3).text = f'MH: {mh}'
