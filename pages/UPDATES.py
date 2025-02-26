@@ -332,7 +332,6 @@ elif check == 'DOWNLOAD FORM':
                  data=doc_file,
                  file_name=f"FORM FOR ART NO: {artu:,.0f}.docx",
                  mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                 key = arty
                     )
     else:
          st.info(f'**{num} forms are available for this facility or ART NO selected**')
