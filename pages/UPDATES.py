@@ -329,9 +329,9 @@ elif check == 'DOWNLOAD FORM':
          st.download_button(
             label=f"FORM FOR ART NO: {art}",
             data=doc_file,
-            file_name=f"FORM FOR ART NO: {art}.docx",
+            file_name=f"FORM FOR ART NO: {arty}.docx",
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            key = art
+            key = arty
                )
     
     
