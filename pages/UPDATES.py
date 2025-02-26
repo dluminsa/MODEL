@@ -12,6 +12,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
 import datetime as dt
+from docx import Document
+from docx.shared import Inches
+from io import BytesIO
 
 cluster = ''
 consent = ''
@@ -204,6 +207,133 @@ elif check == 'MAKE UPDATES':
 elif check == 'DOWNLOAD FORM':
     col1, col2,col3 = st.columns(3)
     art = col1.number_input('**SEARCH ART No.**')
+    if art:
+         dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
+         dftest= dftest[dftest['ART NO'] == art].copy()
+         dfiss = dfiss[dfiss['ART NO'] == art].copy()
+    else:
+         dfdemo = dfdemo.copy()
+         dftest = dftest.copy()
+         dfisss = dfiss.copy()
+         Arts = dfdemo['ART NO'].unique()
+
+    num = dfdem.shape[0]
+    if num ==0:
+         st.info('**No forms available for this facility or ART NO selected**')
+         st.stop()
+    else:
+         pass
+    for arty in Arts:
+         def create_docx():
+              dfdemy = dfdemo[dfdemo['ART NO'] == arty].copy()
+              dfisy = dfiss[dfiss['ART NO'] == arty].copy()
+              dftsty = dftest[dftest['ART NO'] == arty].copy()            
+              a = arty
+              b = dfdem.iloc[0,12]
+              c = dfdem.iloc[0,6]
+              d = dfdem.iloc[0,7]
+              e = dfdem.iloc[0,10]
+              f = dfdem.iloc[0,9]
+              g = dfdem.iloc[0,11]
+              dt = dfisy.iloc[0,17]
+              sp = ''
+              pm = dfdem.iloc[0,8]
+              dob = dfdem.iloc[0,5]
+              dr = dfdem.iloc[0,4]
+          
+              a1 = dfisy.iloc[0,2]
+              a2 = dfisy.iloc[0,3]
+              a3 = dfisy.iloc[0,4]
+              a4 = dfisy.iloc[0,5]
+              a5 = dfisy.iloc[0,6]
+              a6 = dfisy.iloc[0,7]
+              bar = f'{a1}, {a2}, {a3}, {a4}, {a5}, {a6}'
+              b1 = dfdem.iloc[0,13]
+              b2 = dfdem.iloc[0,14]
+              act = dfisy.iloc[0,8]
+              prev = dfisy.iloc[0,9]
+              econ = dfisy.iloc[0,12]
+          
+              cd = dftsty.iloc[0,2]
+              tb = dftsty.iloc[0,14]
+              vl = dfisy.iloc[0,13]
+          
+              apn = dftsty.iloc[0,7]
+              ht = dfdem.iloc[0,15]
+              dm = dfdem.iloc[0,16]
+              mh = dfdem.iloc[0,18]
+              As = dfdem.iloc[0,17]
+          
+              hw = dfisy.iloc[0,15]
+              chw = dfisy.iloc[0,16]
+              
+              document = Document()
+              document.add_heading ('  IDI MWP CLIENT ENCOUNTER FORM', 0)
+              P = document.add_paragraph(f'   {sp} {sp} This visit, conducted on {dt} was a {b} IAC session for client {a}, a {c} year old {d} from {e} village, {f} district, located at {g}')
+              table1 = document.add_table(rows=1,cols=3, style='Table Grid')
+              table1.cell(0,0).text = f'RESULTS: {dr} copies/mL'
+              table1.cell(0,1).text = f'BLED ON: {dob}'
+              table1.cell(0,2).text = f'PMTCT: {pm}'
+              p = document.add_paragraph('')
+              p = document.add_paragraph('')
+              p.add_run('ADHRENCE BARRIERS, ACTIONS AGREED UP ON AND SERVICES GIVEN').bold=True
+              table1 = document.add_table(rows=5,cols=2, style='Table Grid')
+              table1.cell(0,0).text = 'ADHERENCE SCORE:'
+              table1.cell(0,1).text = f'{b1} % ({b2})'
+              table1.cell(1,0).text = 'BARRIERS IDENTIFIED:'
+              table1.cell(1,1).text = bar
+              table1.cell(2,0).text = 'ACTIONS AGREED UPON:'
+              table1.cell(2,1).text = str(act)
+              table1.cell(3,0).text = 'PREVENTION SERVICES GIVEN:'
+              table1.cell(3,1).text = str(prev)
+              table1.cell(4,0).text = 'ECONOMIC ADVICE:'
+              table1.cell(4,1).text = str(econ)
+              for row in table1.rows:
+                  row.cells[0].width = Inches(1.5)
+                  row.cells[1].width = Inches(5)
+              p = document.add_paragraph('')
+              p = document.add_paragraph('')
+              p.add_run('TESTS DONE').bold=True
+              table2 = document.add_table(rows=3,cols=2, style='Table Grid')
+              table2.cell(0,0).text = 'VL REBLEED:'
+              table2.cell(0,1).text = f'{vl}'
+              table2.cell(1,0).text = 'CD4 TESTING:'
+              table2.cell(1,1).text = f'{cd}'
+              table2.cell(2,0).text = 'TB SCREENING:'
+              table2.cell(2,1).text = f'{tb}'
+              p = document.add_paragraph('')
+              p = document.add_paragraph('')
+              p.add_run('APN, NCD CODES').bold=True
+              table2 = document.add_table(rows=1,cols=5, style='Table Grid')
+              table2.cell(0,0).text = f'Partners: {apn}'
+              table2.cell(0,1).text = f'HTN: {ht}'
+              table2.cell(0,2).text = f'DM: {dm}'
+              table2.cell(0,3).text = f'MH: {mh}'
+              table2.cell(0,4).text = f'AS: {As}'
+              p = document.add_paragraph('')
+              p = document.add_paragraph('')
+              p.add_run('Name of H/worker:').bold =True
+              p.add_run(f'{hw}').bold =True
+              p = document.add_paragraph('')
+              p.add_run('Name of CHW:').bold =True
+              p.add_run(f'{chw}').bold =True
+     
+              doc_io = BytesIO()
+              document.save(doc_io)
+              doc_io.seek(0)  # Move pointer to the start of the file
+              return doc_io
+         
+         doc_file = create_docx()
+
+        # Provide a download button
+         st.download_button(
+            label=f"FORM FOR ART NO: {art}",
+            data=doc_file,
+            file_name=f"FORM FOR ART NO: {art}.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+               )
+    
+    
 elif check == 'MAKE UPDATES':
     pass
 
