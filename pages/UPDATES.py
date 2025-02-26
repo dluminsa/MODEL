@@ -37,7 +37,7 @@ if 'tx' not in st.session_state:
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'DEMO', usecols=list(range(18)),ttl=5)
+        exist = conn.read(worksheet= 'DEMO', usecols=list(range(19)),ttl=5)
         tx = exist.dropna(how='all')
         st.session_state.tx = tx
      except:
@@ -49,7 +49,7 @@ if 'txa' not in st.session_state:
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'ISSUES', usecols=list(range(17)),ttl=5)
+        exist = conn.read(worksheet= 'ISSUES', usecols=list(range(18)),ttl=5)
         txa = exist.dropna(how='all')
         st.session_state.txa = txa
      except:
