@@ -119,7 +119,8 @@ dfn = pd.read_csv(filen)
 dfna = dfn[dfn['FACILITY'] == facility].copy()
 
 check = st.pills('**WHAT DO YOU WANT TO DO?**', options = ['CHECK UPDATE STATUS', '','','MAKE UPDATES','', 'DOWNLOAD FORM'])
-
+if 'form' not in st.session_state:
+     st.session_state.form = False
 if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
@@ -205,6 +206,8 @@ elif check == 'MAKE UPDATES':
                         linked = col3.number_input('**LONGTERM RESULTS**', value=None, step=1)
     
 elif check == 'DOWNLOAD FORM':
+     st.session_state.form = True
+if st.session_state.form:
     col1, col2,col3 = st.columns(3)
     artu = col1.number_input('**SEARCH ART No.**', value=None, step=1)
     if artu:
