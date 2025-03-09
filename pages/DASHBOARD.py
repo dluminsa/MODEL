@@ -10,12 +10,58 @@ import traceback
 import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
-sssssss
 st.set_page_config(
     page_title = 'NS TRACKER',
     page_icon =":bar_chart"
     )
+import streamlit as st
+from streamlit_js_eval import st_javascript
 
+st.write('**TO CAPTURE COORDINATES, YOU NEED TO SWITCH ON YOUR LOCATION**')
+
+allow = st.radio('**IS YOUR LOCATION ON?**', options=['YES', 'NO'], index=None, horizontal=True)
+
+if not allow:
+    st.stop()
+elif allow == 'NO':
+    st.warning("**YOU CAN'T PROCEED WITHOUT LOCATION**")
+    st.stop()
+elif allow == 'YES':
+    st.write("**Fetching your location...**")
+    
+    # Automatically get geolocation
+    coordinates = st_javascript(
+        """navigator.geolocation.getCurrentPosition(
+               (position) => position.coords.latitude + ',' + position.coords.longitude
+           );"""
+    )
+
+    if coordinates:
+        st.success(f"**Your coordinates: {coordinates}**")
+    else:
+        st.warning("**Location access is required. Please allow location access in your browser.**")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+st.stop()
 #st.header('CODE UNDER MAINTENANCE, TRY AGAIN TOMORROW')
 #st.stop()
 cola,colb,colc = st.columns([1,3,1])
