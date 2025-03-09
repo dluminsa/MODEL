@@ -987,7 +987,7 @@ if st.session_state.sub:
            p = document.add_paragraph('')
            p.add_run('APN, NCD CODES').bold=True
            table2 = document.add_table(rows=1,cols=5, style='Table Grid')
-           table2.cell(0,0).text = f'Partners: {partners:,.0f}'
+           table2.cell(0,0).text = f'Partners: {partners}'
            table2.cell(0,1).text = f'HTN: {htn}'
            table2.cell(0,2).text = f'DM: {dm}'
            table2.cell(0,3).text = f'MH: {MH}'
