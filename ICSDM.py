@@ -714,16 +714,13 @@ else:
 st.divider()
 st.write('**TO CAPTURE CORDINATES, YOU NEED TO SWITCH ON YOUR LOCATION**')
 allow = st.radio('**IS YOUR LOCATION ON**', options =['YES', 'NO'], index=None, horizontal = True)
-if 'allw' not in st.session_state:
-    st.session_state.allw = False
+
 if not allow:
     st.stop()
 elif allow =='NO':
     st.warning("** YOU CAN'T PROCEED WITHOUT LOCATION**")
-    st.session_state.allw = False
     st.stop()
 elif allow == 'YES':
-        st.session_state.allw = True
         st.write('**COPY THESE CORDINATES AND PASTE THEM BELOW**')
             # HTML/JavaScript component for getting browser geolocation
         geolocation_html = """
@@ -758,14 +755,18 @@ elif allow == 'YES':
         # # Inform users about the accuracy
         # st.write("Note: Using browser geolocation provides more precise results compared to IP-based services.")
 col1,col2 = st.columns([1,2])
-if st.session_state.allw:
-    cords = col1.text_input('**PASTE THE ABOVE CORDINATES HERE**')
-    if not cords:
-        time.sleep(60)
-        st.session_state.allw = False
-        st.stop()
-    else:
-        pass                
+cords = col1.text_input('**PASTE THE ABOVE CORDINATES HERE**')
+if not cords:
+    time.sleep(40)
+    with col2:
+        cola,cob2 = st.columns([1,2])
+        gen = cola.write('*Click here if you have not seen the cordinates**')
+        rege = colb.button('**GENERATE CORDINATES**')
+        if rege:
+            pass
+    st.stop()
+else:
+    pass                
 st.divider()
 col1,col2 = st.columns([1,2])
 name = col1.text_input('**Name of the HW who did this visit**')
