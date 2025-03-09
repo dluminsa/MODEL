@@ -897,7 +897,6 @@ if not submit:
 else:
     st.success(f'THANK YOU {name}')
     secrets = st.secrets["connections"]["gsheets"]
-                    
         # Prepare the credentials dictionary
     credentials_info = {
             "type": secrets["type"],
@@ -940,15 +939,14 @@ else:
         st.write(traceback.format_exc())
         st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
         st.stop()
-if st.session_state.sub:
+if not st.session_state.sub:
       st.info('**Download this form before form refreshes**')
       def create_docx():
                
            sp = ''
            barx = socialx + econx + healthx + psychx + spirx + otherissue
-           bar = ','.join(barx)
-    
-           
+           bar = barx
+          
            document = Document()
            document.add_heading ('  IDI MWP CLIENT ENCOUNTER FORM', 0)
            P = document.add_paragraph(f'   {sp} {sp} This visit, conducted on {todi} was a {IAC} IAC session for client {art}, a {int(age)} year old {sex} from {vil} village, {dist} district, located at {cords}')
@@ -1029,21 +1027,4 @@ if st.session_state.sub:
 
 
 
-
-
-
-
-
-
-
-
-
-
-    # except Exception as e:
-    #         # Log the error message
-    #     st.write(f"CHECK: {e}")
-    #     st.write(traceback.format_exc())
-    #     st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
-    #     st.stop()
-    
 
