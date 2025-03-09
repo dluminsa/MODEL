@@ -941,8 +941,8 @@ else:
         st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
         st.stop()
 if st.session_state.sub:
-    st.info('**Download this form before form refreshes**')
-    def create_docx():
+      st.info('**Download this form before form refreshes**')
+      def create_docx():
                
            sp = ''
            barx = socialx + econx + healthx + psychx + spirx + otherissue
