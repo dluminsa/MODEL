@@ -759,7 +759,7 @@ cords = col1.text_input('**PASTE THE ABOVE CORDINATES HERE**')
 if not cords:
     time.sleep(40)
     with col2:
-        cola,cob2 = st.columns([1,2])
+        cola,colb = st.columns([1,2])
         gen = cola.write('*Click here if you have not seen the cordinates**')
         rege = colb.button('**GENERATE CORDINATES**')
         if rege:
