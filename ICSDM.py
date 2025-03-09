@@ -991,7 +991,7 @@ if st.session_state.sub:
            table2.cell(0,1).text = f'HTN: {htn}'
            table2.cell(0,2).text = f'DM: {dm}'
            table2.cell(0,3).text = f'MH: {MH}'
-           table2.cell(0,4).text = f'AS: {As}'
+           table2.cell(0,4).text = f'AS: {AS}'
            p = document.add_paragraph('')
            p = document.add_paragraph('')
            p.add_run('Name of H/worker:').bold =True
