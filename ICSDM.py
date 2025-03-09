@@ -6,6 +6,9 @@ import gspread
 from openpyxl import load_workbook
 from pathlib import Path
 import traceback
+from docx import Document
+from docx.shared import Inches
+from io import BytesIO
 import time
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
@@ -886,8 +889,10 @@ todi = str(tod)
 row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher,ad, htn,dm,AS, MH]
 row2 = [facility,art,socialx, econx, healthx, psychx, spirx, otherissue, act, prevx, condoms, vmmc, econix,vl, reason, name, name2, todi]
 row3 = [facility,art,cd, vist, lam, tblam, tbaction, crag, partners, ellig, chid, tested, pos, linked, post, screened, presumed, picked]
-
+if 'sub' not in st.session_state:
+    st.session_state.sub = False
 if not submit:
+    st.session_state.sub = False
     st.stop()
 else:
     st.success(f'THANK YOU {name}')
@@ -907,29 +912,133 @@ else:
             "client_x509_cert_url": secrets["client_x509_cert_url"]
         }
             
-    #try:
-    # Define the scopes needed for your application
-    scopes = ["https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/drive"]
-     
-    credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
-        
-        # Authorize and access Google Sheets
-    client = gspread.authorize(credentials)
-        
-        # Open the Google Sheet by URL
-    spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
-    spreadsheet = client.open_by_url(spreadsheetu)
-    sheet1 = spreadsheet.worksheet("DEMO")
-    sheet2 = spreadsheet.worksheet("ISSUES")
-    sheet3 = spreadsheet.worksheet("TESTS")
-    sheet1.append_row(row1, value_input_option='RAW')
-    sheet2.append_row(row2, value_input_option='RAW')
-    sheet3.append_row(row3, value_input_option='RAW')
-    time.sleep(3)
-    st.markdown("""
+    try:
+        # Define the scopes needed for your application
+        scopes = ["https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/drive"]
+         
+        credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
+            
+            # Authorize and access Google Sheets
+        client = gspread.authorize(credentials)
+            
+            # Open the Google Sheet by URL
+        spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
+        spreadsheet = client.open_by_url(spreadsheetu)
+        sheet1 = spreadsheet.worksheet("DEMO")
+        sheet2 = spreadsheet.worksheet("ISSUES")
+        sheet3 = spreadsheet.worksheet("TESTS")
+        sheet1.append_row(row1, value_input_option='RAW')
+        sheet2.append_row(row2, value_input_option='RAW')
+        sheet3.append_row(row3, value_input_option='RAW')
+        st.session_state.sub = True
+        time.sleep(1)
+    except Exception as e:
+            # Log the error message
+        st.session_state.sub = False
+        st.write(f"CHECK: {e}")
+        st.write(traceback.format_exc())
+        st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
+        st.stop()
+if st.session_state.sub:
+    st.info('**Download this form before form refreshes**')
+    def create_docx():
+               
+           sp = ''
+           barx = socialx + econx + healthx + psychx + spirx + otherissue
+           bar = ','.join(barx)
+    
+           
+           document = Document()
+           document.add_heading ('  IDI MWP CLIENT ENCOUNTER FORM', 0)
+           P = document.add_paragraph(f'   {sp} {sp} This visit, conducted on {todi} was a {IAC} IAC session for client {art}, a {int(age)} year old {sex} from {vil} village, {dist} district, located at {cords}')
+           table1 = document.add_table(rows=1,cols=3, style='Table Grid')
+           table1.cell(0,0).text = f'RESULTS: {results} copies/mL'
+           table1.cell(0,1).text = f'BLED ON: {dob}'
+           table1.cell(0,2).text = f'PMTCT: {pm}'
+           p = document.add_paragraph('')
+           p = document.add_paragraph('')
+           p.add_run('ADHRENCE BARRIERS, ACTIONS AGREED UP ON AND SERVICES GIVEN').bold=True
+           table1 = document.add_table(rows=5,cols=2, style='Table Grid')
+           table1.cell(0,0).text = 'ADHERENCE SCORE:'
+           table1.cell(0,1).text = f'{adher} % ({ad})'
+           table1.cell(1,0).text = 'BARRIERS IDENTIFIED:'
+           table1.cell(1,1).text = bar
+           table1.cell(2,0).text = 'ACTIONS AGREED UPON:'
+           table1.cell(2,1).text = str(act)
+           table1.cell(3,0).text = 'PREVENTION SERVICES GIVEN:'
+           table1.cell(3,1).text = str(prevx)
+           table1.cell(4,0).text = 'ECONOMIC ADVICE:'
+           table1.cell(4,1).text = str(econix)
+           for row in table1.rows:
+               row.cells[0].width = Inches(1.5)
+               row.cells[1].width = Inches(5)
+           p = document.add_paragraph('')
+           p = document.add_paragraph('')
+           p.add_run('TESTS DONE').bold=True
+           table2 = document.add_table(rows=3,cols=2, style='Table Grid')
+           table2.cell(0,0).text = 'REBLED FOR VL?:'
+           table2.cell(0,1).text = f'{vl}'
+           table2.cell(1,0).text = 'CD4 TESTING:'
+           table2.cell(1,1).text = f'{cd}'
+           table2.cell(2,0).text = 'SCREENED FOR TB:'
+           table2.cell(2,1).text = f'{(screened)}'
+           p = document.add_paragraph('')
+           p = document.add_paragraph('')
+           p.add_run('APN, NCD CODES').bold=True
+           table2 = document.add_table(rows=1,cols=5, style='Table Grid')
+           table2.cell(0,0).text = f'Partners: {partners:,.0f}'
+           table2.cell(0,1).text = f'HTN: {htn}'
+           table2.cell(0,2).text = f'DM: {dm}'
+           table2.cell(0,3).text = f'MH: {MH}'
+           table2.cell(0,4).text = f'AS: {As}'
+           p = document.add_paragraph('')
+           p = document.add_paragraph('')
+           p.add_run('Name of H/worker:').bold =True
+           p.add_run(f'{name}').bold =True
+           p = document.add_paragraph('')
+           p.add_run('Name of CHW:').bold =True
+           p.add_run(f'{name2}').bold =True
+  
+           doc_io = BytesIO()
+           document.save(doc_io)
+           doc_io.seek(0)  # Move pointer to the start of the file
+           return doc_io
+      
+      doc_file = create_docx()
+
+         # Provide a download button
+      but = st.download_button(
+             label=f"DOWNLOAD FORM FOR ART NO: {art:,.0f}",
+             data=doc_file,
+             file_name=f"FORM FOR ART NO: {art:,.0f}.docx",
+             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                )
+      if but:
+          st.success('**Form has been downloaded, check your downloads**')
+          time.sleep(2)
+          st.markdown("""
          <meta http-equiv="refresh" content="0">
                """, unsafe_allow_html=True)
+      elif not but:
+          st.info('**DOWNLOAD THIS FORM BEFORE THIS PAGE REFRESHES**')
+          time.sleep(40)
+          st.markdown("""
+             <meta http-equiv="refresh" content="0">
+               """, unsafe_allow_html=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
     # except Exception as e:
     #         # Log the error message
     #     st.write(f"CHECK: {e}")
