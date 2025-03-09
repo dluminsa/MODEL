@@ -724,29 +724,55 @@ elif allow == 'YES':
         st.write('**COPY THESE CORDINATES AND PASTE THEM BELOW**')
             # HTML/JavaScript component for getting browser geolocation
         geolocation_html = """
-        <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                alert("Geolocation is not supported by this browser.");
+            <script>
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
             }
-        }
+            
+            function showPosition(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                document.getElementById("output").value = `${lat},${lon}`;
+            }
+            
+            function showError(error) {
+                alert("Switch on your location.");
+            }
+            
+            getLocation();
+            </script>
+            <input id="output" type="text" readonly>
+            <button onclick="getLocation()">Refresh Location</button>
+            """
+
+        # geolocation_html = """
+        # <script>
+        # function getLocation() {
+        #     if (navigator.geolocation) {
+        #         navigator.geolocation.getCurrentPosition(showPosition, showError);
+        #     } else {
+        #         alert("Geolocation is not supported by this browser.");
+        #     }
+        # }
         
-        function showPosition(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            document.getElementById("output").value = `${lat},${lon}`;
-        }
+        # function showPosition(position) {
+        #     const lat = position.coords.latitude;
+        #     const lon = position.coords.longitude;
+        #     document.getElementById("output").value = `${lat},${lon}`;
+        # }
         
-        function showError(error) {
-            alert("Switch on your location.");
-        }
+        # function showError(error) {
+        #     alert("Switch on your location.");
+        # }
         
-        getLocation();
-        </script>
-        <input id="output" type="text" readonly>
-        """
+        # getLocation();
+        # </script>
+        # <input id="output" type="text" readonly>
+        # """
         
         st.write('**HERE IS YOUR CURRENT LOCATION, COPY THE CORDINATES AND PASTE THEM BELOW**')
         st.warning('**May take some time to generate them, please wait**')
@@ -757,13 +783,6 @@ elif allow == 'YES':
 col1,col2 = st.columns([1,2])
 cords = col1.text_input('**PASTE THE ABOVE CORDINATES HERE**')
 if not cords:
-    time.sleep(40)
-    with col2:
-        cola,colb = st.columns([1,2])
-        gen = cola.write('*Click here if you have not seen the cordinates**')
-        rege = colb.button('**GENERATE CORDINATES**')
-        if rege:
-            pass
     st.stop()
 else:
     pass                
