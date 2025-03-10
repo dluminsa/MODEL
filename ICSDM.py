@@ -931,9 +931,9 @@ else:
         sheet2.append_row(row2, value_input_option='RAW')
         sheet3.append_row(row3, value_input_option='RAW')
         st.session_state.sub = True
-        st.markdown("""
-             <meta http-equiv="refresh" content="0">
-               """, unsafe_allow_html=True)
+        # st.markdown("""
+        #      <meta http-equiv="refresh" content="0">
+        #        """, unsafe_allow_html=True)
         time.sleep(1)
         
         if not st.session_state.sub:
