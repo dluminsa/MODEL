@@ -883,6 +883,8 @@ if len(otherprev) ==0:
 else:
     otherprev = ','.join(otherprev)
     st.write(f'**Other services provided are: {otherprev}**')
+def download_clicked():
+    st.session_state.but = True
 
 col1, col2, col3 = st.columns(3)
 submit = col3.button('**SUBMIT**')
