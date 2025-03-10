@@ -1018,6 +1018,13 @@ else:
                     )
           if but:
               st.session_state.but = True
+    except Exception as e:
+            # Log the error message
+        st.session_state.sub = False
+        st.write(f"CHECK: {e}")
+        st.write(traceback.format_exc())
+        st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
+        st.stop()
           
 if st.session_state.sub and st.session_state.but:
               st.success('**Form has been downloaded, check your downloads**')
