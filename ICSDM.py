@@ -936,7 +936,7 @@ else:
         #        """, unsafe_allow_html=True)
         time.sleep(1)
         
-        if not st.session_state.sub:
+        if st.session_state.sub:
           st.info('**Download this form before form refreshes**')
           def create_docx():
                    
