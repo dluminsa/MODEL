@@ -1032,7 +1032,7 @@ if st.session_state.sub and st.session_state.but:
               st.markdown("""
              <meta http-equiv="refresh" content="0">
                    """, unsafe_allow_html=True)
-          elif not but:
+else:
               st.info('**DOWNLOAD THIS FORM BEFORE THIS PAGE REFRESHES**')
               time.sleep(40)
               st.markdown("""
