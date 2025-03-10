@@ -935,9 +935,6 @@ else:
         #      <meta http-equiv="refresh" content="0">
         #        """, unsafe_allow_html=True)
         time.sleep(1)
-        
-        if st.session_state.sub:
-            st.write('MWERI')
         if st.session_state.sub:
           st.info('**Download this form before form refreshes**')
           def create_docx():
@@ -1003,7 +1000,8 @@ else:
                return doc_io
           
           doc_file = create_docx()
-    
+          if 'but' not in st.session_state:
+            st.session_state.but = False
              # Provide a download button
           but = st.download_button(
                  label=f"DOWNLOAD FORM FOR ART NO: {art:,.0f}",
@@ -1012,12 +1010,15 @@ else:
                  mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     )
           if but:
+              st.session_state.but = True
+
+          if st.session_state.but:
               st.success('**Form has been downloaded, check your downloads**')
               time.sleep(2)
               st.markdown("""
              <meta http-equiv="refresh" content="0">
                    """, unsafe_allow_html=True)
-          elif not but:
+          elif not st.session_state.but:
               st.info('**DOWNLOAD THIS FORM BEFORE THIS PAGE REFRESHES**')
               time.sleep(40)
               st.markdown("""
