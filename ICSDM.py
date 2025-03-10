@@ -934,7 +934,7 @@ else:
         # st.markdown("""
         #      <meta http-equiv="refresh" content="0">
         #        """, unsafe_allow_html=True)
-        time.sleep(1)
+        
         if st.session_state.sub:
           st.info('**Download this form before form refreshes**')
           def create_docx():
@@ -1012,7 +1012,7 @@ else:
           if but:
               st.session_state.but = True
 
-          if st.session_state.but:
+          if st.session_state.sub and st.session_state.but:
               st.success('**Form has been downloaded, check your downloads**')
               time.sleep(2)
               st.markdown("""
