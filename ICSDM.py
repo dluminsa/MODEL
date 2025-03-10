@@ -940,7 +940,7 @@ else:
         if st.session_state.sub:
           st.info('**Download this form before form refreshes**')
           def create_docx():
-              st.session_state.but = True    
+               st.session_state.but = True    
                sp = ''
                barx = socialx + econx + healthx + psychx + spirx + otherissue
                bar = barx
@@ -1020,7 +1020,7 @@ else:
         st.write(traceback.format_exc())
         st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
         st.stop()
- if st.session_state.but:
+if st.session_state.but:
     st.write('MWERI')
           
 if st.session_state.sub and st.session_state.but:
