@@ -1031,13 +1031,13 @@ if st.session_state.sub and st.session_state.but:
               st.markdown("""
                  <meta http-equiv="refresh" content="0">
                    """, unsafe_allow_html=True)
-    except Exception as e:
-            # Log the error message
-        st.session_state.sub = False
-        st.write(f"CHECK: {e}")
-        st.write(traceback.format_exc())
-        st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
-        st.stop()
+    # except Exception as e:
+    #         # Log the error message
+    #     st.session_state.sub = False
+    #     st.write(f"CHECK: {e}")
+    #     st.write(traceback.format_exc())
+    #     st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
+    #     st.stop()
 
 
 
