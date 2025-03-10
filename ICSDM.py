@@ -1012,9 +1012,6 @@ else:
                  mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                  on_click=download_clicked
                     )
-          if but:
-              st.write('HELLO')
-              st.session_state.but = True
     except Exception as e:
             # Log the error message
         st.session_state.sub = False
