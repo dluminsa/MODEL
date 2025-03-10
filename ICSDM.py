@@ -16,15 +16,15 @@ from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
 import datetime as dt
 
-if 'but' not in st.session_state:
-        st.session_state.but = False
-if st.session_state.but:
-# if st.session_state.sub and st.session_state.but:
-          st.success('**Form has been downloaded, check your downloads**')
-          time.sleep(2)
-          st.markdown("""
-         <meta http-equiv="refresh" content="0">
-               """, unsafe_allow_html=True)
+# if 'but' not in st.session_state:
+#         st.session_state.but = False
+# if st.session_state.but:
+# # if st.session_state.sub and st.session_state.but:
+#           st.success('**Form has been downloaded, check your downloads**')
+#           time.sleep(2)
+#           st.markdown("""
+#          <meta http-equiv="refresh" content="0">
+#                """, unsafe_allow_html=True)
 cluster = ''
 pos = ''
 vist = ''
@@ -1018,13 +1018,13 @@ else:
                     )
           if but:
               st.session_state.but = True
-
-          # if st.session_state.sub and st.session_state.but:
-          #     st.success('**Form has been downloaded, check your downloads**')
-          #     time.sleep(2)
-          #     st.markdown("""
-          #    <meta http-equiv="refresh" content="0">
-          #          """, unsafe_allow_html=True)
+          
+if st.session_state.sub and st.session_state.but:
+              st.success('**Form has been downloaded, check your downloads**')
+              time.sleep(2)
+              st.markdown("""
+             <meta http-equiv="refresh" content="0">
+                   """, unsafe_allow_html=True)
           elif not but:
               st.info('**DOWNLOAD THIS FORM BEFORE THIS PAGE REFRESHES**')
               time.sleep(40)
