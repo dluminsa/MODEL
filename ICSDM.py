@@ -1025,6 +1025,8 @@ else:
         st.write(traceback.format_exc())
         st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
         st.stop()
+if st.session_state.but:
+    st.write('MWERI')
           
 if st.session_state.sub and st.session_state.but:
               st.success('**Form has been downloaded, check your downloads**')
