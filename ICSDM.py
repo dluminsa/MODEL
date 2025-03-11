@@ -752,7 +752,7 @@ elif allow == 'YES':
             getLocation();
             </script>
             <input id="output" type="text" readonly>
-            <button onclick="getLocation()">Refresh Location</button>
+            <button onclick="getLocation()">NO CORDS? CLICK HERE TO REFRESH</button>
             """
 
         # geolocation_html = """
