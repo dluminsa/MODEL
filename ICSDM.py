@@ -140,6 +140,7 @@ else:
         dfna['ART'] = pd.to_numeric(dfna['ART'], errors = 'coerce') 
         art = int(art)
         client = dfna[dfna['ART'] ==art].copy()
+        st.write(dfna)
 
         dob = client.iloc[0,5]
         results = client.iloc[0,6]
