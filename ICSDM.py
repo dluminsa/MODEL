@@ -137,7 +137,8 @@ else:
                         st.markdown(f'**{art} WAS BLED ON {dob} AND THE RESULTS WERE {results} AND IS {due} FOR REBLEEDING**')
                 pass
     else:  
-        dfna['ART'] = pd.to_numeric(dfna['ART'], errors = 'coerce')       
+        dfna['ART'] = pd.to_numeric(dfna['ART'], errors = 'coerce') 
+        art = int(art)
         client = dfna[dfna['ART'] ==art].copy()
 
         dob = client.iloc[0,5]
