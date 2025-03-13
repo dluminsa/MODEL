@@ -225,6 +225,8 @@ if st.session_state.form:
          st.info('**No forms available for this facility or ART NO selected**')
          st.stop()
     elif artu or num ==1:
+              if not artu:
+                   artu = dfdemo.iloc[0,3]
               st.info('**1 form is available for this facility or ART NO selected**')
               def create_docx():
                    dfdemy= dfdemo.copy()
