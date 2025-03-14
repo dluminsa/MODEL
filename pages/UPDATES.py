@@ -265,6 +265,7 @@ if st.session_state.form:
                    vl = dfisy.iloc[0,13]
                
                    apn = dftesty.iloc[0,7]
+                   apn = int(apn)
                    ht = dfdemy.iloc[0,15]
                    dm = dfdemy.iloc[0,16]
                    mh = dfdemy.iloc[0,18]
