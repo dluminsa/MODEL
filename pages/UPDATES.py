@@ -265,7 +265,6 @@ if st.session_state.form:
                    vl = dfisy.iloc[0,13]
                
                    apn = dftesty.iloc[0,7]
-                   apn = int(apn)
                    ht = dfdemy.iloc[0,15]
                    dm = dfdemy.iloc[0,16]
                    mh = dfdemy.iloc[0,18]
@@ -423,7 +422,9 @@ if st.session_state.form:
                    p = document.add_paragraph('')
                    p.add_run('APN, NCD CODES').bold=True
                    table2 = document.add_table(rows=1,cols=5, style='Table Grid')
-                   table2.cell(0,0).text = f'Partners: {apn:,.0f}'
+                   apn = int(apn)
+                   apn = str(apn)
+                   table2.cell(0,0).text = f'Partners: {apn}'
                    table2.cell(0,1).text = f'HTN: {ht}'
                    table2.cell(0,2).text = f'DM: {dm}'
                    table2.cell(0,3).text = f'MH: {mh}'
