@@ -422,7 +422,7 @@ if st.session_state.form:
                    p = document.add_paragraph('')
                    p.add_run('APN, NCD CODES').bold=True
                    table2 = document.add_table(rows=1,cols=5, style='Table Grid')
-                   apn = int(apn)
+                   #apn = int(apn)
                    apn = str(apn)
                    table2.cell(0,0).text = f'Partners: {apn}'
                    table2.cell(0,1).text = f'HTN: {ht}'
