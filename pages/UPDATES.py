@@ -145,7 +145,7 @@ elif check == 'MAKE UPDATES':
     if partners > 0:
          if partners ==1:
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partner ellicited**')
-              col1,col2,col3 = st.columns(2)
+              col1,col2,col3 = st.columns(3)
               notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NO'], horizontal= True, index=None)
               if not notif:
                    st.stop()
