@@ -254,7 +254,7 @@ elif check == 'MAKE UPDATES':
                              #      if check > pos:
                              #           st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
                              #           st.stop()
-                              if check or check ==0:
+                             if check or check ==0:
                                    pass
                              else:
                                   st.stop()
