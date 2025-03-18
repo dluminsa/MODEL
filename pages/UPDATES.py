@@ -141,7 +141,7 @@ elif check == 'MAKE UPDATES':
     #dftest['PARTNERS'] = pd.to_numeric(dftest['PARTNERS'], errors = 'coerce')
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
-    partners = dftest.iloc[0,7]
+    partners = dftest.iloc[0,8]
     if partners > 0:
          #partners = int(0)
          st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
