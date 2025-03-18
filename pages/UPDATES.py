@@ -187,14 +187,13 @@ elif check == 'MAKE UPDATES':
               if notif > partners:
                    st.warning("**YOU CAN'T NOTIFY MORE THAN THOSE ELLICITED**")
               else:
-                   st.write(f'**OF THE {notif} NOTIFIED, how were tested (put 0, if none):**')
                    col1,col2 = st.columns(2)
-                   tested = col3.number_input('**TESTED**', value=None, step=1, key=3)
+                   tested = col3.number_input('**HOW MANY WERE TESTED**', value=None, step=1, key=3)
                    if tested or tested ==0:
                              pass
                    else:
                         st.stop()
-                   alread = col2.number_input('**KNOWN POSTIVE**', value=None, step=1, key=4)
+                   alread = col2.number_input('**KNOWN POSTIVE, (input 0 if none)**', value=None, step=1, key=4)
                    if alread or alread ==0:
                         pass
                    else:
