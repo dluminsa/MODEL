@@ -143,7 +143,7 @@ elif check == 'MAKE UPDATES':
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,8]
     if partners > 0:
-         if partner ==1:
+         if partners ==1:
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partner ellicited**')
               col1,col2 = st.columns(2)
               notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NO'], horizontal= True)
