@@ -238,14 +238,14 @@ elif check == 'MAKE UPDATES':
                              else:
                                   pass
                         if pos:
-                             st.write(f'**RECENCY TEST**')
-                             # col1,col2, col3 = st.columns(3) 
+                             st.write(f'**RECENCY TESTING**')
+                             col1,col2 = st.columns(2) 
                              # recency = col1.number_input('**RECENCY TEST**', value=None, step=1, key = 8)
                              # if not recency:
                              #      st.stop()
                              # else:
-                                  recent = col2.number_input('**RECENT RESULT**', value=None, step=1, key=9)
-                                  long = col3.number_input('**LONGTERM RESULTS**', value=None, step=1, key=10)
+                             recent = col2.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
+                             long = col3.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
     
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
