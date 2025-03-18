@@ -150,12 +150,13 @@ elif check == 'MAKE UPDATES':
               if not notif:
                    st.stop()
               elif notif == 'NO':
-                   st.write('**FOLLOW UP ON THIS PARTNER PLEASE**')
+                   st.warning('**KINDLY FOLLOW UP ON THIS PARTNER PLEASE**')
               elif notif == 'YES':
                    testapn = col2.radio('**WAS SHE/HE TESTED**', options=['YES', 'NO'], horizontal= True, index=None)
                    if not testapn:
                         st.stop()
                    elif testapn == 'NO':
+                        st.warning('**ENSURE THIS CLIENT IS TESTED**')
                         pass
                    elif testapn == 'YES':
                         posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True, index=None)
