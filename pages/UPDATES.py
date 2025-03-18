@@ -180,7 +180,7 @@ elif check == 'MAKE UPDATES':
           
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
               st.write(f'**OF THESE {partners:,.0f} partners, how many have been:**')
-              col1,col2 = st.columns(2)
+              col1,col2, col3 = st.columns([2,1,2])
               notif = col1.number_input('**NOTIFIED**', value=None, step=1, key=2)
               if not notif:
                    st.stop()
@@ -189,7 +189,7 @@ elif check == 'MAKE UPDATES':
               else:
                    st.write(f'**OF THE {notif} NOTIFIED, how were tested (put 0, if none):**')
                    col1,col2 = st.columns(2)
-                   tested = col1.number_input('**TESTED**', value=None, step=1, key=3)
+                   tested = col3.number_input('**TESTED**', value=None, step=1, key=3)
                    if tested or tested ==0:
                              pass
                    else:
