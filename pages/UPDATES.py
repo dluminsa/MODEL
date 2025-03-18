@@ -164,6 +164,7 @@ elif check == 'MAKE UPDATES':
                         elif posapn == 'NEG':
                              pass
                         elif posapn =='POS':
+                             col1, col2 = st.columns([1,2])
                              linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
                              if not linkedapn:
                                   st.stop()
