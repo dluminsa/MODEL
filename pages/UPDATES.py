@@ -217,11 +217,6 @@ elif check == 'MAKE UPDATES':
                         col1,col2, col3 = st.columns(3) 
                         neg = col1.number_input('**NUMBER NEGATIVE**', value=None, step=1, key = 5)
                         pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
-                        if pos:
-                             linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1, key=7)
-                             if linked > pos:
-                                  st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
-                                  st.stop()
                         if pos or pos ==0:
                              pass
                         else:
@@ -229,18 +224,26 @@ elif check == 'MAKE UPDATES':
                         if neg or neg ==0:
                              pass
                         else:
-                             st.warning('Number negative is required or put a 0 (zero)**')
+                             st.warning('Total negative is required or put a 0 (zero)**')
                              st.stop()
                         if (neg + pos) > tested:
                              st.warning('**Number positive and negative is greater than number tested**')
                              st.stop()
                         if pos:
-                             st.write(f'**OF THE {pos}, how many have:**')
-                             col1,col2, col3 = st.columns(3) 
-                             recency = col1.number_input('**RECENCY TEST**', value=None, step=1, key = 8)
-                             if not recency:
-                                  st.stop()
+                             linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1, key=7)
+                             if linked or linked ==0:
+                                  if linked > pos:
+                                       st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
+                                       st.stop()
                              else:
+                                  pass
+                        if pos:
+                             st.write(f'**RECENCY TEST**')
+                             # col1,col2, col3 = st.columns(3) 
+                             # recency = col1.number_input('**RECENCY TEST**', value=None, step=1, key = 8)
+                             # if not recency:
+                             #      st.stop()
+                             # else:
                                   recent = col2.number_input('**RECENT RESULT**', value=None, step=1, key=9)
                                   long = col3.number_input('**LONGTERM RESULTS**', value=None, step=1, key=10)
     
