@@ -145,29 +145,35 @@ elif check == 'MAKE UPDATES':
     if partners > 0:
          if partners ==1:
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partner ellicited**')
-              col1,col2 = st.columns(2)
+              col1,col2,col3 = st.columns(2)
               notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NO'], horizontal= True, index=None)
               if not notif:
                    st.stop()
               elif notif == 'NO':
                    st.write('**FOLLOW UP ON THIS PARTNER PLEASE**')
               elif notif == 'YES':
-                   posapn = col2.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True, index=None)
-                   if not posapn:
+                   testapn = col2.radio('**WAS SHE/HE TESTED**', options=['YES', 'NO'], horizontal= True, index=None)
+                   if not testapn:
                         st.stop()
-                   elif posapn == 'NEG':
+                   elif testapn == 'NO':
                         pass
-                   elif posapn =='POS':
-                        linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
-                        if not linkedapn:
+                   elif testapn == 'YES':
+                        posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True, index=None)
+                        if not posapn:
                              st.stop()
-                        else:
+                        elif posapn == 'NEG':
                              pass
-                        recent = col1.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONGTERM', 'NOT DONE'], index=None, horizontal=True)
-                        if not recent:
-                             st.stop()
-                        else:
-                             pass
+                        elif posapn =='POS':
+                             linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
+                             if not linkedapn:
+                                  st.stop()
+                             else:
+                                  pass
+                             recent = col1.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONGTERM', 'NOT DONE'], index=None, horizontal=True)
+                             if not recent:
+                                  st.stop()
+                             else:
+                                  pass
          if partners > 1:
           
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
