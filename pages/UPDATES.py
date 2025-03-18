@@ -241,25 +241,21 @@ elif check == 'MAKE UPDATES':
                                   pass
                         if pos:
                              st.write(f'**RECENCY TESTING**')
-                             col1,col2 = st.columns(2) 
-                             # recency = col1.number_input('**RECENCY TEST**', value=None, step=1, key = 8)
-                             # if not recency:
-                             #      st.stop()
-                             # else:
+                             col1,col2 = st.columns(2)
                              recent = col1.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
                              long = col2.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
-                             if check or check ==0:
+                             if recent or recent ==0:
                                    pass
                              else:
                                   st.stop()
-                             if recent or recent == 0:
+                             if long or long == 0:
                                    pass
                              else:
                                    st.stop()
-                             if check or check==0:
+                             if long or long ==0:
                                   if recent or recent ==0:
-                                     check = recent + long
-                                     if check > pos:
+                                     checki = recent + long
+                                     if checki > pos:
                                          st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
                                          st.stop()
     
