@@ -31,6 +31,7 @@ sex = ''
 others = ''
 otherissue = ''
 adher = ''
+alread =0
 
 st.write('**FOLLOW UP SECTION ON AREAS NOT COMPLETED FROM THE FIELD**')
 if 'tx' not in st.session_state:     
