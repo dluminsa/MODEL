@@ -258,14 +258,14 @@ elif check == 'MAKE UPDATES':
                                    pass
                              else:
                                   st.stop()
-                              if recent or recent == 0:
+                             if recent or recent == 0:
                                    pass
-                              else:
+                             else:
                                    st.stop()
-                              check = recent + long
-                              if check > pos:
-                                       st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
-                                       st.stop()
+                             check = recent + long
+                             if check > pos:
+                                    st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
+                                    st.stop()
     
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
