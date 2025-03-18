@@ -235,6 +235,8 @@ elif check == 'MAKE UPDATES':
                                   if linked > pos:
                                        st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
                                        st.stop()
+                             elif not linked:
+                                  st.stop()
                              else:
                                   pass
                         if pos:
@@ -244,8 +246,8 @@ elif check == 'MAKE UPDATES':
                              # if not recency:
                              #      st.stop()
                              # else:
-                             recent = col2.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
-                             long = col3.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
+                             recent = col1.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
+                             long = col2.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
     
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
