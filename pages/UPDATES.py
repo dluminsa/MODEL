@@ -146,24 +146,28 @@ elif check == 'MAKE UPDATES':
          if partners ==1:
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partner ellicited**')
               col1,col2 = st.columns(2)
-              notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NO'], horizontal= True)
+              notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NO'], horizontal= True, index=None)
               if not notif:
                    st.stop()
               elif notif == 'NO':
                    st.write('**FOLLOW UP ON THIS PARTNER PLEASE**')
               elif notif == 'YES':
-                   posapn = col2.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True)
+                   posapn = col2.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True, index=None)
                    if not posapn:
                         st.stop()
                    elif posapn == 'NEG':
                         pass
                    elif posapn =='POS':
-                        linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True)
+                        linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
                         if not linkedapn:
                              st.stop()
                         else:
                              pass
-                        
+                        recent = col1.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONGTERM', 'NOT DONE', index=None, horizontal=True)
+                        if not recent:
+                             st.stop()
+                        else:
+                             pass
          if partners > 1:
           
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
@@ -223,8 +227,11 @@ elif check == 'MAKE UPDATES':
                              st.write(f'**OF THE {pos}, how many have:**')
                              col1,col2, col3 = st.columns(3) 
                              recency = col1.number_input('**RECENCY TEST**', value=None, step=1)
-                             alread = col2.number_input('**RECENT RESULT**', value=None, step=1)
-                             linked = col3.number_input('**LONGTERM RESULTS**', value=None, step=1)
+                             if not recency:
+                                  st.stop()
+                             else:
+                                  recent = col2.number_input('**RECENT RESULT**', value=None, step=1)
+                                  long = col3.number_input('**LONGTERM RESULTS**', value=None, step=1)
     
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
