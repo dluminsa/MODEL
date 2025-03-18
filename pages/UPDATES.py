@@ -170,7 +170,7 @@ elif check == 'MAKE UPDATES':
                                   st.stop()
                              else:
                                   pass
-                             recent = col1.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONGTERM', 'NOT DONE'], index=None, horizontal=True)
+                             recent = col2.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONGTERM', 'NOT DONE'], index=None, horizontal=True)
                              if not recent:
                                   st.stop()
                              else:
