@@ -248,12 +248,6 @@ elif check == 'MAKE UPDATES':
                              # else:
                              recent = col1.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
                              long = col2.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
-                             # if check or check==0:
-                             #      if recent or recent ==0:
-                             #      check = recent + long
-                             #      if check > pos:
-                             #           st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
-                             #           st.stop()
                              if check or check ==0:
                                    pass
                              else:
@@ -262,10 +256,12 @@ elif check == 'MAKE UPDATES':
                                    pass
                              else:
                                    st.stop()
-                             check = recent + long
-                             if check > pos:
-                                    st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
-                                    st.stop()
+                             if check or check==0:
+                                  if recent or recent ==0:
+                                     check = recent + long
+                                     if check > pos:
+                                         st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
+                                         st.stop()
     
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
