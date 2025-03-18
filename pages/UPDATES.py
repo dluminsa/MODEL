@@ -125,7 +125,7 @@ if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
     col1, col2,col3 = st.columns(3)
-    art = col1.number_input('**SEARCH ART No.**', value=None, step=1)
+    art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
          st.stop()
     # dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
@@ -179,7 +179,7 @@ elif check == 'MAKE UPDATES':
               st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
               st.write(f'**OF THESE {partners:,.0f} partners, how many have been:**')
               col1,col2 = st.columns(2)
-              notif = col1.number_input('**NOTIFIED**', value=None, step=1)
+              notif = col1.number_input('**NOTIFIED**', value=None, step=1, key=2)
               if not notif:
                    st.stop()
               if notif > partners:
@@ -187,12 +187,12 @@ elif check == 'MAKE UPDATES':
               else:
                    st.write(f'**OF THE {notif} NOTIFIED, how were tested (put 0, if none):**')
                    col1,col2 = st.columns(2)
-                   tested = col1.number_input('**TESTED**', value=None, step=1)
+                   tested = col1.number_input('**TESTED**', value=None, step=1, key=3)
                    if tested or tested ==0:
                              pass
                    else:
                         st.stop()
-                   alread = col2.number_input('**KNOWN POSTIVE**', value=None, step=1)
+                   alread = col2.number_input('**KNOWN POSTIVE**', value=None, step=1, key=4)
                    if alread or alread ==0:
                         pass
                    else:
@@ -210,10 +210,10 @@ elif check == 'MAKE UPDATES':
                    else:
                         st.write(f'**OF THE {tested} tested, HOW MANY WERE:**')
                         col1,col2, col3 = st.columns(3) 
-                        neg = col1.number_input('**NEGATIVE**', value=None, step=1)
-                        pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1)
+                        neg = col1.number_input('**NEGATIVE**', value=None, step=1, key = 5)
+                        pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
                         if pos:
-                             linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1)
+                             linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1, key=7)
                              if linked > pos:
                                   st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
                                   st.stop()
@@ -232,18 +232,18 @@ elif check == 'MAKE UPDATES':
                         if pos:
                              st.write(f'**OF THE {pos}, how many have:**')
                              col1,col2, col3 = st.columns(3) 
-                             recency = col1.number_input('**RECENCY TEST**', value=None, step=1)
+                             recency = col1.number_input('**RECENCY TEST**', value=None, step=1, key = 8)
                              if not recency:
                                   st.stop()
                              else:
-                                  recent = col2.number_input('**RECENT RESULT**', value=None, step=1)
-                                  long = col3.number_input('**LONGTERM RESULTS**', value=None, step=1)
+                                  recent = col2.number_input('**RECENT RESULT**', value=None, step=1, key=9)
+                                  long = col3.number_input('**LONGTERM RESULTS**', value=None, step=1, key=10)
     
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
 if st.session_state.form:
     col1, col2,col3 = st.columns(3)
-    artu = col1.number_input('**SEARCH ART No.**', value=None, step=1)
+    artu = col1.number_input('**SEARCH ART No.**', value=None, step=1, key =11)
     if artu:
          dfdemo = dfdemo[dfdemo['ART NO'] == artu].copy()
          dftest= dftest[dftest['ART NO'] == artu].copy()
