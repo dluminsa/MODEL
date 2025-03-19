@@ -258,7 +258,41 @@ elif check == 'MAKE UPDATES':
                                      if checki > pos:
                                          st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
                                          st.stop()
-    
+                         
+    ###TB
+    cd4 = dftest.iloc[0,3]
+    if cd4 !='CD4 SAMPLE PICKED':
+         st.info('**NO CD4 UPDATES ARE NEEDED, PROCEED TO TB SECTION**')
+    elif cd4 == 'CD4 SAMPLE PICKED':
+         updcd4 = st.radio('**CD4 SAMPLE WAS PICKED, DO YOU WANT TO UPDATE THE RESULTS**', options =['YES', 'NO'],horizontal=True, index=None)
+         if not updcd4:
+              st.stop()
+         elif updcd4 =='NO':
+              pass
+         else: 
+              cdresults = st.radio('**CD4 RESULTS**', options = ['<200', '>200', 'BELOW REFRCE', 'ABOVE REFRCE'], horizontal=True, index=None)
+              if not or cd4results in ['>200', 'ABOVE REFRCE']:
+                   pass
+              elif cd4results in ['<200', 'BELOW REFRCE']:
+                   tblamdone = st.radio('**WAS TB LAM DONE**', options = ['YES', 'NO'], horizontal=True, index=None)
+                   if not tblamdone:
+                        st.stop()
+                   elif tblamdone == 'NO':
+                        pass
+                   else:
+                        tblamres = st.radio('**TB LAM RESULTS**', options =['POS', 'YES'],  horizontal=True, index=None)
+                        if not tblamres:
+                             pass
+                        elif tblamres =='NO':
+                             pass
+                        else:
+                             tblamrx = st.radio('**WAS THE CLIENT STARTED ON ANTI-TB's**', options = ['YES', 'NO'], horizontal=True, index=None)
+                   crag = st.radio('**WAS CRAG DONE**', options = ['YES', 'NO'], horizontal=True, index=None)
+                   if not crag:
+                        st.stop()
+                   else:
+                        pass                
+
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
 if st.session_state.form:
