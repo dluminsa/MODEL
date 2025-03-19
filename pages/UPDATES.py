@@ -261,7 +261,7 @@ elif check == 'MAKE UPDATES':
                          
     ###TB
     cd4 = dftest.iloc[0,3]
-    st.write (cd4)
+    st.write (dftest)
     if cd4 !='CD4 SAMPLE PICKED':
          st.info('**NO CD4 UPDATES ARE NEEDED, PROCEED TO TB SECTION**')
     elif cd4 == 'CD4 SAMPLE PICKED':
