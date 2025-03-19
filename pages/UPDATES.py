@@ -271,7 +271,7 @@ elif check == 'MAKE UPDATES':
          elif updcd4 =='NO':
               pass
          else: 
-              cdresults = st.radio('**CD4 RESULTS**', options = ['<200', '>200', 'BELOW REFRCE', 'ABOVE REFRCE'], horizontal=True, index=None)
+              cd4results = st.radio('**CD4 RESULTS**', options = ['<200', '>200', 'BELOW REFRCE', 'ABOVE REFRCE'], horizontal=True, index=None)
               if not cd4results or cd4results in ['>200', 'ABOVE REFRCE']:
                    pass
               elif cd4results in ['<200', 'BELOW REFRCE']:
