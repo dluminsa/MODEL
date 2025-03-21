@@ -1,5 +1,6 @@
 import pandas as pd 
 import streamlit as st 
+dbdbd
 import os
 import numpy as np
 import gspread
@@ -293,6 +294,11 @@ elif check == 'MAKE UPDATES':
                         st.stop()
                    else:
                         pass                
+
+    tbsamples = dftest.iloc[0,17]
+    if tbsamples >0:
+         if tbsamples==1:
+              tbtest  = st.radio('**1 SAMPLE WAS PICKED HAVE THEY BEEN TESTED', options = ['YES', 'NO'], horizontal=True, index=None)
 
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
