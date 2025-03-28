@@ -901,10 +901,10 @@ if not submit:
     st.session_state.sub = False
     st.stop()
 else:
-    st.success(f'THANK YOU {name}')
-    secrets = st.secrets["connections"]["gsheets"]
+        st.success(f'THANK YOU {name}')
+        secrets = st.secrets["connections"]["gsheets"]
         # Prepare the credentials dictionary
-    credentials_info = {
+        credentials_info = {
             "type": secrets["type"],
             "project_id": secrets["project_id"],
             "private_key_id": secrets["private_key_id"],
@@ -915,7 +915,7 @@ else:
             "token_uri": secrets["token_uri"],
             "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
             "client_x509_cert_url": secrets["client_x509_cert_url"]
-        }
+         }
             
     #try:
         # Define the scopes needed for your application
