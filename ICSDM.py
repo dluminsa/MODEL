@@ -917,7 +917,7 @@ else:
             "client_x509_cert_url": secrets["client_x509_cert_url"]
         }
             
-    try:
+    #try:
         # Define the scopes needed for your application
         scopes = ["https://www.googleapis.com/auth/spreadsheets",
                 "https://www.googleapis.com/auth/drive"]
@@ -940,13 +940,13 @@ else:
         st.markdown("""
              <meta http-equiv="refresh" content="0">
                """, unsafe_allow_html=True)
-    except Exception as e:
-            # Log the error message
-        st.session_state.sub = False
-        st.write(f"CHECK: {e}")
-        st.write(traceback.format_exc())
-        st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
-        st.stop()
+    # except Exception as e:
+    #         # Log the error message
+    #     st.session_state.sub = False
+    #     st.write(f"CHECK: {e}")
+    #     st.write(traceback.format_exc())
+    #     st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
+    #     st.stop()
         
 #         if st.session_state.sub:
 #           st.info('**Download this form before form refreshes**')
