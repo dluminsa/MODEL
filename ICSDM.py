@@ -902,13 +902,11 @@ if not submit:
     st.session_state.sub = False
     st.stop()
 else:   
-        st.write(row1)
-        st.write(row2)
-        st.write(row3)
-        st.success(f'THANK YOU {name}')
-        secrets = st.secrets["connections"]["gsheets"]
+    
+    st.success(f'THANK YOU {name}')
+    secrets = st.secrets["connections"]["gsheets"]
         # Prepare the credentials dictionary
-        credentials_info = {
+    credentials_info = {
             "type": secrets["type"],
             "project_id": secrets["project_id"],
             "private_key_id": secrets["private_key_id"],
@@ -921,7 +919,7 @@ else:
             "client_x509_cert_url": secrets["client_x509_cert_url"]
          }
             
-    #try:
+    try:
         # Define the scopes needed for your application
         scopes = ["https://www.googleapis.com/auth/spreadsheets",
                 "https://www.googleapis.com/auth/drive"]
@@ -944,13 +942,14 @@ else:
         st.markdown("""
              <meta http-equiv="refresh" content="0">
                """, unsafe_allow_html=True)
-    # except Exception as e:
-    #         # Log the error message
-    #     st.session_state.sub = False
-    #     st.write(f"CHECK: {e}")
-    #     st.write(traceback.format_exc())
-    #     st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
-    #     st.stop()
+    except Exception as e:
+            # Log the error message
+        st.info('NOT SUBMITTED')
+        st.session_state.sub = False
+        st.write(f"CHECK: {e}")
+        st.write(traceback.format_exc())
+        st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
+        st.stop()
         
 #         if st.session_state.sub:
 #           st.info('**Download this form before form refreshes**')
