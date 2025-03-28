@@ -902,7 +902,7 @@ if not submit:
     st.stop()
 else:   
         st.write(row1)
-        st.wriete(row2)
+        st.write(row2)
         st.write(row3)
         st.success(f'THANK YOU {name}')
         secrets = st.secrets["connections"]["gsheets"]
