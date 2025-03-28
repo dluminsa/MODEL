@@ -143,6 +143,7 @@ else:
 
         dob = client.iloc[0,5]
         results = client.iloc[0,6]
+        results = int(results)
         due = client.iloc[0,7]
 
         st.markdown(f'**{art} WAS BLED ON {dob} AND THE RESULTS WERE {results} AND IS {due} FOR REBLEEDING**')
