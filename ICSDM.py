@@ -900,7 +900,9 @@ if 'sub' not in st.session_state:
 if not submit:
     st.session_state.sub = False
     st.stop()
-else:
+else:   st.write(row1)
+        st.wriete(row2)
+        st.write(row3)
         st.success(f'THANK YOU {name}')
         secrets = st.secrets["connections"]["gsheets"]
         # Prepare the credentials dictionary
