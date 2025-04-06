@@ -283,7 +283,7 @@ elif check == 'MAKE UPDATES':
                    else:
                         tblamres = st.radio('**TB LAM RESULTS**', options =['POS', 'YES'],  horizontal=True, index=None)
                         if not tblamres:
-                             pass
+                             st.stop()
                         elif tblamres =='NO':
                              pass
                         else:
