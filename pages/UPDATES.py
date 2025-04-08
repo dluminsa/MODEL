@@ -161,7 +161,7 @@ elif check == 'MAKE UPDATES':
                    elif testapn == 'NOT YET':
                         st.warning('**ENSURE THIS CLIENT IS TESTED**')
                         pass
-                   elif == 'UPDATE ALREADY MADE':
+                   elif testapn == 'UPDATE ALREADY MADE':
                         pass
                    elif testapn == 'YES':
                         posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True, index=None)
