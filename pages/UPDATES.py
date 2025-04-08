@@ -367,7 +367,7 @@ elif check == 'MAKE UPDATES':
                          elif treat == 'NO':
                               st.warning('**START THIS CLIENT ON ANTI TBs PLEASE**')
                          elif treat == 'YES':
-                              pass:
+                              pass
 
          if tbsamples>1:
              tbtest  = st.radio(f'**{tbsamples} WERE PICKED, HAVE THEY BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
