@@ -164,10 +164,10 @@ elif check == 'MAKE UPDATES':
                    elif testapn == 'UPDATE ALREADY MADE':
                         pass
                    elif testapn == 'YES':
-                        posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS'], horizontal= True, index=None)
+                        posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS', 'KNOWN POS'], horizontal= True, index=None)
                         if not posapn:
                              st.stop()
-                        elif posapn == 'NEG':
+                        elif posapn in ['NEG', 'KNOWN POS']:
                              pass
                         elif posapn =='POS':
                              col1, col2 = st.columns([1,2])
@@ -284,7 +284,7 @@ elif check == 'MAKE UPDATES':
     if cd4 !='CD4 SAMPLE PICKED':
          st.info('**NO CD4 UPDATES ARE NEEDED, PROCEED TO TB SECTION**')
     elif cd4 == 'CD4 SAMPLE PICKED':
-         updcd4 = st.radio('**CD4 SAMPLE WAS PICKED, DO YOU WANT TO UPDATE THE RESULTS**', options =['YES', 'NOT YET DONE', 'UPDATE WAS ALREADY MADE'],horizontal=True, index=None)
+         updcd4 = st.radio('**A CD4 SAMPLE WAS PICKED, DO YOU WANT TO UPDATE THE RESULTS**', options =['YES', 'NOT YET DONE', 'UPDATE WAS ALREADY MADE'],horizontal=True, index=None)
          if not updcd4:
               st.stop()
          elif updcd4 =='NOT YET DONE':
