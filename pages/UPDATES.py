@@ -325,7 +325,7 @@ elif check == 'MAKE UPDATES':
                    elif crag == 'YES':
                         crares = st.radio('**CRAG RESULTS**', options =['POS', 'NEG'],  horizontal=True, index=None)
                         if not crares:
-                             st.sop()
+                             st.stop()
                         elif crares == 'NO':
                              pass
                         elif crares == 'YES':
