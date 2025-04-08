@@ -341,6 +341,7 @@ elif check == 'MAKE UPDATES':
                                   elif csf == 'POS':
                                        st.info('**START THE CLIENT ON CCM TREATMENT**')
     tbsamples = dftest.iloc[0,17]
+    st.write('pass')
     if not tbsamples:
        st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
        pass
@@ -392,6 +393,7 @@ elif check == 'MAKE UPDATES':
                             tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = a12)
                   else:
                        st.stop()
+                       
     vlsample = dftest.iloc[0,13]
     if not vlsample or vlsample:
        st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
