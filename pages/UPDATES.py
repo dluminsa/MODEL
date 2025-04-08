@@ -307,7 +307,7 @@ elif check == 'MAKE UPDATES':
                         tblamres = st.radio('**TB LAM RESULTS**', options =['POS', 'NEG'],  horizontal=True, index=None)
                         if not tblamres:
                              st.stop()
-                        elif tblamres =='NO':
+                        elif tblamres =='NEG':
                              pass
                         else:
                              tblamrx = st.radio("**WAS THE CLIENT STARTED ON ANTI-TB's**", options = ['YES', 'NO'], horizontal=True, index=None)
