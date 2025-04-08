@@ -329,7 +329,7 @@ elif check == 'MAKE UPDATES':
                         elif crares == 'NEG':
                              pass
                         elif crares == 'POS':
-                             ccm = st.radio('**WAS CSF CRAG DONE**', options = ['YES', 'NO', 'CLIENT WAS REFERED'], horizontal=True, index=None)
+                             ccmres = st.radio('**WAS CSF CRAG DONE**', options = ['YES', 'NO', 'CLIENT WAS REFERED'], horizontal=True, index=None)
                              if not ccm:
                                   st.stop()
                              elif ccmres == 'CLIENT WAS REFERED':
