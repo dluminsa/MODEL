@@ -302,7 +302,7 @@ elif check == 'MAKE UPDATES':
                    if not tblamdone:
                         st.stop()
                    elif tblamdone == 'NO':
-                        pass
+                        st.warning('**CLIENT NEEDS A TB LAM, MAKE SURE YOU UPDATE IT**')
                    else:
                         tblamres = st.radio('**TB LAM RESULTS**', options =['POS', 'NEG'],  horizontal=True, index=None)
                         if not tblamres:
