@@ -330,7 +330,7 @@ elif check == 'MAKE UPDATES':
                              pass
                         elif crares == 'POS':
                              ccmres = st.radio('**WAS CSF CRAG DONE**', options = ['YES', 'NO', 'CLIENT WAS REFERED'], horizontal=True, index=None)
-                             if not ccm:
+                             if not ccmres:
                                   st.stop()
                              elif ccmres == 'CLIENT WAS REFERED':
                                   st.warning('**FOLLOW UP ON THIS CLIENT TO ASCERTAIN THEIR CSF CRAG RESULTS**')
