@@ -313,6 +313,8 @@ elif check == 'MAKE UPDATES':
                              tblamrx = st.radio("**WAS THE CLIENT STARTED ON ANTI-TB's**", options = ['YES', 'NO'], horizontal=True, index=None)
                              if not tblamrx:
                                   st.stop()
+                             elif tblamrx =='NO':
+                                  st.warning('CLIENTSHOULD BE STARTED ON ANTI TBs')
                              else:
                                   pass
                    crag = st.radio('**WAS CRAG DONE**', options = ['YES', 'NO'], horizontal=True, index=None)
