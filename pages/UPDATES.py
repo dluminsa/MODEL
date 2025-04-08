@@ -316,9 +316,9 @@ elif check == 'MAKE UPDATES':
                    crag = st.radio('**WAS CRAG DONE**', options = ['YES', 'NO'], horizontal=True, index=None)
                    if not crag:
                         st.stop()
-                   elif crag = 'NO':
+                   elif crag == 'NO':
                         st.warning('**THIS CLIENT NEEDS A SERUM CRAG, MAKE SURE YOU UPDATE IT**')
-                   elif crag = 'YES':
+                   elif crag == 'YES':
                         crares = st.radio('**CRAG RESULTS**', options =['POS', 'NEG'],  horizontal=True, index=None)
                         if not crares:
                              st.sop()
@@ -328,7 +328,7 @@ elif check == 'MAKE UPDATES':
                              ccm = st.radio('**WAS CSF CRAG DONE**', options = ['YES', 'NO', 'CLIENT WAS REFERED'], horizontal=True, index=None)
                              if not ccm:
                                   st.stop()
-                             elif ccmres = 'CLIENT WAS REFERED':
+                             elif ccmres == 'CLIENT WAS REFERED':
                                   st.warning('**FOLLOW UP ON THIS CLIENT TO ASCERTAIN THEIR CSF CRAG RESULTS**')
                              elif ccmres == 'NO':
                                   st.warning('**CLIENT NEEDS A CSF CRAG, KINDLY FOLLOW UP**')
