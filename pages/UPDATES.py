@@ -341,10 +341,7 @@ elif check == 'MAKE UPDATES':
                                   elif csf == 'POS':
                                        st.info('**START THE CLIENT ON CCM TREATMENT**')
     tbsamples = dftest.iloc[0,17]
-    t = 3/tbsamples
-    st.write(t)
-    if  tbsamples is None:
-       st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
+       
     if tbsamples >0:
          if tbsamples==1:
               tbtest  = st.radio('**1 SAMPLE WAS PICKED HAS IT BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
@@ -393,7 +390,8 @@ elif check == 'MAKE UPDATES':
                             tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = a12)
                   else:
                        st.stop()
-                       
+    else:
+         st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dftest.iloc[0,13]
     if not vlsample or vlsample:
        st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
