@@ -293,7 +293,9 @@ elif check == 'MAKE UPDATES':
               pass
          else: 
               cd4results = st.radio('**CD4 RESULTS**', options = ['BELOW 200', 'ABOVE 200', 'BELOW REFRCE', 'ABOVE REFRCE'], horizontal=True, index=None)
-              if not cd4results or cd4results in ['ABOVE 200', 'ABOVE REFRCE']:
+              if not cd4results:
+                   st.stop()
+              elif cd4results in ['ABOVE 200', 'ABOVE REFRCE']:
                    pass
               elif cd4results in ['BELOW 200', 'BELOW REFRCE']:
                    tblamdone = st.radio('**WAS TB LAM DONE**', options = ['YES', 'NO'], horizontal=True, index=None)
