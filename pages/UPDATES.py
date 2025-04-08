@@ -341,7 +341,7 @@ elif check == 'MAKE UPDATES':
                                   elif csf == 'POS':
                                        st.info('**START THE CLIENT ON CCM TREATMENT**')
     tbsamples = dftest.iloc[0,17]
-    if not tb samples:
+    if not tbsamples:
        st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
        pass
     if tbsamples >0:
