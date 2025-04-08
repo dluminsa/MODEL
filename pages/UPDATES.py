@@ -344,7 +344,6 @@ elif check == 'MAKE UPDATES':
     
     if  tbsamples is None:
        st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
-       pass
     if tbsamples >0:
          if tbsamples==1:
               tbtest  = st.radio('**1 SAMPLE WAS PICKED HAS IT BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
