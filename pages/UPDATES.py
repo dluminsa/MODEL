@@ -342,7 +342,7 @@ elif check == 'MAKE UPDATES':
                                        st.info('**START THE CLIENT ON CCM TREATMENT**')
     tbsamples = dftest.iloc[0,17]
     if not tbsamples:
-       st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
+       st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
        pass
     if tbsamples >0:
          if tbsamples==1:
@@ -379,18 +379,37 @@ elif check == 'MAKE UPDATES':
                   st.write('**HOW MANY WERE (PUT A ZERO WHERE APPLICABLE):**')
                   col1,col2,col3 = st.columns(3)
                   tbrest = col1.number_input('**POSTIVE**', value=None, step=1, key = a11)
-                  if tbrest or tbrest = 0:
-                       tbneg = col1.number_input('**NEG**', value=None, step=1, key = a12)
-                       if tbneg or tbneg == 0:
+                  if tbrest or tbrest == 0:
+                       if tbrest == tbtest or tbrest==0:
                             pass
+                       elif tbrest:
+                            tbneg = col1.number_input('**NEG**', value=None, step=1, key = a12)
+                            if tbneg or tbneg == 0:
+                                  pass
                        else: 
                             st.stop()
-                       if tbrest = 
+                       if tbrest >1:
+                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = a12)
                   else:
                        st.stop()
-                       
-                        
-                                                                                        
+    vlsample = dftest.iloc[0,13]
+    if not vlsample or vlsample:
+       st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
+       pass
+    else: 
+         vlrest = st.radio('**A VL SAMPLE WAS PICKED, ARE RESULTS BACK**', options=['YES','NO'], horizontal=True, index=None)
+         if not vlrest:
+              st.stop()
+         elif vlrest =='NO':
+              pass
+         elif vlrest =='YES':
+              sup = st.radio('**WHAT WERE THE RESULTS**', options=['SUPRESSED','STILL NON SUPPRESSED'], horizontal=True, index=None)
+              if not sup:
+                   pass
+              else: 
+                   pass
+
+         
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
 if st.session_state.form:
