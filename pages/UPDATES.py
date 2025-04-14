@@ -273,7 +273,8 @@ elif check == 'MAKE UPDATES':
                              if notif == tested:
                                   pass
                              elif notif > tested:
-                                  alread = col1.number_input('**KNOWN POSTIVE, (input 0 if none)**', value=None, step=1, key=4)
+                                  col1,col2,col3 = st.columns(3)
+                                  alread = col1.number_input('**KNOWN POSITIVE, (input 0 if none)**', value=None, step=1, key=4)
                                   if alread or alread ==0:
                                        pass
                                   else:
