@@ -172,7 +172,6 @@ if 'form' not in st.session_state:
 if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
-    GGGG
     col1, col2,col3 = st.columns(3)
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
