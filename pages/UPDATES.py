@@ -6,7 +6,6 @@ import gspread
 from openpyxl import load_workbook
 from pathlib import Path
 import traceback
-FFFF
 import time
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
@@ -399,7 +398,7 @@ elif check == 'MAKE UPDATES':
     else:
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dftest.iloc[0,13]
-
+    st.write(vlsample)
     if vlsample == 'YES': 
          vlrest = st.radio('**A VL SAMPLE WAS PICKED, ARE RESULTS BACK**', options=['YES','NO'], horizontal=True, index=None)
          if not vlrest:
