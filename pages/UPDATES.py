@@ -358,7 +358,7 @@ elif check == 'MAKE UPDATES':
               elif tbtest == 'UPDATE ALREADY MADE':
                     pass
               elif tbtest == 'YES': 
-                    tbrest = st.radio('**WHAT WERE THE RESULTS**', options = ['P0S', 'NEG'], horizontal=True, index=None)
+                    tbrest = st.radio('**WHAT WERE THE RESULTS**', options = ['POS', 'NEG'], horizontal=True, index=None)
                     if not tbrest:
                          st.stop()
                     elif tbrest == 'NEG':
