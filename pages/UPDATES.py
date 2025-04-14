@@ -405,7 +405,7 @@ elif check == 'MAKE UPDATES':
                                       st.stop()
                                   elif tbck < tbsamples:
                                        tbnot = tbsamples -tbck
-                                       st.sucess(f'** THIS LEAVES {tbnot} SAMPLE(S) NOT ACCOUNTED FOR**')
+                                       st.success(f'** THIS LEAVES {tbnot} SAMPLE(S) NOT ACCOUNTED FOR**')
                             elif not tbneg:
                                  st.stop()
                             else:
