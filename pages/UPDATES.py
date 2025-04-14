@@ -496,7 +496,7 @@ elif check == 'MAKE UPDATES':
          tbsamples = ''
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dfiss.iloc[0,13]
-    st.write(dfiss)
+    
     if vlsample == 'YES': 
          vlrest = st.radio('**A VL SAMPLE WAS PICKED, ARE RESULTS BACK**', options=['YES','NO'], horizontal=True, index=None)
          if not vlrest:
