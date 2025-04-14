@@ -386,13 +386,13 @@ elif check == 'MAKE UPDATES':
                        if tbrest == tbtest or tbrest==0:
                             pass
                        elif tbrest:
-                            tbneg = col1.number_input('**NEG**', value=None, step=1, key = a12)
+                            tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
                             if tbneg or tbneg == 0:
                                   pass
                        else: 
                             st.stop()
                        if tbrest >1:
-                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = a12)
+                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
                   else:
                        st.stop()
     else:
