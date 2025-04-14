@@ -264,6 +264,7 @@ elif check == 'MAKE UPDATES':
                         elif updatetest == 'NOT YET':
                              st.warning('**PARTNERS SHOULD BE FOLLOWED UP FOR TESTING**')
                         elif updatetest == 'YES':
+                             col1,col2,col3 = st.columns(2)
                              tested = col3.number_input('**HOW MANY WERE TESTED**', value=None, step=1, key=3)
                              if tested or tested ==0:
                                        pass
