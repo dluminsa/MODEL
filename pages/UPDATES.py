@@ -373,7 +373,7 @@ elif check == 'MAKE UPDATES':
                               pass
 
          if tbsamples>1:
-             tbtest  = st.radio(f'**{tbsamples} SPUTUM SAMPLES WERE PICKED, HAVE THEY BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
+             tbtest  = st.radio(f'**{int(tbsamples)} SPUTUM SAMPLES WERE PICKED, HAVE THEY BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
              if tbtest == 'NOT YET':
                   st.warning('**FOLLOW UP TO SEE THAT THEY ARE TESTED**')
              elif tbtest == 'UPDATE ALREADY MADE':
@@ -387,8 +387,12 @@ elif check == 'MAKE UPDATES':
                             pass
                        elif tbrest:
                             tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
+                            tbck = tbneg + tbrest
                             if tbneg or tbneg == 0:
                                   pass
+                            elif tbck > tbsamples:
+                                 st.warning("THAT'S MORE THAN SAMPLES COLLECTED")
+                                 st.stop()
                        else: 
                             st.stop()
                        if tbrest >1:
