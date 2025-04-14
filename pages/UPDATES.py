@@ -347,6 +347,7 @@ elif check == 'MAKE UPDATES':
     tbsamples = dftest.iloc[0,17]
        
     if tbsamples >0:
+         st.write('**TB SAMPLES PICKED**')
          if tbsamples==1:
               tbtest  = st.radio('**1 SAMPLE WAS PICKED HAS IT BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
               if not tbtest:
