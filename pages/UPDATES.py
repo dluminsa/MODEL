@@ -397,7 +397,7 @@ elif check == 'MAKE UPDATES':
                        st.stop()
     else:
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
-    vlsample = dftest.iloc[0,13]
+    vlsample = dfiss.iloc[0,13]
     st.write(vlsample)
     if vlsample == 'YES': 
          vlrest = st.radio('**A VL SAMPLE WAS PICKED, ARE RESULTS BACK**', options=['YES','NO'], horizontal=True, index=None)
