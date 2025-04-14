@@ -403,12 +403,13 @@ elif check == 'MAKE UPDATES':
                                   if tbck > tbsamples:
                                       st.warning("THAT'S MORE THAN SAMPLES COLLECTED")
                                       st.stop()
+                                  elif tbck < tbsamples:
+                                       tbnot = tbsamples -tbck
+                                       st.sucess(f'** THIS LEAVES {tbnot} SAMPLE(S) NOT ACCOUNTED FOR**')
                             elif not tbneg:
                                  st.stop()
                             else:
                                  pass
-                                
-                                 st.stop()
                   else: 
                     st.stop()
     else:
