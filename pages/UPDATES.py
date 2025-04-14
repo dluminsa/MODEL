@@ -135,6 +135,31 @@ dfiss = dfiss[dfiss['FACILITY'] == facility].copy()
 
 dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
 dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
+factz = dfdemo['FACILITY'].unique()
+
+dfdemoz =[]
+for facx in factz:
+     dfdemof = dfdemo[dfdemo['FACILITY']==facx].copy()
+     dfdemof = dfdemof.drop_duplicates(subset = 'ART NO', keep='last')
+     dfdemoz.append(dfdemof)
+dfdemo = pd.concat(dfdemoz)
+
+dfissuez =[]
+for facx in factz:
+     dfissf = dfiss[dfiss['FACILITY']==facx].copy()
+     dfissf = dfissf.drop_duplicates(subset = 'ART NO', keep='last')
+     dfissuez.append(dfissf)
+dfiss = pd.concat(dfissuez)
+
+dftestz =[]
+for facx in factz:
+     dftestf = dftest[dftest['FACILITY']==facx].copy()
+     dftestf = dftestf.drop_duplicates(subset = 'ART NO', keep='last')
+     dftestz.append(dftestf)
+dftest = pd.concat(dftestz)
+
+
+
 
 filen = r'ALL.csv'
 dfn = pd.read_csv(filen)
