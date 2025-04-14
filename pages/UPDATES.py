@@ -388,7 +388,9 @@ elif check == 'MAKE UPDATES':
                        if tbrest >0:
                             tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
                             if tbtreat or tbtreat == 0:
-                                 pass
+                                 if tbtreat > tbrest:
+                                      st.warning("TREATED CAN'T BE GREATER THAN THOSE POS")
+                                      st.stop()
                             else:
                                  st.stop()     
                   elif tbrest < tbsamples or tbrest==0:
