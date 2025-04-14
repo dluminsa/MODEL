@@ -349,7 +349,7 @@ elif check == 'MAKE UPDATES':
     if tbsamples >0:
          st.write('**TB SAMPLES PICKED**')
          if tbsamples==1:
-              tbtest  = st.radio('**1 SAMPLE WAS PICKED HAS IT BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
+              tbtest  = st.radio('**1 SPUTUM SAMPLE WAS PICKED HAS IT BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
               if not tbtest:
                      st.stop()
               elif  tbtest == 'NOT YET':
@@ -373,7 +373,7 @@ elif check == 'MAKE UPDATES':
                               pass
 
          if tbsamples>1:
-             tbtest  = st.radio(f'**{tbsamples} WERE PICKED, HAVE THEY BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
+             tbtest  = st.radio(f'**{tbsamples} SPUTUM SAMPLES WERE PICKED, HAVE THEY BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
              if tbtest == 'NOT YET':
                   st.warning('**FOLLOW UP TO SEE THAT THEY ARE TESTED**')
              elif tbtest == 'UPDATE ALREADY MADE':
@@ -398,7 +398,7 @@ elif check == 'MAKE UPDATES':
     else:
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dfiss.iloc[0,13]
-    st.write(vlsample)
+
     if vlsample == 'YES': 
          vlrest = st.radio('**A VL SAMPLE WAS PICKED, ARE RESULTS BACK**', options=['YES','NO'], horizontal=True, index=None)
          if not vlrest:
@@ -406,9 +406,9 @@ elif check == 'MAKE UPDATES':
          elif vlrest =='NO':
               pass
          elif vlrest =='YES':
-              sup = st.radio('**WHAT WERE THE RESULTS**', options=['SUPRESSED','STILL NON SUPPRESSED'], horizontal=True, index=None)
+              sup = st.number_input('**WHAT WERE THE RESULTS**',value=None, step=1, key='vl')
               if not sup:
-                   pass
+                   st.stop()
               else: 
                    pass
     else:
