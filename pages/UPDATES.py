@@ -398,10 +398,8 @@ elif check == 'MAKE UPDATES':
     else:
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dftest.iloc[0,13]
-    if not vlsample or vlsample:
-       st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
-       pass
-    else: 
+
+    if vlsample == 'YES': 
          vlrest = st.radio('**A VL SAMPLE WAS PICKED, ARE RESULTS BACK**', options=['YES','NO'], horizontal=True, index=None)
          if not vlrest:
               st.stop()
@@ -413,7 +411,10 @@ elif check == 'MAKE UPDATES':
                    pass
               else: 
                    pass
-
+    else:
+       # if not vlsample or vlsample == 'NO':
+             st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
+       
          
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
