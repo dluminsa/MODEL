@@ -448,17 +448,17 @@ elif check == 'MAKE UPDATES':
                   st.write('**HOW MANY WERE (PUT A ZERO WHERE APPLICABLE):**')
                   col1,col2,col3 = st.columns(3)
                   tbrest = col1.number_input('**POSTIVE**', value=None, step=1, key = 'a11')
-                  if tbrest or tbrest==0:
-                       if tbrest >0:
-                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
-                            if tbtreat or tbtreat == 0:
-                                 if tbtreat > tbrest:
-                                      st.warning("TREATED CAN'T BE GREATER THAN THOSE POS")
-                                      st.stop()
-                            else:
-                                 st.stop()  
-                  else:
-                       st.stop()
+                  # if tbrest or tbrest==0:
+                  #      if tbrest >0:
+                  #           tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
+                  #           if tbtreat or tbtreat == 0:
+                  #                if tbtreat > tbrest:
+                  #                     st.warning("TREATED CAN'T BE GREATER THAN THOSE POS")
+                  #                     st.stop()
+                  #           else:
+                  #                st.stop()  
+                  # else:
+                  #      st.stop()
                   if tbrest or tbrest==0:
                       if tbrest < tbsamples or tbrest==0:
                             col1,col2,col3 = st.columns(3)
@@ -477,6 +477,18 @@ elif check == 'MAKE UPDATES':
                                  pass
                   else: 
                     st.stop()
+
+                  if tbrest or tbrest==0:
+                       if tbrest >0:
+                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
+                            if tbtreat or tbtreat == 0:
+                                 if tbtreat > tbrest:
+                                      st.warning("TREATED CAN'T BE GREATER THAN THOSE POS")
+                                      st.stop()
+                            else:
+                                 st.stop()  
+                  else:
+                       st.stop()
     else:
          tbsamples = ''
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
