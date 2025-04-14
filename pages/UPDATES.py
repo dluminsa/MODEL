@@ -461,6 +461,7 @@ elif check == 'MAKE UPDATES':
                        st.stop()
                   if tbrest or tbrest==0:
                       if tbrest < tbsamples or tbrest==0:
+                            col1,col2,col3 = st.columns(3)
                             tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
                             if tbneg or tbneg == 0:
                                   tbck = tbneg + tbrest
