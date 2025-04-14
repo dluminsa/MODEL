@@ -391,6 +391,7 @@ elif check == 'MAKE UPDATES':
                                  pass
                             else:
                                  st.stop()
+                       st.write(f'{tbrest} tbrest then {tbrest} tbrest')
                        elif tbrest < tbtest or tbrest==0:
                             tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
                             if tbneg or tbneg == 0:
