@@ -477,6 +477,7 @@ elif check == 'MAKE UPDATES':
                   else: 
                     st.stop()
     else:
+         tbsamples = ''
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dfiss.iloc[0,13]
 
@@ -501,7 +502,7 @@ elif check == 'MAKE UPDATES':
     
     row1 = [district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup]
-    st.write(row1) 
+     
     if not submit:
          st.stop()
     else:   
