@@ -390,10 +390,8 @@ elif check == 'MAKE UPDATES':
                             if tbtreat or tbtreat == 0:
                                  pass
                             else:
-                                 st.stop()
-                  
-                  if tbrest or tbrest==0:       
-                       if tbrest < tbtest or tbrest==0:
+                                 st.stop()     
+                  elif tbrest < tbsamples or tbrest==0:
                             tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
                             if tbneg or tbneg == 0:
                                   tbck = tbneg + tbrest
