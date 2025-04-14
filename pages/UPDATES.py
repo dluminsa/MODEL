@@ -136,7 +136,10 @@ dfiss = dfiss[dfiss['FACILITY'] == facility].copy()
 dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
 dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
 factz = dfdemo['FACILITY'].unique()
-
+num = dfdemo.shape[0]
+if num ==0:
+     st.warning('**THERE IS NO DATA FOR THIS FACILITY**')
+     st.stop()
 dfdemoz =[]
 for facx in factz:
      dfdemof = dfdemo[dfdemo['FACILITY']==facx].copy()
