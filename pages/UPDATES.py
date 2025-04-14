@@ -387,11 +387,16 @@ elif check == 'MAKE UPDATES':
                             pass
                        elif tbrest:
                             tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
-                            tbck = tbneg + tbrest
                             if tbneg or tbneg == 0:
-                                  pass
-                            elif tbck > tbsamples:
-                                 st.warning("THAT'S MORE THAN SAMPLES COLLECTED")
+                                  tbck = tbneg + tbrest
+                                  if tbck > tbsamples:
+                                      st.warning("THAT'S MORE THAN SAMPLES COLLECTED")
+                                      st.stop()
+                            elif not tbneg:
+                                 st.stop()
+                            else:
+                                 pass
+                                
                                  st.stop()
                        else: 
                             st.stop()
