@@ -381,7 +381,7 @@ elif check == 'MAKE UPDATES':
              elif tbtest == 'YES':
                   st.write('**HOW MANY WERE (PUT A ZERO WHERE APPLICABLE):**')
                   col1,col2,col3 = st.columns(3)
-                  tbrest = col1.number_input('**POSTIVE**', value=None, step=1, key = a11)
+                  tbrest = col1.number_input('**POSTIVE**', value=None, step=1, key = 'a11')
                   if tbrest or tbrest == 0:
                        if tbrest == tbtest or tbrest==0:
                             pass
