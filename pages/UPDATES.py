@@ -279,10 +279,11 @@ elif check == 'MAKE UPDATES':
                                        pass
                                   else:
                                        st.stop()
-                             checkm = tested + alread
-                             if checkm > notif:
-                                  st.warning("**TESTED AND KNOWN POS ARE MORE THAN THOSE NOTIFIED**")
-                                  st.stop()
+                                  if alread or alread ==0:
+                                       checkm = tested + alread
+                                       if checkm > notif:
+                                            st.warning("**TESTED AND KNOWN POS ARE MORE THAN THOSE NOTIFIED**")
+                                            st.stop()
                              if not tested:
                                   st.stop()
                              elif tested > notif:
