@@ -32,6 +32,28 @@ others = ''
 otherissue = ''
 adher = ''
 alread =0
+notif = ''
+pos = ''
+neg =''
+alread = ''
+linked = ''
+recent = ''
+cd4 = ''
+cd4results = ''
+tblamdone = ''
+tblamres = ''
+tblamrx = ''
+crag = ''
+crares = ''
+ccmres = ''
+csf = ''
+tbsamples = ''
+tbtest = ''
+tbrest = ''
+tbtreat = ''
+tbneg = ''
+sup = ''
+
 
 st.write('**FOLLOW UP SECTION ON AREAS NOT COMPLETED FROM THE FIELD**')
 if 'tx' not in st.session_state:     
@@ -155,6 +177,7 @@ elif check == 'MAKE UPDATES':
               elif notif == 'UPDATE ALREADY MADE':
                    pass
               elif notif == 'YES':
+                   notif = 1
                    testapn = col2.radio('**WAS SHE/HE TESTED**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
                    if not testapn:
                         st.stop()
@@ -164,14 +187,22 @@ elif check == 'MAKE UPDATES':
                    elif testapn == 'UPDATE ALREADY MADE':
                         pass
                    elif testapn == 'YES':
+                        tested = 1
                         posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS', 'KNOWN POS'], horizontal= True, index=None)
                         if not posapn:
                              st.stop()
                         elif posapn in ['NEG', 'KNOWN POS']:
+                             if posapn == 'NEG':
+                                  neg = 1
+                             elif posapn == 'KNOWN POS':
+                                  alread = 1
                              pass
                         elif posapn =='POS':
+                             pos = 1
                              col1, col2 = st.columns([1,2])
                              linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
+                             if linkedapn == 'YES':
+                                  linked = 1
                              if not linkedapn:
                                   st.stop()
                              else:
@@ -358,18 +389,23 @@ elif check == 'MAKE UPDATES':
               elif tbtest == 'UPDATE ALREADY MADE':
                     pass
               elif tbtest == 'YES': 
+                    tbtest = 1
                     tbrest = st.radio('**WHAT WERE THE RESULTS**', options = ['POS', 'NEG'], horizontal=True, index=None)
+                    
                     if not tbrest:
                          st.stop()
                     elif tbrest == 'NEG':
+                         tbneg = 1
                          pass
                     elif tbrest == 'POS':
+                         tbrest = 1
                          treat = st.radio('**WAS THE CLIENT STARTED ON ANTI TBS**',options = ['YES', 'NO'], horizontal=True, index=None)
                          if not treat:
                               st.stop()
                          elif treat == 'NO':
                               st.warning('**START THIS CLIENT ON ANTI TBs PLEASE**')
                          elif treat == 'YES':
+                              tbtreat = 1
                               pass
 
          if tbsamples>1:
@@ -423,7 +459,8 @@ elif check == 'MAKE UPDATES':
          elif vlrest =='NO':
               pass
          elif vlrest =='YES':
-              sup = st.number_input('**WHAT WERE THE RESULTS**',value=None, step=1, key='vl')
+              col1, col2, col3 = st.columns(3)
+              sup = col1.number_input('**WHAT WERE THE RESULTS**',value=None, step=1, key='vl')
               if not sup:
                    st.stop()
               else: 
@@ -431,7 +468,59 @@ elif check == 'MAKE UPDATES':
     else:
        # if not vlsample or vlsample == 'NO':
              st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
-       
+     col1, col2, col3 = st.columns(3)
+    submit = col.button('SUBMIT')
+    row1 = [district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
+                                                    tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup]
+    if not submit:
+         st.stop()
+    else:   
+         secrets = st.secrets["connections"]["gsheets"]
+             # Prepare the credentials dictionary
+         credentials_info = {
+                 "type": secrets["type"],
+                 "project_id": secrets["project_id"],
+                 "private_key_id": secrets["private_key_id"],
+                 "private_key": secrets["private_key"],
+                 "client_email": secrets["client_email"],
+                 "client_id": secrets["client_id"],
+                 "auth_uri": secrets["auth_uri"],
+                 "token_uri": secrets["token_uri"],
+                 "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
+                 "client_x509_cert_url": secrets["client_x509_cert_url"]
+              }
+                 
+         try:
+             # Define the scopes needed for your application
+             scopes = ["https://www.googleapis.com/auth/spreadsheets",
+                     "https://www.googleapis.com/auth/drive"]
+              
+             credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
+                 
+                 # Authorize and access Google Sheets
+             client = gspread.authorize(credentials)
+                 
+                 # Open the Google Sheet by URL
+             spreadsheetu = "https://docs.google.com/spreadsheets/d/1qGCvtnYZ9SOva5YqztSX7wjh8JLF0QRw-zbX9djQBWo"
+             spreadsheet = client.open_by_url(spreadsheetu)
+             sheet = spreadsheet.worksheet("UPDATES")
+         
+             sheet.append_row(row1, value_input_option='RAW')
+
+             st.success(f'THANK YOU, THESE UPDATES HAVE BEEN MADE')
+             time.sleep(2)
+             st.markdown("""
+                  <meta http-equiv="refresh" content="0">
+                    """, unsafe_allow_html=True)
+         except Exception as e:
+                 # Log the error message
+             st.info('NOT SUBMITTED')
+             st.session_state.sub = False
+             st.write(f"CHECK: {e}")
+             st.write(traceback.format_exc())
+             st.write("** POOR NETWORK, COULDN'T CONNECT TO GOOGLE SHEET, SUBMIT AGAIN**")
+             st.stop()
+             
          
 elif check == 'DOWNLOAD FORM':
      st.session_state.form = True
