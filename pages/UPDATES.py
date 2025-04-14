@@ -374,6 +374,8 @@ elif check == 'MAKE UPDATES':
 
          if tbsamples>1:
              tbtest  = st.radio(f'**{int(tbsamples)} SPUTUM SAMPLES WERE PICKED, HAVE THEY BEEN TESTED**', options = ['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal=True, index=None)
+             if not tbtest:
+                  st.stop()
              if tbtest == 'NOT YET':
                   st.warning('**FOLLOW UP TO SEE THAT THEY ARE TESTED**')
              elif tbtest == 'UPDATE ALREADY MADE':
@@ -382,10 +384,14 @@ elif check == 'MAKE UPDATES':
                   st.write('**HOW MANY WERE (PUT A ZERO WHERE APPLICABLE):**')
                   col1,col2,col3 = st.columns(3)
                   tbrest = col1.number_input('**POSTIVE**', value=None, step=1, key = 'a11')
-                  if tbrest or tbrest == 0:
-                       if tbrest == tbtest or tbrest==0:
-                            pass
-                       elif tbrest:
+                  if tbrest:
+                       if tbrest >0:
+                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
+                            if tbtreat or tbtreat == 0:
+                                 pass
+                            else:
+                                 st.stop()
+                  elif tbrest < tbtest or tbrest==0:
                             tbneg = col1.number_input('**NEG**', value=None, step=1, key = 'a12')
                             if tbneg or tbneg == 0:
                                   tbck = tbneg + tbrest
@@ -398,12 +404,8 @@ elif check == 'MAKE UPDATES':
                                  pass
                                 
                                  st.stop()
-                       else: 
-                            st.stop()
-                       if tbrest >1:
-                            tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
-                  else:
-                       st.stop()
+                  else: 
+                    st.stop()
     else:
          st.info('**NO SPUTUM SAMPLE WAS PICKED, PROCEED TO VL SECTION**')
     vlsample = dfiss.iloc[0,13]
