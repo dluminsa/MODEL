@@ -147,6 +147,7 @@ if 'form' not in st.session_state:
 if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
+    GGGG
     col1, col2,col3 = st.columns(3)
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
@@ -468,7 +469,7 @@ elif check == 'MAKE UPDATES':
     else:
        # if not vlsample or vlsample == 'NO':
              st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
-     col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
     submit = col.button('SUBMIT')
     row1 = [district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup]
