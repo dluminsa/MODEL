@@ -42,7 +42,11 @@ dfiss = st.session_state.txa.copy()
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss = dfiss.reset_index()
 
-#dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
+dfisx = dfisx.sort_values(by = 'index')
+dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
+dfisx = dfisx.drop(column = ['index'])
 
 st.write(dfiss)
 #########################################################################################################
