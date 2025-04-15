@@ -38,8 +38,8 @@ if 'txa' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dfiss = st.session_state.txa.copy()
-# dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
-# dfiss = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'inner')
+dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
+dfiss = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'inner')
 st.write(dfiss)
 #########################################################################################################
 
