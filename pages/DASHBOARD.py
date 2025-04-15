@@ -39,7 +39,7 @@ if 'txa' not in st.session_state:
          st.stop()
 dfiss = st.session_state.txa.copy()
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
-dfiss = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'right')
+dfiss = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'inner')
 st.write(dfiss)
 #########################################################################################################
 
