@@ -41,13 +41,8 @@ if 'txa' not in st.session_state:
 dfiss = st.session_state.txa.copy()
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 
-dfissz = []
-for facil in facilities:
-     dfx = dfiss[dfiss['FACILITY']== facil].copy()
-     dfy = dfdist[dfdist['FACILITY']== facil].copy()
-     dfisx = pd.merge(dfy, dfx, on= 'FACILITY', how = 'outer')
-     dfissz.append(dfisx)
-dfiss = pd.concat(dfissz)
+dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+
 st.write(dfiss)
 #########################################################################################################
 
