@@ -40,8 +40,9 @@ if 'txa' not in st.session_state:
          st.stop()
 dfiss = st.session_state.txa.copy()
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
+dfiss = dfiss.reset_index()
 
-dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+#dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
 
 st.write(dfiss)
 #########################################################################################################
