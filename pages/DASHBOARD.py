@@ -39,46 +39,56 @@ if 'txa' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dfiss = st.session_state.txa.copy()
-st.write(dfiss.shape[0])
+
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss = dfiss.reset_index()
 
 dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
-st.write(dfisx.shape[0])
+
 dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
 dfisx = dfisx.sort_values(by = 'index')
 
 dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
-dfisx = dfisx.drop(columns = ['index'])
+dfiss = dfisx.drop(columns = ['index'])
 
-st.write(dfisx)
 #########################################################################################################
 
-# if 'txb' not in st.session_state:     
-#      try:
-#         #cola,colb= st.columns(2)
-#         conn = st.connection('gsheets', type=GSheetsConnection)
-#         exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
-#         txb = exist.dropna(how='all')
-#         st.session_state.txb = txb
-#      except:
-#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-#          st.stop()
-# dftest = st.session_state.txb.copy()
-# dftest['FACILITY'] = dftest['FACILITY'].astype(str)
-# dftest = pd.merge(dfdist, dftest, on= 'FACILITY', how = 'outer')
-# ################################################################################################################
-# if 'txy' not in st.session_state:     
-#      try:
-#         #cola,colb= st.columns(2)
-#         conn = st.connection('gsheets', type=GSheetsConnection)
-#         exist = conn.read(worksheet= 'UPDATES', usecols=list(range(19)),ttl=5)
-#         txy = exist.dropna(how='all')
-#         st.session_state.txy = txy
-#      except:
-#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-#          st.stop()
-# dfup = st.session_state.txy.copy()
+if 'txb' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
+        txb = exist.dropna(how='all')
+        st.session_state.txb = txb
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dftest = st.session_state.txb.copy()
+st.write(dftest.shape[0])
+dftest['FACILITY'] = dftest['FACILITY'].astype(str)
+dftest = dftest.reset_index()
+
+dftex = pd.merge(dfdist, dftek, on= 'FACILITY', how = 'outer')
+
+dftex['index'] = pd.to_numeric(dftex['index'], errors='coerce')
+dftex = dftex.sort_values(by = 'index')
+
+dftex = dftex.drop_duplicates(subset= 'index', keep='first')
+dftest = dftex.drop(columns = ['index'])
+st.write(dftest.shape[0])
+
+################################################################################################################
+if 'txy' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'UPDATES', usecols=list(range(19)),ttl=5)
+        txy = exist.dropna(how='all')
+        st.session_state.txy = txy
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dfup = st.session_state.txy.copy()
 # ################################################################################################################
 # file = r'CLUSTERS.csv'
 # dfa = pd.read_csv(file)
