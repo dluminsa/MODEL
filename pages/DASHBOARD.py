@@ -44,6 +44,7 @@ dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss = dfiss.reset_index()
 
 dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+st.write(dfisx.shape[0])
 dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
 dfisx = dfisx.sort_values(by = 'index')
 dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
