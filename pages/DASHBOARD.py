@@ -80,6 +80,7 @@ if not CLUSTER:
     water2 = water.copy()
      
 else:
+     pass
 if cluster:
     dfd = dfa[dfa['CLUSTER'] == cluster].copy()
     districts = dfd['DISTRICT'].unique()
