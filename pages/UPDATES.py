@@ -516,7 +516,7 @@ elif check == 'MAKE UPDATES':
     col1, col2, col3 = st.columns(3)
     submit = col1.button('SUBMIT')
     
-    row1 = [district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
+    row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup]
      
     if not submit:
