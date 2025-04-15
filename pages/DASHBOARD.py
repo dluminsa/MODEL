@@ -45,7 +45,7 @@ dfissz = []
 for facil in facilities:
      dfx = dfiss[dfiss['FACILITY']== facil].copy()
      dfy = dfdist[dfdist['FACILITY']== facil].copy()
-     dfisx = pd.merge(dfy, dfx, on= 'FACILITY', how = 'left')
+     dfisx = pd.merge(dfy, dfx, on= 'FACILITY', how = 'outer')
      dfissz.append(dfisx)
 dfiss = pd.concat(dfissz)
 st.write(dfiss)
