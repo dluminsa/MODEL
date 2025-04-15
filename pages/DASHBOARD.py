@@ -26,6 +26,7 @@ dfdemo = st.session_state.tx.copy()
 
 dfdist = dfdemo[['CLUSTER', 'DISTRICT', 'FACILITY']].copy()
 dfdist['FACILITY'] = dfdist['FACILITY'].astype(str)
+facilities = dfdist['FACILITY'].unique()
 
 if 'txa' not in st.session_state:     
      try:
@@ -39,7 +40,14 @@ if 'txa' not in st.session_state:
          st.stop()
 dfiss = st.session_state.txa.copy()
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
-dfiss = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'right')
+
+dfissz = []
+for facil in facilities:
+     dfx = dfiss[dfiss['FACILITY']== facil].copy()
+     dfy = dfdist[dfdist['FACILITY']== facil].copy()
+     dfisx = pd.merge(dfy, dfx, on= 'FACILITY', how = 'right')
+     dfissz.append(dfisx)
+dfiss = pd.concat(dfissz)
 st.write(dfiss)
 #########################################################################################################
 
