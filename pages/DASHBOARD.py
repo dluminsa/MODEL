@@ -51,7 +51,7 @@ dfisx = dfisx.sort_values(by = 'index')
 dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
 dfisx = dfisx.drop(columns = ['index'])
 
-st.write(dfisx.shape[0])
+st.write(dfisx)
 #########################################################################################################
 
 # if 'txb' not in st.session_state:     
