@@ -43,7 +43,7 @@ dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 
 dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
 
-st.write(dfiss)
+st.write(dfisx)
 #########################################################################################################
 
 # if 'txb' not in st.session_state:     
