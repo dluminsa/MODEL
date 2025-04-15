@@ -68,7 +68,7 @@ st.write(dftest.shape[0])
 dftest['FACILITY'] = dftest['FACILITY'].astype(str)
 dftest = dftest.reset_index()
 
-dftex = pd.merge(dfdist, dftek, on= 'FACILITY', how = 'outer')
+dftex = pd.merge(dfdist, dftest, on= 'FACILITY', how = 'outer')
 
 dftex['index'] = pd.to_numeric(dftex['index'], errors='coerce')
 dftex = dftex.sort_values(by = 'index')
