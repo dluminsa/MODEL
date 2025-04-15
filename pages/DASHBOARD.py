@@ -39,6 +39,7 @@ if 'txa' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dfiss = st.session_state.txa.copy()
+st.write(dfiss.shape[0])
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss = dfiss.reset_index()
 
@@ -48,7 +49,7 @@ dfisx = dfisx.sort_values(by = 'index')
 dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
 dfisx = dfisx.drop(columns = ['index'])
 
-st.write(dfisx)
+st.write(dfisx.shape[0])
 #########################################################################################################
 
 # if 'txb' not in st.session_state:     
