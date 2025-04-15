@@ -10,475 +10,117 @@ import traceback
 import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
-st.set_page_config(
-    page_title = 'NS TRACKER',
-    page_icon =":bar_chart"
-    )
-import streamlit as st
-from streamlit_js_eval import st_javascript
-
-st.write('**TO CAPTURE COORDINATES, YOU NEED TO SWITCH ON YOUR LOCATION**')
-
-allow = st.radio('**IS YOUR LOCATION ON?**', options=['YES', 'NO'], index=None, horizontal=True)
-
-if not allow:
-    st.stop()
-elif allow == 'NO':
-    st.warning("**YOU CAN'T PROCEED WITHOUT LOCATION**")
-    st.stop()
-elif allow == 'YES':
-    st.write("**Fetching your location...**")
-    
-    # Automatically get geolocation
-    coordinates = st_javascript(
-        """navigator.geolocation.getCurrentPosition(
-               (position) => position.coords.latitude + ',' + position.coords.longitude
-           );"""
-    )
-
-    if coordinates:
-        st.success(f"**Your coordinates: {coordinates}**")
-    else:
-        st.warning("**Location access is required. Please allow location access in your browser.**")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-st.stop()
-#st.header('CODE UNDER MAINTENANCE, TRY AGAIN TOMORROW')
-#st.stop()
-cola,colb,colc = st.columns([1,3,1])
-colb.subheader('TRACKING NS')
-
-today = datetime.now()
-todayd = today.strftime("%Y-%m-%d")# %H:%M")
-wk = today.strftime("%V")
-week = int(wk)-39
-cola,colb = st.columns(2)
-cola.write(f"**DATE TODAY:    {todayd}**")
-colb.write(f"**CURRENT WEEK:    {week}**")
-dd = int(week)
-k = int(wk)
 
 
 if 'tx' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'ALLNS', usecols=list(range(20)),ttl=5)
+        exist = conn.read(worksheet= 'DEMO', usecols=list(range(19)),ttl=5)
         tx = exist.dropna(how='all')
         st.session_state.tx = tx
      except:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
-dfapt = st.session_state.tx.copy()
-#######################FILTERS
+dfdemo = st.session_state.tx.copy()
+
 if 'txa' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'SUP', usecols=list(range(12)),ttl=5)
+        exist = conn.read(worksheet= 'ISSUES', usecols=list(range(18)),ttl=5)
         txa = exist.dropna(how='all')
         st.session_state.txa = txa
      except:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
-dfr = st.session_state.txa.copy()
-dfall = pd.read_csv('ALLNS.csv')
-############################
+dfiss = st.session_state.txa.copy()
+#########################################################################################################
 
-clusters = dfall['CLUSTER'].unique()
+if 'txb' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
+        txb = exist.dropna(how='all')
+        st.session_state.txb = txb
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dftest = st.session_state.txb.copy()
 
-#FILTERS
-st.sidebar.subheader('**Filter from here**')
-CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+################################################################################################################
 
-#create for the state
-if not CLUSTER:
-    dfr2 = dfr.copy()
-    dfall2 = dfall.copy()
-    dfapt2 = dfapt.copy() 
+file = r'CLUSTERS.csv'
+dfa = pd.read_csv(file)
+
+clusters = dfa['CLUSTER'].unique()
+
+cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
+
+if not cluster:
+    st.stop()
 else:
-    dfr2 = dfr[dfr['CLUSTER'].isin(CLUSTER)].copy()
-    dfall2 = dfall[dfall['CLUSTER'].isin(CLUSTER)].copy()
-    dfapt2 = dfapt[dfapt['CLUSTER'].isin(CLUSTER)].copy()
-    
-district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfall2['DISTRICT'].unique(), key='d')
-#create for the state
+    pass
+if cluster:
+    dfd = dfa[dfa['CLUSTER'] == cluster].copy()
+    districts = dfd['DISTRICT'].unique()
+    district = st.radio('**CHOOSE A district**', districts, index= None, horizontal=True)
+
 if not district:
-    dfr3 = dfr2.copy()
-    dfall3 = dfall2.copy()
-    dfapt3 = dfapt2.copy() 
+    st.stop()
 else:
-    dfr3 = dfr2[dfr2['DISTRICT'].isin(district)].copy()
-    dfall3 = dfall2[dfall2['DISTRICT'].isin(district)].copy()
-    dfapt3 = dfapt2[dfapt2['DISTRICT'].isin(district)].copy()
+    pass
+col1,col2, col3 = st.columns([2,1,2])
+with col1:
+    if district:
+        fac = dfa[dfa['DISTRICT'] == district].copy()
+        facilities = fac['FACILITY'].unique()
+        facility = st.selectbox('**SELECT FACILITY**', facilities, index= None)
 
-facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dfall3['facility'].unique(), key='c')
 if not facility:
-    dfr4 = dfr3.copy()
-    dfall4 = dfall3.copy()
-    dfapt4 = dfapt3.copy() 
+    st.stop()
 else:
-    dfr4 = dfr3[dfr3['facility'].isin(facility)].copy()
-    dfall4 = dfall3[dfall3['facility'].isin(facility)].copy()
-    dfapt4 = dfapt3[dfapt3['facility'].isin(facility)].copy()
-
-
-# Base DataFrame to filter
-dfr = dfr4.copy()
-dfall = dfall4.copy()
-dfapt = dfapt.copy()
-
-
-# Apply filters based on selected criteria
-if CLUSTER:
-    dfr = dfr[dfr['CLUSTER'].isin(CLUSTER)].copy()
-    dfall = dfall[dfall['CLUSTER'].isin(CLUSTER)].copy()
-    dfapt = dfapt[dfapt['CLUSTER'].isin(CLUSTER)].copy()
-
-if district:
-    dfr = dfr[dfr['DISTRICT'].isin(district)].copy()
-    dfall = dfall[dfall['DISTRICT'].isin(district)].copy()
-    dfapt = dfapt[dfapt['DISTRICT'].isin(district)].copy()
-
-if facility:
-    dfr = dfr[dfr['facility'].isin(facility)].copy()
-    dfall = dfall[dfall['facility'].isin(facility)].copy()
-    dfapt = dfapt[dfapt['facility'].isin(facility)].copy()
-###FACILITIES THAT HAVEN'T UPLOADED EMR
-s1 = dfall['facility'].unique()
-s2 = dfapt['facility'].unique()
-notemr = set(s1) - set(s2)
-
-if facility:
-    if facility not in s2:
-        st.warning('**EMR EXTRACT FOR THIS FACILITY HAS NOT BEEN UPLOADED YET**')
-        st.stop()
-    else:
-        pass
-
-num = len(list(notemr))
-if not facility:
-    if num >0:
-        if num >1:
-            st.write(f'**{num} facilities have not uploaded their emr extarcts for tracking**')
-            with st.expander('CLICK HERE TO SEE THEM'):
-                st.write(notemr)
-        if num ==1:
-            st.write(f'**{num} facility has not uploaded their emr extarcts for tracking**')
-            with st.expander('CLICK HERE TO SEE IT'):
-                st.write(notemr)
-    else:
-        st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
-#######################################
-checkd = dfapt['DISTRICT'].unique()
-checkf = dfapt['facility'].unique()
-#REPLACE LONG FACILITIES
-dfapt['facility'] = dfapt['facility'].astype(str)
-dfapt['facility'] = dfapt['facility'].str.replace('Ssembabule HC IV', 'Sembabule IV', regex=False)
-dfapt['facility'] = dfapt['facility'].str.replace('Kalangala HC IV', 'Kalangala IV', regex=False)
-
-if len(checkd)>1:
-    dfr['USE']  = dfr4['DISTRICT']
-    dfall['USE'] = dfall4['DISTRICT']
-    dfapt['USE'] = dfapt['DISTRICT']
-    word ='DISTRICT'
-    checka = dfapt['USE'].unique()
-elif len(checkd) ==1:
-    dfr['USE']  = dfr4['facility']
-    dfall['USE'] = dfall4['facility']#.map(mapper)
-    dfapt['USE'] = dfapt['facility']#.map(mapper)
-    word ='FACILITY'
-    checka = dfapt['USE'].unique()
-##################NS THAT ARE DEAD
-dfaptd = dfapt.copy()    
-total = dfapt.shape[0]
-dead = dfapt[dfapt['DD'].notna()]
-dd = dead.shape[0]
-########### REMAINING NS AFTER THE DEAD THEN TO
-dfapt = dfapt[dfapt['DD'].isnull()].copy()
-to = dfapt[dfapt['TO'].notna()]
-totalto = to.shape[0]
-dfapt = dfapt[dfapt['TO'].isnull()].copy()
-#####ACTIVE
-dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce')
-active = dfapt[dfapt['Ryear']==2025]
-ager = active.copy()
-ac = active.shape[0]
-lost = dfapt[dfapt['Ryear']<2025]
-los = lost.shape[0]
-cola, colb = st.columns([1,6])
-colb.write('**PART ONE: NUMBER OF NS THAT ARE STILL ACTIVE AND DUE**')
-st.divider()
-if len(checkd)>1  or len(checkf) >1:
-    html_table = """
-    <h6><b><u style="color: purple;">SUMMARY (ALL COMBINED)</u></b></h6>
-    """
-    st.markdown(html_table, unsafe_allow_html=True)
+    pass
     
-    cola, colb,colc, cold, cole, colf = st.columns(6)
-    cola.write('**ALL**')
-    colb.write('**TOTAL DUE**')
-    colc.write('**ACTIVE**')
-    cold.write('**LTFU**')
-    cole.write('**T/O**')
-    colf.write('**DEAD**')
-    
-    colb.write(f'**{total}**')
-    colc.write(f'**{ac}**')
-    cold.write(f'**{los}**')
-    cole.write(f'**{totalto}**')
-    colf.write(f'**{dd}**')
-html_table = """
-    <h6><b><u style="color: purple;">SUMMARY AT DISTRICT/FACILITY LEVEL</u></b></h6>
-    """
-st.markdown(html_table, unsafe_allow_html=True)
+dftest['FACILITY'] = dftest['FACILITY'].astype(str)
+dftest = dftest[dftest['FACILITY'] == facility].copy()
 
-cola, colb,colc, cold, cole, colf = st.columns(6)
-cola.write(f'**{word}**')
-colb.write('**TOTAL DUE**')
-colc.write('**ACTIVE**')
-cold.write('**LTFU**')
-cole.write('**T/O**')
-colf.write('**DEAD**')
-for fac in checka:
-    dfapt['USE'] = dfaptd['USE'].astype(str)
-    dfapta= dfaptd[dfaptd['USE']==fac].copy()
-    totala = dfapta.shape[0]
-    deada = dfapta[dfapta['DD'].notna()]
-    dda = deada.shape[0]
-    ########### REMAINING NS AFTER THE DEAD THEN TO
-    dfapta = dfapta[dfapta['DD'].isnull()].copy()
-    toa = dfapta[dfapta['TO'].notna()]
-    totaltoa = toa.shape[0]
-    dfapta = dfapta[dfapta['TO'].isnull()].copy()
-    #####ACTIVE
-    dfapta['Ryear'] = pd.to_numeric(dfapta['Ryear'], errors='coerce')
-    activea = dfapta[dfapta['Ryear']==2025]
-    agera = activea.copy()
-    aca = activea.shape[0]
-    losta = dfapta[dfapta['Ryear']<2025]
-    losa = losta.shape[0]
-    
-    cola.write(f'**{fac}**')
-    colb.write(f'**{totala}**')
-    colc.write(f'**{aca}**')
-    cold.write(f'**{losa}**')
-    cole.write(f'**{totaltoa}**')
-    colf.write(f'**{dda}**')
-st.divider()
-    
-###########
-html_table = """
-<h6><b><u style="color: green;">REBLEEDING AMONGST THOSE THAT ARE ACTIVE</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
-facz = active['facility'].unique()
+dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
+dfiss = dfiss[dfiss['FACILITY'] == facility].copy()
 
-dfnot = []
-dfbled = []
-for facilit in facz:
-    dfa = active[active['facility']==facilit].copy()
-    dfb = dfr[dfr['facility']==facilit].copy()
+dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
+dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
+factz = dfdemo['FACILITY'].unique()
+num = dfdemo.shape[0]
+if num ==0:
+     st.warning('**THERE IS NO DATA FOR THIS FACILITY**')
+     st.stop()
+dfdemoz =[]
+for facx in factz:
+     dfdemof = dfdemo[dfdemo['FACILITY']==facx].copy()
+     dfdemof = dfdemof.drop_duplicates(subset = 'ART NO', keep='last')
+     dfdemoz.append(dfdemof)
+dfdemo = pd.concat(dfdemoz)
 
-    dfa['ARTN'] = pd.to_numeric(dfa['ARTN'], errors = 'coerce')
-    dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+dfissuez =[]
+for facx in factz:
+     dfissf = dfiss[dfiss['FACILITY']==facx].copy()
+     dfissf = dfissf.drop_duplicates(subset = 'ART NO', keep='last')
+     dfissuez.append(dfissf)
+dfiss = pd.concat(dfissuez)
 
-    dfbld = dfa[dfa['ARTN'].isin(dfb['ART'])]
-    dfnt = dfa[~dfa['ARTN'].isin(dfb['ART'])]
-    dfnot.append(dfnt)
-    dfbled.append(dfbld)
-if len(dfbled) == 0:
-    bled = 0
-else:
-    dfbleds = pd.concat(dfbled)
-    bled = dfbleds.shape[0]
-dfnots = pd.concat(dfnot)
+dftestz =[]
+for facx in factz:
+     dftestf = dftest[dftest['FACILITY']==facx].copy()
+     dftestf = dftestf.drop_duplicates(subset = 'ART NO', keep='last')
+     dftestz.append(dftestf)
+dftest = pd.concat(dftestz)
 
-rebleds = dfbleds.shape[0]
-dfnots[['Vmonth', 'Vyear']] = dfnots[['Vmonth', 'Vyear']].apply(pd.to_numeric, errors='coerce')
-awr = dfnots[((dfnots['Vyear']>2024) | ((dfnots['Vyear'] == 2024) & (dfnots['Vmonth'] > 9)))].copy()
-aw = awr.shape[0]
-due = dfnots[((dfnots['Vyear']<2024) | ((dfnots['Vyear'] ==2024) & (dfnots['Vmonth'] <10)))].copy()
-du = due.shape[0]
 
-cola, colb,colc, cold = st.columns(4)
-cola.write('**ACTIVE**')
-colb.write('**REBLED (cphl)**')
-colc.write('**AWR (emr)**')
-cold.write('**DUE**')
 
-cola.write(f'**{ac}**')
-colb.write(f'**{bled}**')
-colc.write(f'**{aw}**')
-cold.write(f'**{du}**')
-st.markdown('**KEY: AWR>> AWAITING RESULTS, HAS RECENT VL DATE IN EMR**')
-st.divider()
-html_table = """
-<h6><b><u style="color: red;">FOR THOSE THAT ARE DUE, WHEN ARE THEY ON APPOINTMENT</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
 
-today = datetime.now()
-todayd = today.strftime("%Y-%m-%d")# %H:%M")
+filen = r'ALL.csv'
+dfn = pd.read_csv(filen)
 
-mon = today.strftime("%m")
-mon = int(mon)
-
-day = today.strftime("%d")
-day = int(day)
-wk = today.strftime("%V")
-week = int(wk)-39
-
-due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']] = due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']].apply(pd.to_numeric, errors='coerce')
-
-tude = due[((due['Ryear']==2025) & (due['Rmonth']==mon) & (due['Rday']== day))].copy()
-
-tud = tude.shape[0]
-
-wiki = due[((due['Ryear']==2025) & (due['RWEEK']==week))].copy()
-wik = wiki.shape[0]
-
-jan = due[((due['Ryear']==2025) & (due['Rmonth']==1))].copy()
-ja = jan.shape[0]
-
-feb = due[((due['Ryear']==2025) & (due['Rmonth']==2))].copy()
-fe = feb.shape[0]
-
-marc = due[((due['Ryear']==2025) & (due['Rmonth']==3))].copy()
-mar = marc.shape[0]
-
-others = due[((due['Ryear']>2025) | ((due['Ryear']==2025) & (due['Rmonth']>4)))].copy()
-other = others.shape[0]
-
-cola, colb,colc, cold, cole, colf = st.columns(6)
-cola.write('**TODAY**')
-colb.write('**THIS WEEK**')
-colc.write('**JAN**')
-cold.write('**FEB**')
-cole.write('**MARCH**')
-colf.write('**OTHER Qtrs**')
-
-cola.write(f'**{tud}**')
-colb.write(f'**{wik}**')
-colc.write(f'**{ja}**')
-cold.write(f'**{fe}**')
-cole.write(f'**{mar}**')
-colf.write(f'**{other}**')
-
-st.write('**DOWNLOADS**')
-with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST ON APPOINTMENT**'):
-    cola,colb = st.columns(2)
-    optioniz = ['TODAY', 'THIS WEEK', 'JAN', 'FEB', 'MARCH', 'OTHER Qtrs']
-    perd = colb.selectbox('**FILTER BY RETURN PERIOD**', optioniz, index=None)
-    if perd =='TODAY':
-        due = tude.copy()
-    elif perd == 'THIS WEEK':
-        due = wiki.copy()
-    elif perd == 'JAN':
-        due = jan.copy()
-    elif perd == 'FEB':
-        due = feb.copy()
-    elif perd == 'MARCH':
-        due = marc.copy()
-    elif perd == 'OTHER Qtrs':
-        due = others.copy()
-    else:
-        due = due.copy()
-    
-    due = due[['facility','ART','result_numeric', 'date_collected','RD', 'VD']].copy()
-    due = due.rename(columns = {'RD': 'RETURN DATE', 'VD': 'VL DATE(EMR)'})
-    due = due.reset_index()
-    due = due.drop(columns = 'index')
-    st.write(due.head(5))
-    csv_data = due.to_csv(index=False)
-    st.download_button(
-                        label=" DOWNLOAD THIS DATA SET",
-                        data=csv_data,
-                        file_name="ACTIVITIES.csv",
-                        mime="text/csv")
-st.divider()
-    
-html_table = """
-<h6><b><u style="color: purple;">FOR THOSE THAT WERE ON APPOINTMENT, LAST MONTH, HOW MANY WERE BLED</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
-cola, colb,colc, cold, cole, colf = st.columns(6)
-cola.write('**ON APPT**')
-colb.write('**ATTENDED**')
-colc.write('**MISSED**')
-cold.write('**REBLED(cphl)**')
-cole.write('**AWR(emr)**')
-colf.write('**NOT BLED**')
-
-cola.write(f'**7**')
-colb.write(f'**0**')
-colc.write(f'**0**')
-cold.write(f'**0**')
-cole.write(f'**0**')
-colf.write(f'**0**')
-with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
-    st.write('BEING DEVELOPED')
-st.divider()          
-html_table = """
-<h6><b><u style="color: blue;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
-
-ager = ager[['facility', 'ART', 'AG']].copy()
-ager['AG'] = pd.to_numeric(ager['AG'], errors='coerce')
-
-def band(x):
-   if x < 10:
-       return '0 to 9'
-   elif x < 20:
-       return '10 to 19'
-   elif x < 30:
-       return '20 to 29'
-   elif x < 40:
-       return '30 to 39'
-   elif x < 50:
-       return '40 to 49'
-   else:
-       return 'Above 50'
-       
-
-ager['BAND'] = ager['AG'].apply(band)
-ager = ager.sort_values(by = 'AG')
-
-fig = px.histogram(ager, x='BAND', text_auto=True,
-                   title="Distribution of NS by their Age Bands",
-                   labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
-
-# Customize layout
-fig.update_layout(xaxis_title="Age Band",
-                  yaxis_title="Count of NS",
-                  bargap=0.1)
-
-# Show the figure
-st.plotly_chart(fig)
-st.divider()        
-html_table = """
-<h6><b><u style="color: trend;">TREND LINE FOR REBLEEDING</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
-         
-            
+dfna = dfn[dfn['FACILITY'] == facility].copy()
