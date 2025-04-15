@@ -24,6 +24,9 @@ if 'tx' not in st.session_state:
          st.stop()
 dfdemo = st.session_state.tx.copy()
 
+dfdist = dfdemo[['CLUSTER', 'DISTRICT', 'FACILITY']].copy()
+st.write(dfdist)
+
 if 'txa' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
@@ -50,11 +53,49 @@ if 'txb' not in st.session_state:
 dftest = st.session_state.txb.copy()
 
 ################################################################################################################
-
+if 'txy' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'UPDATES', usecols=list(range(19)),ttl=5)
+        txy = exist.dropna(how='all')
+        st.session_state.txy = txy
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dfup = st.session_state.txy.copy()
+################################################################################################################
 file = r'CLUSTERS.csv'
 dfa = pd.read_csv(file)
 
 clusters = dfa['CLUSTER'].unique()
+#FILTERS
+st.sidebar.subheader('**Filter from here**')
+CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+
+#create for the state
+if not CLUSTER:
+    dfearly2 = dfearly.copy()
+    dfrep2 = dfrep.copy()
+    water2 = water.copy()
+     
+else:
+if cluster:
+    dfd = dfa[dfa['CLUSTER'] == cluster].copy()
+    districts = dfd['DISTRICT'].unique()
+    district = st.radio('**CHOOSE A district**', districts, index= None, horizontal=True)
+
+    dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
+    dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
+
+    dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
+    dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
+    
+    water['CLUSTER'] = water['CLUSTER'].astype(str)
+    water2 = water[water['CLUSTER'].isin(CLUSTER)]
+################################################################################################################
+
+
 
 cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
