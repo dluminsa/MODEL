@@ -46,7 +46,7 @@ dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
 dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
 dfisx = dfisx.sort_values(by = 'index')
 dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
-dfisx = dfisx.drop(column = ['index'])
+dfisx = dfisx.drop(columns = ['index'])
 
 st.write(dfiss)
 #########################################################################################################
