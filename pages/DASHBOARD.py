@@ -43,12 +43,11 @@ st.write(dfiss.shape[0])
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss = dfiss.reset_index()
 
-dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'left')
+dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
 st.write(dfisx.shape[0])
 dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
 dfisx = dfisx.sort_values(by = 'index')
-dfx = dfisx.head(30)
-st.write(dfx)
+
 dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
 dfisx = dfisx.drop(columns = ['index'])
 
