@@ -25,7 +25,7 @@ if 'tx' not in st.session_state:
 dfdemo = st.session_state.tx.copy()
 
 dfdist = dfdemo[['CLUSTER', 'DISTRICT', 'FACILITY']].copy()
-st.write(dfdist)
+dfdist['FACILITY'] = dfdist['FACILITY'].astype(str)
 
 if 'txa' not in st.session_state:     
      try:
@@ -38,6 +38,9 @@ if 'txa' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dfiss = st.session_state.txa.copy()
+dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
+dfiss = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+st.write(dfiss)
 #########################################################################################################
 
 if 'txb' not in st.session_state:     
@@ -51,7 +54,8 @@ if 'txb' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftest = st.session_state.txb.copy()
-
+dftest['FACILITY'] = dftest['FACILITY'].astype(str)
+dftest = pd.merge(dfdist, dftest, on= 'FACILITY', how = 'outer')
 ################################################################################################################
 if 'txy' not in st.session_state:     
      try:
