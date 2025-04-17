@@ -95,10 +95,10 @@ dfup = st.session_state.txy.copy()
 clusters = dfdemo['CLUSTER'].unique()
 # #FILTERS
 st.sidebar.subheader('**Filter from here**')
-CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+cluster = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
 
 # #create for the state
-if not CLUSTER:
+if not cluster:
      dfdemo2 = dfdemo.copy()
      dftest2 = dftest.copy()
      dfup2 = dfup.copy()
