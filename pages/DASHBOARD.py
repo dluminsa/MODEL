@@ -1,4 +1,4 @@
- import pandas as pd 
+ imp ort pandas as pd 
 import streamlit as st 
 import os
 import gspread
