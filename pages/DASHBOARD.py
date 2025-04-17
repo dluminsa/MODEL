@@ -64,7 +64,7 @@ if 'txb' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftest = st.session_state.txb.copy()
-st.write(dftest.shape[0])
+
 dftest['FACILITY'] = dftest['FACILITY'].astype(str)
 dftest = dftest.reset_index()
 
@@ -75,7 +75,7 @@ dftex = dftex.sort_values(by = 'index')
 
 dftex = dftex.drop_duplicates(subset= 'index', keep='first')
 dftest = dftex.drop(columns = ['index'])
-st.write(dftest.shape[0])
+
 
 ################################################################################################################
 if 'txy' not in st.session_state:     
@@ -90,35 +90,34 @@ if 'txy' not in st.session_state:
          st.stop()
 dfup = st.session_state.txy.copy()
 # ################################################################################################################
-# file = r'CLUSTERS.csv'
-# dfa = pd.read_csv(file)
 
-# clusters = dfa['CLUSTER'].unique()
+
+clusters = dfdemo['CLUSTER'].unique()
 # #FILTERS
-# st.sidebar.subheader('**Filter from here**')
-# CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+st.sidebar.subheader('**Filter from here**')
+CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
 
 # #create for the state
-# if not CLUSTER:
-#     dfearly2 = dfearly.copy()
-#     dfrep2 = dfrep.copy()
-#     water2 = water.copy()
+if not CLUSTER:
+     dfdemo2 = dfdemo.copy()
+     dftest2 = dftest.copy()
+     dfup2 = dfup.copy()
      
-# else:
-#      pass
-# if cluster:
-#     dfd = dfa[dfa['CLUSTER'] == cluster].copy()
-#     districts = dfd['DISTRICT'].unique()
-#     district = st.radio('**CHOOSE A district**', districts, index= None, horizontal=True)
+else:
+      pass
+if cluster:
+     dfd = dfdemo[dfdemo['CLUSTER'] == cluster].copy()
+     districts = dfd['DISTRICT'].unique()
+     district = st.radio('**CHOOSE A district**', districts, index= None, horizontal=True)
 
-#     dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
-#     dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
+     dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
+     dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
 
-#     dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
-#     dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
+     dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
+     dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
     
-#     water['CLUSTER'] = water['CLUSTER'].astype(str)
-#     water2 = water[water['CLUSTER'].isin(CLUSTER)]
+     water['CLUSTER'] = water['CLUSTER'].astype(str)
+     water2 = water[water['CLUSTER'].isin(CLUSTER)]
 # ################################################################################################################
 
 
