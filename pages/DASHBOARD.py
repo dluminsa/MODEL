@@ -255,19 +255,20 @@ else:
      
 # Get counts
 district_counts = dfuse['USE'].value_counts().reset_index()
-district_counts.columns = [word, 'count']  # Rename based on dynamic word
-district_counts = district_counts.sort_values(by='count', ascending=False)
+district_counts.columns = [word, 'count']
+district_counts = district_counts.sort_values(by='count', ascending=True)  # Ascending for hbar
 
-# Plot
+# Plot horizontal bar chart with uniform light blue color
 fig = px.bar(
     district_counts,
-    x=word,
-    y='count',
-    title='Number of Records per ' + label_name,
+    y=word,
+    x='count',
+    title=f'Number of Records per {label_name}',
     labels={word: label_name, 'count': 'NUMBER VISITED'},
-    color='count'
 )
 
-fig.update_layout(xaxis_tickangle=-45)
-st.plotly_chart(fig, use_container_width=True)
+fig.update_traces(marker_color='lightblue')  # All bars same color
+fig.update_layout(yaxis=dict(tickfont=dict(size=12)), xaxis_title='NUMBER VISITED')
+
+# Show plot
 st.plotly_chart(fig, use_container_width=True)
