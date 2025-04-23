@@ -251,21 +251,21 @@ else:
      dfuse['USE'] = dfuse['DISTRICT']
      word = 'DISTRICT'
      
+# Get counts
 district_counts = dfuse['USE'].value_counts().reset_index()
-district_counts.columns = [district, 'count']
+district_counts.columns = [word, 'count']  # Rename based on dynamic word
 district_counts = district_counts.sort_values(by='count', ascending=False)
 
-
+# Plot
 fig = px.bar(
     district_counts,
-    x = district,
+    x=word,
     y='count',
-    title='Number of Records per District',
-     if len (check) ==1:
-          labels={'district': 'FACILITY', 'count': 'NUMBER VISITED'}
-     else:
-          labels={'district': 'DISTRICT', 'count': 'NUMBER VISITED'},
-    color='count',  # optional: adds color gradient based on count
+    title='Number of Records per ' + label_name,
+    labels={word: label_name, 'count': 'NUMBER VISITED'},
+    color='count'
 )
+
 fig.update_layout(xaxis_tickangle=-45)
+st.plotly_chart(fig, use_container_width=True)
 st.plotly_chart(fig, use_container_width=True)
