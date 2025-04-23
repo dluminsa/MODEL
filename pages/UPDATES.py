@@ -315,7 +315,6 @@ if not check:
     st.stop()
 elif check == 'MAKE UPDATES':
     col1, col2,col3 = st.columns(3)
-    ssss
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
          st.stop()
