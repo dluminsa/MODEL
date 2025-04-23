@@ -39,7 +39,6 @@ for facil in facilities:
 dfdemo = pd.concat(dfdemoz)
 dfdemo[['ART NO', 'DAY', 'MONTH']] = dfdemo[['ART NO', 'DAY', 'MONTH']].astype(str)
 dfdemo['ART'] = dfdemo['MONTH'] + dfdemo['DAY'] + dfdemo['ART NO'] 
-st.write(dfdemo.shape[0])
 
 
 if 'txa' not in st.session_state:     
