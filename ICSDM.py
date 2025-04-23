@@ -16,8 +16,7 @@ from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
 import datetime as dt
 
-st.write('BEING UPDATED')
-st.stop()
+
 if 'but' not in st.session_state:
         st.session_state.but = False
 cluster = ''
@@ -895,9 +894,9 @@ submit = col3.button('**SUBMIT**')
 dob = str(dob)
 todi = dt.date.today()
 todi = str(todi)
-row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher,ad, htn,dm,AS, MH]
+row1 = [cluster, district, facility,art, results, dob, age, sex, pm, dist, vil, cords, IAC, adher,ad, htn,dm,AS, MH,todi]
 row2 = [facility,art,socialx, econx, healthx, psychx, spirx, otherissue, act, prevx, condoms, vmmc, econix,vl, reason, name, name2, todi]
-row3 = [facility,art,cd, vist, lam, tblam, tbaction, crag, partners, ellig, chid, tested, pos, linked, post, screened, presumed, picked]
+row3 = [facility,art,cd, vist, lam, tblam, tbaction, crag, partners, ellig, chid, tested, pos, linked, post, screened, presumed, picked,todi]
 if 'sub' not in st.session_state:
     st.session_state.sub = False
 if not submit:
