@@ -179,20 +179,13 @@ for fac in facilities:
      
 dfdemo1 = pd.concat(dfdemz)
 
-st.write(dfdemo1.shape[0])
-st.write(dfdemo1.columns)
-dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
-dfiss['ART'] = pd.to_numeric(dfiss['ART'], errors = 'coerce')
-dfdemo1['ART'] = pd.to_numeric(dfdemo1['ART'], errors = 'coerce')
-
-
 ############################################################################
 #last merged
 
 dfdemoz = []
 dfissx = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
 for fac in facilities:
-     dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
+     dfdemu = dfdemo1[dfdemo1['FACILITY']==fac].copy()
      dfissu = dfissx[dfissx['FACILITY']==fac].copy()
      dfissu = dfissu.drop(columns ='FACILITY')
      dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
