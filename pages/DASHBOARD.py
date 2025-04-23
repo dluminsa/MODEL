@@ -55,9 +55,9 @@ for facil in facilities:
            distr = ''
            clus = ''
      dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
-     dfissa[['ARTNO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ARTNO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
      dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
-     dfissa = dfissa.drop_duplicates(subset = ['ARTNO', 'YEAR', 'MONTH', 'DAY'])
+     dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
      dfissz.append(dfissa)
 dfiss = pd.concat(dfissz)
 
