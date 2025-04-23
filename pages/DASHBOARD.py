@@ -268,7 +268,7 @@ fig = px.bar(
     labels={word: label_name, 'count': 'NUMBER VISITED'},
 )
 fig.update_traces(
-    marker_color='lightblue',                 # Set all bars to light blue
+    marker_color='green',                 # Set all bars to light blue
     text=district_counts['count'],            # Labels for each bar
     textposition='auto',                      # Auto label positioning
     textfont=dict(color='black', size=12)     # Label font style
