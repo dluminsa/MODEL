@@ -677,7 +677,11 @@ elif check == 'DOWNLOAD FORM':
 if st.session_state.form:
     col1, col2,col3 = st.columns(3)
     artu = col1.number_input('**SEARCH ART No.**', value=None, step=1, key =11)
+    artu = int(float(artu))
     if artu:
+         dfdemo['ART NO'] = pd.to_numeric(dfdemo['ART NO'], errors = 'coerce')
+         dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
+         dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
          dfdemo = dfdemo[dfdemo['ART NO'] == artu].copy()
          dftest= dftest[dftest['ART NO'] == artu].copy()
          dfiss = dfiss[dfiss['ART NO'] == artu].copy()
