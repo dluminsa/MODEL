@@ -699,9 +699,10 @@ if st.session_state.form:
                    dfdemy= dfdemo.copy()
                    dftesty = dftest.copy()
                    dfisy = dfiss.copy()
+                   dfdemy['ART NO'] = dfdemy['ART NO'].astype(str)
                    
                    arty = dfdemy.iloc[0,3]
-                   arty = int(arty)
+                   
                    a = arty
                    b = dfdemy.iloc[0,12]
                    c = dfdemy.iloc[0,6]
