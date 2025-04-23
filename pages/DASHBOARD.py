@@ -185,7 +185,7 @@ else:
      dfuse['CLUSTER'] = dfuse['CLUSTER'].astype(str)
      dfuse2 = dfuse[dfuse['CLUSTER'].isin(cluster)].copy()
      
- district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfuse2['DISTRICT'].unique(), key='b')
+district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfuse2['DISTRICT'].unique(), key='b')
 
 if not district:
      dfuse3 = dfuse2.copy()
