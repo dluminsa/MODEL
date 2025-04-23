@@ -24,9 +24,23 @@ if 'tx' not in st.session_state:
          st.stop()
 dfdemo = st.session_state.tx.copy()
 
-dfdist = dfdemo[['CLUSTER', 'DISTRICT', 'FACILITY']].copy()
-dfdist['FACILITY'] = dfdist['FACILITY'].astype(str)
-facilities = dfdist['FACILITY'].unique()
+dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
+dfdemo['DT'] = dfdemo['DATE'].astype(str)
+facilities = dfdemo['FACILITY'].unique()
+
+dfdemoz = []
+for facil in facilities:
+     dfissa = dfdemo[dfdemo['FACILITY']==facil].copy()
+     dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
+     dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+     dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+     dfdemozz.append(dfissa)
+dfdemo = pd.concat(dfdemoz)
+dfdemo[['ART NO', 'DAY', 'MONTH']] = dfdemo[['ART NO', 'DAY', 'MONTH']].astype(str)
+dfdemo['ART'] = dfdemo['MONTH'] + dfdemo['DAY'] + dfdemo['ART NO'] 
+st.write(dfdemo.shape[0])
+
 
 if 'txa' not in st.session_state:     
      try:
@@ -64,7 +78,7 @@ for facil in facilities:
 dfiss = pd.concat(dfissz)
 dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
 dfiss['ART'] = dfiss['MONTH'] + dfiss['DAY'] + dfiss['ART NO'] 
-st.write(dfiss.shape[0])
+
 
 #########################################################################################################
 
@@ -105,7 +119,7 @@ for facil in facilities:
 dftest = pd.concat(dfissz)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
-st.write(dftest.shape[0])
+
 
 ################################################################################################################
 if 'txy' not in st.session_state:     
