@@ -201,6 +201,40 @@ dftest[['DAY', 'MONTH']] = dftest[['DAY', 'MONTH']].astype(int)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
 ################################################################################################################
+#ONE MERGED ONE
+facilities = dfdemo['FACILITY'].unique()
+
+dfdemz = []
+dfissx = dfiss.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
+for fac in facilities:
+     dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
+     dfissu = dfissx[dfissx['FACILITY']==fac].copy()
+     dfissu = dfissu.drop(columns ='FACILITY')
+     dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
+     dfissu['ART'] = pd.to_numeric(dfissu['ART'], errors = 'coerce')
+     dfd = pd.merge(dfdemu, dfissu, on = 'ART', how = 'inner')
+     dfdemz.append(dfd)
+     
+dfdemo1 = pd.concat(dfdemz)
+
+############################################################################
+#last merged
+
+dfdemoz = []
+
+dfissy = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
+
+for fac in facilities:
+     dfdemux = dfdemo1[dfdemo1['FACILITY']==fac].copy()
+     dfissh = dfissy[dfissy['FACILITY']==fac].copy()
+     dfissh = dfissh.drop(columns ='FACILITY')
+     dfdemux['ART'] = pd.to_numeric(dfdemux['ART'], errors = 'coerce')
+     dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce') 
+     dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
+     dfdemoz.append(dfd)
+
+dfdemo2 = pd.concat(dfdemoz)
+################################################################################################################
 
 file = r'CLUSTERS.csv'
 dfa = pd.read_csv(file)
@@ -285,12 +319,25 @@ elif check == 'MAKE UPDATES':
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
          st.stop()
-    dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
-    if dfdemo.shape[0] == 0:
+    dfdemo2 = dfdemo2[dfdemo2['ART NO'] == art].copy()
+    if dfdemo2.shape[0] == 0:
          st.info(f'**ART NO {art} NOT FOUND IN THE DATA BASE**')
          st.stop()
+    elif dfdemo2.shape[0] > 1:
+         st.info('**THIS CLIENT WAS REVISITED', UPDATES FOR WHICH IAC SESSION ARE YOU MAKING?**')
+         options = dfdemoz['IAC'].unique()
+         iac = st.select_box('**CHOOSE FROM HERE**', options, index = None)
+         if not iac:
+              st.stop()
+         else:
+              dfdemo2 = dfdemo2[dfdemo2['IAC'] == iac].copy()
+              dfdemo = dfdemo2[['CLUSTER', 'DISTRICT', 'FACILITY', 'LETTER', 'ART NO', 'RESULTS', 'DOB','AGE', 'SEX', 'PMTCT', 'DISTRI', 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD','htn', 'dm', 'AS', 'MH']].copy()
+              dftest = dfdemo2[[['FACILITY', 'ART NO', 'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH','SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS','VL', 'REASON', 'NAME', 'NAME2', 'DATE']].copy()
+              dfiss  = dfdemo2[['FACILITY', 'ART NO', 'CD4', 'VISITECT', 'LAM', 'TBLAM','TB RX', 'CRAG', 'PARTNERS', 'ELLIG', 'CHILD', 'TESTED', 'POS','LINKED', 'POST', 'SCREENED', 'PRESUMED', 'PICKED']].copy()
     else:
-         pass
+         dfdemo = dfdemo2[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'RESULTS', 'DOB','AGE', 'SEX', 'PMTCT', 'DISTRI, 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD','htn', 'dm', 'AS', 'MH']].copy()
+         dftest = dfdemo2[[['FACILITY', 'ART NO', 'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH','SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS','VL', 'REASON', 'NAME', 'NAME2', 'DATE']].copy()
+         dfiss  = dfdemo2[['FACILITY', 'ART NO', 'CD4', 'VISITECT', 'LAM', 'TBLAM','TB RX', 'CRAG', 'PARTNERS', 'ELLIG', 'CHILD', 'TESTED', 'POS','LINKED', 'POST', 'SCREENED', 'PRESUMED', 'PICKED']].copy()
     dftest= dftest[dftest['ART NO'] == art].copy()
     #dftest['PARTNERS'] = pd.to_numeric(dftest['PARTNERS'], errors = 'coerce')
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
