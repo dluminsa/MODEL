@@ -192,6 +192,8 @@ for fac in facilities:
      dfissh = dfissh.drop(columns ='FACILITY')
      dfdemux['ART'] = pd.to_numeric(dfdemux['ART'], errors = 'coerce')
      dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce')
+     st.write(dfdemux['ART'].head(1))
+     st.write(dfissh['ART'].head(1))
      dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
      dfdemoz.append(dfd)
 
