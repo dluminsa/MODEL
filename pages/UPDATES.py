@@ -820,7 +820,6 @@ if st.session_state.form:
                    dfisy = dfiss[dfiss['ART NO'] == arty].copy()
                    dftsty = dftest[dftest['ART NO'] == arty].copy() 
                    a = arty
-                   # a,arty = int(float(arty))
                    b = dfdemy.iloc[0,12]
                    c = dfdemy.iloc[0,6]
                    d = dfdemy.iloc[0,7]
@@ -921,9 +920,8 @@ if st.session_state.form:
               
               
              # Provide a download button
-              # artyz = int(float(arty))
-              st.download_button(
-                 artyz = int(float(arty))  
+              artyz = int(float(arty))
+              st.download_button(  
                  label=f"DOWNLOAD FORM FOR ART NO: {artyz:,.0f}",
                  data=doc_file,
                  file_name=f"FORM FOR ART NO: {artyz:,.0f}.docx",
