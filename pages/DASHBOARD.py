@@ -115,7 +115,7 @@ for facil in facilities:
      dftisa['CLUSTER'] = clus
      dftestz.append(dftisa)
      
-dftest = pd.concat(dfissz)
+dftest = pd.concat(dftestz)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
 st.write(dftest.columns)
