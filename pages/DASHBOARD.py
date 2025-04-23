@@ -163,7 +163,22 @@ if cluster:
      water2 = water[water['CLUSTER'].isin(CLUSTER)]
 # ################################################################################################################
 
+#ONE MERGED ONE
+facilities = dfdemo['FACILITY'].unique()
 
+dfdemz = []
+for fac in facilities:
+     dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
+     dfissu = dfiss[dfiss['FACILITY']==fac].copy()
+     dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
+     dfissu['ART'] = pd.to_numeric(dfissu['ART'], errors = 'coerce')
+     dfd = pd.merge(dfdemu, dfissu, on = 'ART', how = 'inner')
+     dfdemz.append(dfd)
+     
+dfdemo1 = pd.concat(dfdemz)
+
+st.write(dfdemo1.shape[0])
+st.write(dfdemo.columns)
 
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
