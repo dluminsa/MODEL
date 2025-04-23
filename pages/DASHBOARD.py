@@ -118,6 +118,7 @@ for facil in facilities:
 dftest = pd.concat(dfissz)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
+st.write(dftest.columns)
 
 
 ################################################################################################################
@@ -183,7 +184,10 @@ dfdemo1 = pd.concat(dfdemz)
 #last merged
 
 dfdemoz = []
+st.write(dfdemo1.columns)
+
 dfissy = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
+st.write(dfissy.columns)
 for fac in facilities:
      dfdemux = dfdemo1[dfdemo1['FACILITY']==fac].copy()
      dfissh = dfissy[dfissy['FACILITY']==fac].copy()
