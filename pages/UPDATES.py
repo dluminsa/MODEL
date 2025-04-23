@@ -813,8 +813,9 @@ if st.session_state.form:
               def create_docx():
                    dfdemy = dfdemo[dfdemo['ART NO'] == arty].copy()
                    dfisy = dfiss[dfiss['ART NO'] == arty].copy()
-                   dftsty = dftest[dftest['ART NO'] == arty].copy()            
-                   a,arty = int(float(arty))
+                   dftsty = dftest[dftest['ART NO'] == arty].copy() 
+                   a = arty
+                   # a,arty = int(float(arty))
                    b = dfdemy.iloc[0,12]
                    c = dfdemy.iloc[0,6]
                    d = dfdemy.iloc[0,7]
