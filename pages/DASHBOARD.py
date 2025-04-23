@@ -92,7 +92,7 @@ if 'txb' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftest = st.session_state.txb.copy()
-st.write(dftest.shape[0])
+st.write(dftest.head(5))
 
 dftest['FACILITY'] = dftest['FACILITY'].astype(str)
 dftest['DT'] = dftest['DATE'].astype(str)
