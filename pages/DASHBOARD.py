@@ -246,11 +246,13 @@ check = dfuse['DISTRICT'].unique()
 
 if len (check) ==1:
      dfuse['USE'] = dfuse['DISTRICT']
+     word = 'DISTRICT'
 else:
      dfuse['USE'] = dfuse['FACILITY']
+     word = 'FACILITY'
      
-district_counts = dfuse['DISTRICT'].value_counts().reset_index()
-district_counts.columns = ['DISTRICT', 'count']
+district_counts = dfuse['USE'].value_counts().reset_index()
+district_counts.columns = [word, 'count']
 district_counts = district_counts.sort_values(by='count', ascending=False)
 
 
@@ -263,4 +265,4 @@ fig = px.bar(
     color='count',  # optional: adds color gradient based on count
 )
 fig.update_layout(xaxis_tickangle=-45)
- st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
