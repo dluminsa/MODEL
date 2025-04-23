@@ -136,32 +136,6 @@ dfup = st.session_state.txy.copy()
 # ################################################################################################################
 
 
-clusters = dfdemo['CLUSTER'].unique()
-# #FILTERS
-st.sidebar.subheader('**Filter from here**')
-cluster = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
-
-# #create for the state
-if not cluster:
-     dfdemo2 = dfdemo.copy()
-     dftest2 = dftest.copy()
-     dfup2 = dfup.copy()
-     
-else:
-      pass
-if cluster:
-     dfd = dfdemo[dfdemo['CLUSTER'] == cluster].copy()
-     districts = dfd['DISTRICT'].unique()
-     district = st.radio('**CHOOSE A district**', districts, index= None, horizontal=True)
-
-     dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
-     dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
-     dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
-     dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
-     water['CLUSTER'] = water['CLUSTER'].astype(str)
-     water2 = water[water['CLUSTER'].isin(CLUSTER)]
-# ################################################################################################################
-
 #ONE MERGED ONE
 facilities = dfdemo['FACILITY'].unique()
 
@@ -195,17 +169,80 @@ for fac in facilities:
      dfdemoz.append(dfd)
 
 dfdemo2 = pd.concat(dfdemoz)
+dfuse = dfdemo2.copy()
+#########################################################################################################
+#FILTERS
+clusters = dfuse['CLUSTER'].unique()
+# #FILTERS
+st.sidebar.subheader('**Filter from here**')
+cluster = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+
+# #create for the state
+if not cluster:
+     dfuse2 = dfuse.copy()
+     
+else:
+     dfuse['CLUSTER'] = dfuse['CLUSTER'].astype(str)
+     dfuse2 = dfuse[dfuse['CLUSTER'].isin(cluster)].copy()
+     
+ district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfuse2['DISTRICT'].unique(), key='b')
+
+if not district:
+     dfuse3 = dfuse2.copy()
+     
+else:
+     dfuse2['DISTRICT'] = dfuse2['DISTRICT'].astype(str)
+     dfuse3 = dfuse2[dfuse2['DISTRICT'].isin(district)].copy()
+
+facility = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfuse3['FACILITY'].unique(), key='b')
+
+if not facility:
+     dfuse4 = dfuse3.copy()
+     
+else:
+     dfuse3['FACILITY'] = dfuse3['FACILITY'].astype(str)
+     dfuse4 = dfuse3[dfuse3['FACILITY'].isin(facility)]
+
+dfuse = dfuse4.copy()
+if cluster:
+    dfuse = dfuse[dfuse['CLUSTER'].isin(cluster)].copy()
+
+if district:
+     dfuse = dfuse[dfuse['DISTRICT'].isin(district)].copy()
+     
+if facility:
+     dfuse = dfuse[dfuse['FACILITY'].isin(facility)].copy()
 
 
-dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
-dftest['ART'] = pd.to_numeric(dftest['ART'], errors = 'coerce')
-dfdemo2['ART'] = pd.to_numeric(dfdemo2['ART'], errors = 'coerce')
+#########################################################################################################
+##QUICK SUMMARY
+st.divider()
+cola, colb, colc = st.columns(3)
+colb.success('**QUICK SUMMARY**')
+cola, colb, colc, cold, cole = st.columns(5)
+cola.info('**TOTAL NS VISITED**')
+colb.info('**HLVs**')
+colc.info('**PARTNERS**')
+cold.info('**REBLED**')
+cole.info('**SPUTUM SAMPLES**')
 
-dfc = dfdemo[~dfdemo['ART'].isin(dfdemo2['ART'])]
-st.write(dfc)
+q1 = dfuse.shape[0]
+bal = pd.to_numeric(dfuse['PARTNERS'], errors='coerce').sum()
+hlvs  = dfuse[dfuse['RESULTS']>999].copy()
+q2 = hlvs.shape[0]
+reb = dfuse[dfuse['VL']=='YES'].copy()
+txm = reb.shape[0]
+txmp = pd.to_numeric(dfuse['PICKED'], errors='coerce').sum() 
 
-dfc = dftest[~dftest['ART'].isin(dfdemo2['ART'])]
-st.write(dfc)
+
+cola.metric(label='a', value =f'{q1}', label_visibility='hidden')
+colb.metric(label='b', value =f'{q2}', label_visibility='hidden')
+colc.metric(label='c', value =f'{bal}', label_visibility='hidden')
+cold.metric(label='d', value =f'{txm}', label_visibility='hidden')
+cole.metric(label='e', value =f'{txmp}', label_visibility='hidden')
+
+
+
 
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
