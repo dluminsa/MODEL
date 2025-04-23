@@ -245,23 +245,26 @@ cold.metric(label='d', value =f'{txm}', label_visibility='hidden')
 check = dfuse['DISTRICT'].unique()
 
 if len (check) ==1:
-     dfuse['USE'] = dfuse['DISTRICT']
-     word = 'DISTRICT'
-else:
      dfuse['USE'] = dfuse['FACILITY']
      word = 'FACILITY'
+else:
+     dfuse['USE'] = dfuse['DISTRICT']
+     word = 'DISTRICT'
      
 district_counts = dfuse['USE'].value_counts().reset_index()
-district_counts.columns = [word, 'count']
+district_counts.columns = [district, 'count']
 district_counts = district_counts.sort_values(by='count', ascending=False)
 
 
 fig = px.bar(
     district_counts,
-    x='district',
+    x = district
     y='count',
     title='Number of Records per District',
-    labels={'district': 'District', 'count': 'Count'},
+     if len (check) ==1:
+          labels={'district': 'FACILITY', 'count': 'NUMBER VISITED'}
+     else:
+          labels={'district': 'DISTRICT', 'count': 'NUMBER VISITED'},
     color='count',  # optional: adds color gradient based on count
 )
 fig.update_layout(xaxis_tickangle=-45)
