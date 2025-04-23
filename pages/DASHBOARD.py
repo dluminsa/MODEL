@@ -118,7 +118,7 @@ for facil in facilities:
 dftest = pd.concat(dftestz)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
-st.write(dftest.columns)
+st.write(dftest.shape[0])
 
 
 ################################################################################################################
