@@ -247,9 +247,11 @@ check = dfuse['DISTRICT'].unique()
 if len (check) ==1:
      dfuse['USE'] = dfuse['FACILITY']
      word = 'FACILITY'
+     label_name = 'FACILITY'
 else:
      dfuse['USE'] = dfuse['DISTRICT']
      word = 'DISTRICT'
+     label_name = 'DISTRICT'
      
 # Get counts
 district_counts = dfuse['USE'].value_counts().reset_index()
