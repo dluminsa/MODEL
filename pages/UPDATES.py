@@ -55,18 +55,72 @@ tbneg = ''
 sup = ''
 
 
-st.write('**FOLLOW UP SECTION ON AREAS NOT COMPLETED FROM THE FIELD**')
+# st.write('**FOLLOW UP SECTION ON AREAS NOT COMPLETED FROM THE FIELD**')
+# if 'tx' not in st.session_state:     
+#      try:
+#         #cola,colb= st.columns(2)
+#         conn = st.connection('gsheets', type=GSheetsConnection)
+#         exist = conn.read(worksheet= 'DEMO', usecols=list(range(19)),ttl=5)
+#         tx = exist.dropna(how='all')
+#         st.session_state.tx = tx
+#      except:
+#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+#          st.stop()
+# dfdemo = st.session_state.tx.copy()
+
+# if 'txa' not in st.session_state:     
+#      try:
+#         #cola,colb= st.columns(2)
+#         conn = st.connection('gsheets', type=GSheetsConnection)
+#         exist = conn.read(worksheet= 'ISSUES', usecols=list(range(18)),ttl=5)
+#         txa = exist.dropna(how='all')
+#         st.session_state.txa = txa
+#      except:
+#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+#          st.stop()
+# dfiss = st.session_state.txa.copy()
+# #########################################################################################################
+
+# if 'txb' not in st.session_state:     
+#      try:
+#         #cola,colb= st.columns(2)
+#         conn = st.connection('gsheets', type=GSheetsConnection)
+#         exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
+#         txb = exist.dropna(how='all')
+#         st.session_state.txb = txb
+#      except:
+#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+#          st.stop()
+# dftest = st.session_state.txb.copy()
+###############################################################################################################
 if 'tx' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'DEMO', usecols=list(range(19)),ttl=5)
+        exist = conn.read(worksheet= 'DEMO', usecols=list(range(20)),ttl=5)
         tx = exist.dropna(how='all')
         st.session_state.tx = tx
      except:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dfdemo = st.session_state.tx.copy()
+
+dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
+dfdemo['DT'] = dfdemo['DATE'].astype(str)
+facilities = dfdemo['FACILITY'].unique()
+
+dfdemoz = []
+for facil in facilities:
+     dfissa = dfdemo[dfdemo['FACILITY']==facil].copy()
+     dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
+     dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+     dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+     dfdemoz.append(dfissa)
+dfdemo = pd.concat(dfdemoz)
+dfdemo[['ART NO', 'DAY', 'MONTH']] = dfdemo[['ART NO', 'DAY', 'MONTH']].astype(str)
+dfdemo['ART'] = dfdemo['MONTH'] + dfdemo['DAY'] + dfdemo['ART NO'] 
+
 
 if 'txa' not in st.session_state:     
      try:
@@ -79,13 +133,40 @@ if 'txa' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dfiss = st.session_state.txa.copy()
+
+dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
+dfiss['DT'] = dfiss['DATE'].astype(str)
+facilities = dfiss['FACILITY'].unique()
+
+dfissz = []
+for facil in facilities:
+     dfissa = dfiss[dfiss['FACILITY']==facil].copy()
+     dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
+     try:
+          distr = dfdemu.iloc[0,1]
+          clus = dfdemu.iloc[0,0]
+     except:
+           distr = ''
+           clus = ''
+     dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
+     dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+     dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+     dfissa['DISTRICT'] = distr
+     dfissa['CLUSTER'] = clus
+     dfissz.append(dfissa)
+dfiss = pd.concat(dfissz)
+dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
+dfiss['ART'] = dfiss['MONTH'] + dfiss['DAY'] + dfiss['ART NO'] 
+
+
 #########################################################################################################
 
 if 'txb' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
+        exist = conn.read(worksheet= 'TESTS', usecols=list(range(19)),ttl=5)
         txb = exist.dropna(how='all')
         st.session_state.txb = txb
      except:
@@ -93,6 +174,32 @@ if 'txb' not in st.session_state:
          st.stop()
 dftest = st.session_state.txb.copy()
 
+dftest['FACILITY'] = dftest['FACILITY'].astype(str)
+dftest['DT'] = dftest['DATE'].astype(str)
+facilities = dftest['FACILITY'].unique()
+
+dftestz = []
+for facil in facilities:
+     dftisa = dftest[dftest['FACILITY']==facil].copy()
+     dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
+     try:
+          distr = dfdemu.iloc[0,1]
+          clus = dfdemu.iloc[0,0]
+     except:
+           distr = ''
+           clus = ''
+     dftisa[['YEAR','MONTH','DAY']] = dftisa['DT'].str.split('-', expand=True)
+     dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dftisa = dftisa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+     dftisa = dftisa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+     dftisa['DISTRICT'] = distr
+     dftisa['CLUSTER'] = clus
+     dftestz.append(dftisa)
+     
+dftest = pd.concat(dftestz)
+dftest[['DAY', 'MONTH']] = dftest[['DAY', 'MONTH']].astype(int)
+dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
+dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
 ################################################################################################################
 
 file = r'CLUSTERS.csv'
@@ -162,8 +269,6 @@ for facx in factz:
 dftest = pd.concat(dftestz)
 
 
-
-
 filen = r'ALL.csv'
 dfn = pd.read_csv(filen)
 
@@ -180,9 +285,6 @@ elif check == 'MAKE UPDATES':
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
          st.stop()
-    # dftest['ART NO'] = pd.to_numeric(dftest['ART NO'], errors = 'coerce')
-    # dfdemo['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
-    #dfiss['ART NO'] = pd.to_numeric(dfiss['ART NO'], errors = 'coerce')
     dfdemo = dfdemo[dfdemo['ART NO'] == art].copy()
     if dfdemo.shape[0] == 0:
          st.info(f'**ART NO {art} NOT FOUND IN THE DATA BASE**')
