@@ -109,7 +109,7 @@ for facil in facilities:
            distr = ''
            clus = ''
      dftisa[['YEAR','MONTH','DAY']] = dftisa['DT'].str.split('-', expand=True)
-     dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
      dftisa = dftisa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
      dftisa = dftisa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
      dftisa['DISTRICT'] = distr
