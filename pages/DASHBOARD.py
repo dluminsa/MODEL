@@ -190,6 +190,8 @@ for fac in facilities:
      dfdemux = dfdemo1[dfdemo1['FACILITY']==fac].copy()
      dfissh = dfissy[dfissy['FACILITY']==fac].copy()
      dfissh = dfissh.drop(columns ='FACILITY')
+     st.write(dfissh.shape[0])
+     st.write(dfdemux.shape[0])
      dfdemux['ART'] = pd.to_numeric(dfdemux['ART'], errors = 'coerce')
      dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce')
      dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
