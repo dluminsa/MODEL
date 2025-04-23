@@ -241,6 +241,7 @@ colb.metric(label='b', value =f'{q2}', label_visibility='hidden')
 colc.metric(label='c', value =f'{bal}', label_visibility='hidden')
 cold.metric(label='d', value =f'{txm}', label_visibility='hidden')
 #cole.metric(label='e', value =f'{txmp}', label_visibility='hidden')
+st.divider()
 
 check = dfuse['DISTRICT'].unique()
 
@@ -263,7 +264,7 @@ fig = px.bar(
     district_counts,
     y=word,
     x='count',
-    title=f'Number of Records per {label_name}',
+    title=f'Number of visits done per {label_name}',
     labels={word: label_name, 'count': 'NUMBER VISITED'},
 )
 fig.update_traces(
