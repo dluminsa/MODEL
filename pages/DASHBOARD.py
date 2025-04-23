@@ -196,6 +196,7 @@ for fac in facilities:
      dfdemoz.append(dfd)
      
 dfdemo2 = pd.concat(dfdemoz)
+st.write(dfdemo2.shape[0])
 
 dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
 dftest['ART'] = pd.to_numeric(dftest['ART'], errors = 'coerce')
