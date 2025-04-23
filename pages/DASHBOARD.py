@@ -258,7 +258,7 @@ district_counts = district_counts.sort_values(by='count', ascending=False)
 
 fig = px.bar(
     district_counts,
-    x = district
+    x = district,
     y='count',
     title='Number of Records per District',
      if len (check) ==1:
