@@ -63,7 +63,7 @@ for facil in facilities:
      dfissz.append(dfissa)
 dfiss = pd.concat(dfissz)
 dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
-dfiss['ART'] = dfiss['ART NO'] + dfiss['MONTH'] + dfiss['DAY']
+dfiss['ART'] = dfiss['MONTH'] + dfiss['DAY'] + dfiss['ART NO'] 
 st.write(dfiss)
      
 
