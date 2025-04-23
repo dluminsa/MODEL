@@ -267,12 +267,11 @@ fig = px.bar(
     labels={word: label_name, 'count': 'NUMBER VISITED'},
 )
 fig.update_traces(
-    text=district_counts['count'],           # Text to display on bars
-    textposition='auto',                     # Let Plotly choose best spot
-    textfont=dict(color='black', size=12,
-    marker_color='lightblue')    # Customize font color/size
+    marker_color='lightblue',                 # Set all bars to light blue
+    text=district_counts['count'],            # Labels for each bar
+    textposition='auto',                      # Auto label positioning
+    textfont=dict(color='black', size=12)     # Label font style
 )
-fig.update_traces(marker_color='lightblue')  # All bars same color
 fig.update_layout(yaxis=dict(tickfont=dict(size=12)), xaxis_title='NUMBER VISITED')
 
 # Show plot
