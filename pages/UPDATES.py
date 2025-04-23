@@ -318,6 +318,8 @@ elif check == 'MAKE UPDATES':
     art = col1.number_input('**SEARCH ART No.**', value=None, step=1, key = 1)
     if not art:
          st.stop()
+    dfdemo2['ART NO'] = pd.to_numeric(dfdemo2['ART NO'], errors='coerce')
+    art = int(float(art))
     dfdemo2 = dfdemo2[dfdemo2['ART NO'] == art].copy()
     if dfdemo2.shape[0] == 0:
          st.info(f'**ART NO {art} NOT FOUND IN THE DATA BASE**')
