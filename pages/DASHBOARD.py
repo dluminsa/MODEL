@@ -206,7 +206,7 @@ st.write(dfc)
 
 dfc = dftest[~dftest['ART'].isin(dfdemo2['ART'])]
 st.write(dfc)
-
+st.write(dfdemo2.head(5))
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
 # if not cluster:
