@@ -16,6 +16,8 @@ from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
 import datetime as dt
 
+st.write('BEING UPDATED')
+st.stop()
 if 'but' not in st.session_state:
         st.session_state.but = False
 cluster = ''
