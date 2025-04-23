@@ -324,7 +324,7 @@ elif check == 'MAKE UPDATES':
          st.info(f'**ART NO {art} NOT FOUND IN THE DATA BASE**')
          st.stop()
     elif dfdemo2.shape[0] > 1:
-         st.info('**THIS CLIENT WAS REVISITED', UPDATES FOR WHICH IAC SESSION ARE YOU MAKING?**')
+         st.info('**THIS CLIENT WAS REVISITED, UPDATES FOR WHICH IAC SESSION ARE YOU MAKING?**')
          options = dfdemoz['IAC'].unique()
          iac = st.select_box('**CHOOSE FROM HERE**', options, index = None)
          if not iac:
