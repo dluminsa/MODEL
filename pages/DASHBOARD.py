@@ -116,6 +116,7 @@ for facil in facilities:
      dftestz.append(dftisa)
      
 dftest = pd.concat(dftestz)
+dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(int)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
 st.write(dftest.head(5))
