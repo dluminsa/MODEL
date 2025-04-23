@@ -62,7 +62,8 @@ for facil in facilities:
      dfissa['CLUSTER'] = clus
      dfissz.append(dfissa)
 dfiss = pd.concat(dfissz)
-
+dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
+dfiss['ART'] = dfiss['ART NO'] + dfiss['MONTH'] + dfiss['DAY']
 st.write(dfiss.head(5))
      
 
