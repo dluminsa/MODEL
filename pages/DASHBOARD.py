@@ -119,8 +119,6 @@ dftest = pd.concat(dftestz)
 dftest[['DAY', 'MONTH']] = dftest[['DAY', 'MONTH']].astype(int)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
-st.write(dftest.head(5))
-st.write('here')
 
 
 ################################################################################################################
@@ -208,7 +206,7 @@ st.write(dfc)
 
 dfc = dftest[~dftest['ART'].isin(dfdemo2['ART'])]
 st.write(dfc)
-st.write(dfdemo2.head(5))
+
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
 # if not cluster:
