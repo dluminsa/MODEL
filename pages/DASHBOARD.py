@@ -64,16 +64,7 @@ for facil in facilities:
 dfiss = pd.concat(dfissz)
 dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
 dfiss['ART'] = dfiss['MONTH'] + dfiss['DAY'] + dfiss['ART NO'] 
-st.write(dfiss)
-     
-
-# dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
-
-# dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
-# dfisx = dfisx.sort_values(by = 'index')
-
-# dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
-# dfiss = dfisx.drop(columns = ['index'])
+st.write(dfiss.shape[0])
 
 #########################################################################################################
 
@@ -90,16 +81,31 @@ if 'txb' not in st.session_state:
 dftest = st.session_state.txb.copy()
 
 dftest['FACILITY'] = dftest['FACILITY'].astype(str)
-dftest = dftest.reset_index()
+dftest['DT'] = dftest['DATE'].astype(str)
+facilities = dftest['FACILITY'].unique()
 
-dftex = pd.merge(dfdist, dftest, on= 'FACILITY', how = 'outer')
-
-dftex['index'] = pd.to_numeric(dftex['index'], errors='coerce')
-dftex = dftex.sort_values(by = 'index')
-
-dftex = dftex.drop_duplicates(subset= 'index', keep='first')
-dftest = dftex.drop(columns = ['index'])
-
+dftestz = []
+for facil in facilities:
+     dftisa = dftest[dftest['FACILITY']==facil].copy()
+     dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
+     try:
+          distr = dfdemu.iloc[0,1]
+          clus = dfdemu.iloc[0,0]
+     except:
+           distr = ''
+           clus = ''
+     dftisa[['YEAR','MONTH','DAY']] = dftisa['DT'].str.split('-', expand=True)
+     dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dftisa = dftisa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+     dftisa = dftisa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+     dftisa['DISTRICT'] = distr
+     dftisa['CLUSTER'] = clus
+     dftestz.append(dftisa)
+     
+dftest = pd.concat(dfissz)
+dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
+dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
+st.write(dftest.shape[0])
 
 ################################################################################################################
 if 'txy' not in st.session_state:     
