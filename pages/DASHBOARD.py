@@ -178,7 +178,12 @@ for fac in facilities:
 dfdemo1 = pd.concat(dfdemz)
 
 st.write(dfdemo1.shape[0])
-st.write(dfdemo.columns)
+st.write(dfdemo1.columns)
+dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
+dfdemo1['ART'] = pd.to_numeric(dfdemo1['ART'], errors = 'coerce')
+
+dfck = dfdemo[~dfdemo['ART'].isin(dfdemo1))]
+st.write(dfck)
 
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
