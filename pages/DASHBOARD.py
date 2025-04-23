@@ -92,7 +92,6 @@ if 'txb' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftest = st.session_state.txb.copy()
-st.write(dftest.head(5))
 
 dftest['FACILITY'] = dftest['FACILITY'].astype(str)
 dftest['DT'] = dftest['DATE'].astype(str)
@@ -119,7 +118,6 @@ for facil in facilities:
 dftest = pd.concat(dftestz)
 dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
 dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
-st.write(dftest.shape[0])
 
 
 ################################################################################################################
@@ -185,10 +183,9 @@ dfdemo1 = pd.concat(dfdemz)
 #last merged
 
 dfdemoz = []
-st.write(dfdemo1.columns)
 
 dfissy = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
-st.write(dfissy.columns)
+
 for fac in facilities:
      dfdemux = dfdemo1[dfdemo1['FACILITY']==fac].copy()
      dfissh = dfissy[dfissy['FACILITY']==fac].copy()
@@ -200,17 +197,15 @@ for fac in facilities:
      
 dfdemo2 = pd.concat(dfdemoz)
 
-st.write(dfdemo2.shape[0])
-st.write(dfdemo2.columns)
 dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
 dftest['ART'] = pd.to_numeric(dftest['ART'], errors = 'coerce')
 dfdemo2['ART'] = pd.to_numeric(dfdemo2['ART'], errors = 'coerce')
 
-dfck = dfdemo[~dfdemo['ART'].isin(dfdemo2['ART'])]
-st.write(dfck)
+dfc = dfdemo[~dfdemo['ART'].isin(dfdemo2['ART'])]
+st.write(dfc)
 
-dfck = dftest[~dftest['ART'].isin(dfdemo2['ART'])]
-st.write(dfck)
+dfc = dftest[~dftest['ART'].isin(dfdemo2['ART'])]
+st.write(dfc)
 
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
 
