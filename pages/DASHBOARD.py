@@ -167,9 +167,11 @@ if cluster:
 facilities = dfdemo['FACILITY'].unique()
 
 dfdemz = []
+dfissx = dfiss.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
 for fac in facilities:
      dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
-     dfissu = dfiss[dfiss['FACILITY']==fac].copy()
+     dfissu = dfissx[dfissx['FACILITY']==fac].copy()
+     dfissu = dfissu.drop(columns ='FACILITY')
      dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
      dfissu['ART'] = pd.to_numeric(dfissu['ART'], errors = 'coerce')
      dfd = pd.merge(dfdemu, dfissu, on = 'ART', how = 'inner')
@@ -183,10 +185,33 @@ dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
 dfiss['ART'] = pd.to_numeric(dfiss['ART'], errors = 'coerce')
 dfdemo1['ART'] = pd.to_numeric(dfdemo1['ART'], errors = 'coerce')
 
-dfck = dfdemo[~dfdemo['ART'].isin(dfdemo1['ART'])]
+
+############################################################################
+#last merged
+
+dfdemoz = []
+dfissx = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
+for fac in facilities:
+     dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
+     dfissu = dfissx[dfissx['FACILITY']==fac].copy()
+     dfissu = dfissu.drop(columns ='FACILITY')
+     dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
+     dfissu['ART'] = pd.to_numeric(dfissu['ART'], errors = 'coerce')
+     dfd = pd.merge(dfdemu, dfissu, on = 'ART', how = 'inner')
+     dfdemoz.append(dfd)
+     
+dfdemo2 = pd.concat(dfdemoz)
+
+st.write(dfdemo2.shape[0])
+st.write(dfdemo2.columns)
+dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
+dftest['ART'] = pd.to_numeric(dftest['ART'], errors = 'coerce')
+dfdemo2['ART'] = pd.to_numeric(dfdemo2['ART'], errors = 'coerce')
+
+dfck = dfdemo[~dfdemo['ART'].isin(dfdemo2['ART'])]
 st.write(dfck)
 
-dfck = dfiss[~dfiss['ART'].isin(dfdemo1['ART'])]
+dfck = dftest[~dftest['ART'].isin(dfdemo2['ART'])]
 st.write(dfck)
 
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
