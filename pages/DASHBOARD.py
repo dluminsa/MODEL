@@ -51,7 +51,7 @@ for facil in facilities:
      try:
           distr = dfdemu.iloc[0,1]
           clus = dfdemu.iloc[0,0]
-      except:
+     except:
            distr = ''
            clus = ''
      dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
