@@ -916,7 +916,7 @@ if st.session_state.form:
               
               
              # Provide a download button
-              st.write(arty)
+              arty = int(float(arty))
               st.download_button(
                  label=f"DOWNLOAD FORM FOR ART NO: {arty:,.0f}",
                  data=doc_file,
