@@ -923,9 +923,10 @@ if st.session_state.form:
              # Provide a download button
               # artyz = int(float(arty))
               st.download_button(
-                 label=f"DOWNLOAD FORM FOR ART NO: {arty:,.0f}",
+                 artyz = int(float(arty))  
+                 label=f"DOWNLOAD FORM FOR ART NO: {artyz:,.0f}",
                  data=doc_file,
-                 file_name=f"FORM FOR ART NO: {arty:,.0f}.docx",
+                 file_name=f"FORM FOR ART NO: {artyz:,.0f}.docx",
                  mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                  key = arty
                     )
