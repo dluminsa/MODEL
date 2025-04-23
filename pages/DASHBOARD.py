@@ -64,7 +64,7 @@ for facil in facilities:
 dfiss = pd.concat(dfissz)
 dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
 dfiss['ART'] = dfiss['ART NO'] + dfiss['MONTH'] + dfiss['DAY']
-st.write(dfiss.head(5))
+st.write(dfiss)
      
 
 # dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
