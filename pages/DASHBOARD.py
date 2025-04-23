@@ -182,7 +182,7 @@ st.write(dfdemo1.columns)
 dfdemo['ART'] = pd.to_numeric(dfdemo['ART'], errors = 'coerce')
 dfdemo1['ART'] = pd.to_numeric(dfdemo1['ART'], errors = 'coerce')
 
-dfck = dfdemo[~dfdemo['ART'].isin(dfdemo1))]
+dfck = dfdemo[~dfdemo['ART'].isin(dfdemo1)]
 st.write(dfck)
 
 # cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
