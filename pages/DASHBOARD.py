@@ -219,27 +219,28 @@ if facility:
 st.divider()
 cola, colb, colc = st.columns(3)
 colb.success('**QUICK SUMMARY**')
-cola, colb, colc, cold, cole = st.columns(5)
-cola.info('**TOTAL NS VISITED**')
+cola, colb, colc, cold = st.columns(4)
+cola.info('**TOTAL**')
 colb.info('**HLVs**')
 colc.info('**PARTNERS**')
 cold.info('**REBLED**')
-cole.info('**SPUTUM SAMPLES**')
+#cole.info('**SPUTUM**'
 
 q1 = dfuse.shape[0]
 bal = pd.to_numeric(dfuse['PARTNERS'], errors='coerce').sum()
+bal = int(bal)
 hlvs  = dfuse[dfuse['RESULTS']>999].copy()
 q2 = hlvs.shape[0]
 reb = dfuse[dfuse['VL']=='YES'].copy()
 txm = reb.shape[0]
-txmp = pd.to_numeric(dfuse['PICKED'], errors='coerce').sum() 
+#txmp = pd.to_numeric(dfuse['PICKED'], errors='coerce').sum() 
 
 
 cola.metric(label='a', value =f'{q1}', label_visibility='hidden')
 colb.metric(label='b', value =f'{q2}', label_visibility='hidden')
 colc.metric(label='c', value =f'{bal}', label_visibility='hidden')
 cold.metric(label='d', value =f'{txm}', label_visibility='hidden')
-cole.metric(label='e', value =f'{txmp}', label_visibility='hidden')
+#cole.metric(label='e', value =f'{txmp}', label_visibility='hidden')
 
 
 
