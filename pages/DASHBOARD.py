@@ -158,10 +158,8 @@ if cluster:
 
      dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
      dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
-
      dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
      dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
-    
      water['CLUSTER'] = water['CLUSTER'].astype(str)
      water2 = water[water['CLUSTER'].isin(CLUSTER)]
 # ################################################################################################################
@@ -194,13 +192,10 @@ for fac in facilities:
      dfissh = dfissy[dfissy['FACILITY']==fac].copy()
      dfissh = dfissh.drop(columns ='FACILITY')
      dfdemux['ART'] = pd.to_numeric(dfdemux['ART'], errors = 'coerce')
-     st.write(dfissh['ART'].head(1))
-     dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce')
-     st.write(dfissh['ART'].head(1))
+     dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce') 
      dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
      dfdemoz.append(dfd)
 
-st.write(dfdemoz[2])
 dfdemo2 = pd.concat(dfdemoz)
 
 
