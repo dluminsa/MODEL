@@ -701,6 +701,7 @@ if st.session_state.form:
                    dfisy = dfiss.copy()
                    
                    arty = dfdemy.iloc[0,3]
+                   arty = int(arty)
                    a = arty
                    b = dfdemy.iloc[0,12]
                    c = dfdemy.iloc[0,6]
