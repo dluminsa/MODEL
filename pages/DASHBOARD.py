@@ -195,7 +195,7 @@ for fac in facilities:
      dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
      dfdemoz.append(dfd)
 
-st.write(len(dfdemoz))
+st.write(dfdemoz[2])
 dfdemo2 = pd.concat(dfdemoz)
 
 
