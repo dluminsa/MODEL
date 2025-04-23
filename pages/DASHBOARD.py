@@ -58,6 +58,8 @@ for facil in facilities:
      dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
      dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
      dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+     dfissa['DISTRICT'] = distr
+     dfissa['CLUSTER'] = clus
      dfissz.append(dfissa)
 dfiss = pd.concat(dfissz)
 
