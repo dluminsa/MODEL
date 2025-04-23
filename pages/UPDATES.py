@@ -910,6 +910,7 @@ if st.session_state.form:
                    return doc_io
               
               doc_file = create_docx()
+              arty = int(arty)
      
              # Provide a download button
               st.download_button(
