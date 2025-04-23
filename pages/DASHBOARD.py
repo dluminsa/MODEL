@@ -242,74 +242,25 @@ colc.metric(label='c', value =f'{bal}', label_visibility='hidden')
 cold.metric(label='d', value =f'{txm}', label_visibility='hidden')
 #cole.metric(label='e', value =f'{txmp}', label_visibility='hidden')
 
+check = dfuse['DISTRICT'].unique()
+
+if len (check) ==1:
+     dfuse['USE'] = dfuse['DISTRICT']
+else:
+     dfuse['USE'] = dfuse['FACILITY']
+     
+district_counts = dfuse['DISTRICT'].value_counts().reset_index()
+district_counts.columns = ['DISTRICT', 'count']
+district_counts = district_counts.sort_values(by='count', ascending=False)
 
 
-
-# cluster = st.radio('**CHOOSE A CLUSTER**', clusters, index= None, horizontal=True)
-
-# if not cluster:
-#     st.stop()
-# else:
-#     pass
-# if cluster:
-#     dfd = dfa[dfa['CLUSTER'] == cluster].copy()
-#     districts = dfd['DISTRICT'].unique()
-#     district = st.radio('**CHOOSE A district**', districts, index= None, horizontal=True)
-
-# if not district:
-#     st.stop()
-# else:
-#     pass
-# col1,col2, col3 = st.columns([2,1,2])
-# with col1:
-#     if district:
-#         fac = dfa[dfa['DISTRICT'] == district].copy()
-#         facilities = fac['FACILITY'].unique()
-#         facility = st.selectbox('**SELECT FACILITY**', facilities, index= None)
-
-# if not facility:
-#     st.stop()
-# else:
-#     pass
-    
-# dftest['FACILITY'] = dftest['FACILITY'].astype(str)
-# dftest = dftest[dftest['FACILITY'] == facility].copy()
-
-# dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
-# dfiss = dfiss[dfiss['FACILITY'] == facility].copy()
-
-# dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
-# dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
-# factz = dfdemo['FACILITY'].unique()
-# num = dfdemo.shape[0]
-# if num ==0:
-#      st.warning('**THERE IS NO DATA FOR THIS FACILITY**')
-#      st.stop()
-# dfdemoz =[]
-# for facx in factz:
-#      dfdemof = dfdemo[dfdemo['FACILITY']==facx].copy()
-#      dfdemof = dfdemof.drop_duplicates(subset = 'ART NO', keep='last')
-#      dfdemoz.append(dfdemof)
-# dfdemo = pd.concat(dfdemoz)
-
-# dfissuez =[]
-# for facx in factz:
-#      dfissf = dfiss[dfiss['FACILITY']==facx].copy()
-#      dfissf = dfissf.drop_duplicates(subset = 'ART NO', keep='last')
-#      dfissuez.append(dfissf)
-# dfiss = pd.concat(dfissuez)
-
-# dftestz =[]
-# for facx in factz:
-#      dftestf = dftest[dftest['FACILITY']==facx].copy()
-#      dftestf = dftestf.drop_duplicates(subset = 'ART NO', keep='last')
-#      dftestz.append(dftestf)
-# dftest = pd.concat(dftestz)
-
-
-
-
-# filen = r'ALL.csv'
-# dfn = pd.read_csv(filen)
-
-# dfna = dfn[dfn['FACILITY'] == facility].copy()
+fig = px.bar(
+    district_counts,
+    x='district',
+    y='count',
+    title='Number of Records per District',
+    labels={'district': 'District', 'count': 'Count'},
+    color='count',  # optional: adds color gradient based on count
+)
+fig.update_layout(xaxis_tickangle=-45)
+ st.plotly_chart(fig, use_container_width=True)
