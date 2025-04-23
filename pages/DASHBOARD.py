@@ -16,7 +16,7 @@ if 'tx' not in st.session_state:
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'DEMO', usecols=list(range(19)),ttl=5)
+        exist = conn.read(worksheet= 'DEMO', usecols=list(range(20)),ttl=5)
         tx = exist.dropna(how='all')
         st.session_state.tx = tx
      except:
@@ -41,15 +41,36 @@ if 'txa' not in st.session_state:
 dfiss = st.session_state.txa.copy()
 
 dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
-dfiss = dfiss.reset_index()
+dfiss['DT'] = dfiss['DATE'].astype(str)
+facilities = dfiss['FACILITY'].unique()
 
-dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+dfissz = []
+for facil in facilities:
+     dfissa = dfiss[dfiss['FACILITY']==facil].copy()
+     dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
+     try:
+          distr = dfdemu.iloc[0,1]
+          clus = dfdemu.iloc[0,0]
+      except:
+           distr = ''
+           clus = ''
+     dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
+     dfissa[['ARTNO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ARTNO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+     dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+     dfissa = dfissa.drop_duplicates(subset = ['ARTNO', 'YEAR', 'MONTH', 'DAY'])
+     dfissz.append(dfissa)
+dfiss = pd.concat(dfissz)
 
-dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
-dfisx = dfisx.sort_values(by = 'index')
+st.write(dfiss.head(5))
+     
 
-dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
-dfiss = dfisx.drop(columns = ['index'])
+# dfisx = pd.merge(dfdist, dfiss, on= 'FACILITY', how = 'outer')
+
+# dfisx['index'] = pd.to_numeric(dfisx['index'], errors='coerce')
+# dfisx = dfisx.sort_values(by = 'index')
+
+# dfisx = dfisx.drop_duplicates(subset= 'index', keep='first')
+# dfiss = dfisx.drop(columns = ['index'])
 
 #########################################################################################################
 
@@ -57,7 +78,7 @@ if 'txb' not in st.session_state:
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
+        exist = conn.read(worksheet= 'TESTS', usecols=list(range(19)),ttl=5)
         txb = exist.dropna(how='all')
         st.session_state.txb = txb
      except:
