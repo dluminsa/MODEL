@@ -359,7 +359,7 @@ with col3:
               return 'background-color: yellow'
           else:
               return 'background-color: blue'
-      styler = (
+     styler = (
                   bledr.style
                   .format("{:.0f}", subset = ['NOT BLED', '%-AGE'])  # Format 'VL COV' to one decimal place
                   .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
