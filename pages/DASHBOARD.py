@@ -285,7 +285,7 @@ st.write('**APN CASCADE**')
 st.divider()
 st.write('**VL CASCADE**')
 st.info('Eligibility is based on  5 months or more from the date of bleeding to the date of the visit')
-vl = dfuse[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'DOB','YEAR', 'MONTH', 'DAY', 'VL', 'REASON', 'IAC']].copy()
+vl = dfuse[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'DOB','YEAR', 'MONTH', 'DAY', 'VL', 'REASON', 'IAC', 'USE']].copy()
 
 vl['DB'] = vl['DOB'].astype(str)
 vl[['BYEAR', 'BMONTH', 'BDAY']] = vl['DOB'].str.split('-', expand=True)
