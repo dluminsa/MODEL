@@ -289,7 +289,7 @@ st.write('**TB CASCADE**')
 st.divider()
 
 with st.expander('**DOWNLOAD DATASET HERE**'):
-         dat = dfuse.drop(columns = ['USE', 'DT', 'YEAR', 'MONTH', 'DAY'])
+         dat = dfuse.drop(columns = ['USE', 'DT', 'YEAR', 'MONTH', 'DAY', 'ART'])
          csv_data = dat.to_csv(index=False)
          tot = dat.shape[0]
          st.write(f'**CONTAINS {tot} VISITS**')
