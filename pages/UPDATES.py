@@ -197,7 +197,7 @@ for fac in facilities:
      dfdemoz.append(dfd)
 
 dfdemo2 = pd.concat(dfdemoz)
-st.write(dfdemo2.columns)
+
 ################################################################################################################
 
 file = r'CLUSTERS.csv'
