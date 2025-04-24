@@ -347,7 +347,9 @@ with col3:
      bledr['USE'] = bledr['USE'].astype(str)
      bledy['USE'] = bledy['USE'].astype(str)
      bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
-     bledr['TOTAL'] = bledr['BLED'] + bled['NOT BLED']
+     st.write(bledr)
+     st.stop()
+     bledr['TOTAL'] = bledr['BLED'] + bledr['NOT BLED']
      bledr['%-AGE'] = round((bledr['NOT BLED']/bledr['TOTAL']*100))
      st.write(bledr)
      bledr = bledr[['USE', 'TOTAL', '%-AGE']].copy()
