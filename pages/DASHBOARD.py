@@ -303,7 +303,7 @@ duelast = lastq[((lastq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMO
 
 due = pd.concat([duelast, duethis])
 duetotal = due.shape[0]
-due['VL'] = due['VL'].astype(int)
+due['VL'] = due['VL'].astype(str)
 bled = due[due['VL']=='YES'].copy()
 bledtotal = bled.shape[0]
 notbled = due[due['VL']!='YES'].copy()
