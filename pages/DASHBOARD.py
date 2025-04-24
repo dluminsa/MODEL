@@ -284,7 +284,7 @@ html_table = """
 """
 st.markdown(html_table, unsafe_allow_html=True)
 
-ager = dfuse[['USE', 'ART NO', 'AGE']].copy()
+ager = dfuse[['USE', 'ART NO', 'AGE','SEX']].copy()
 ager['AGE'] = pd.to_numeric(ager['AGE'], errors='coerce')
 
 def band(x):
@@ -307,6 +307,7 @@ ager = ager.sort_values(by = 'AGE')
 
 figX = px.histogram(ager, x='BAND', text_auto=True,
                    title="",
+                   color =  'SEX',
                    labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
 
 # Customize layout
