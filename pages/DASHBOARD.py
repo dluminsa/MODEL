@@ -283,9 +283,9 @@ st.write('**AHD CASCADE**')
 st.divider()
 st.write('**APN CASCADE**')
 st.divider()
-st.write('**VL CASCADE***')
+st.write('**VL CASCADE**')
 st.divider()
-st.write('**TB CASCADE***')
+st.write('**TB CASCADE**')
 st.divider()
 
 with st.expander('**DOWNLOAD DATASET HERE**'):
