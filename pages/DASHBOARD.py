@@ -365,7 +365,7 @@ with col3:
                   .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
               )
       #st.stop()
-                st.write(styler)
+     st.write(styler)
 
 
 st.divider()
