@@ -291,7 +291,8 @@ elif check == 'MAKE UPDATES':
     elif dfdemo2.shape[0] > 1:
          st.info('**THIS CLIENT WAS REVISITED, UPDATES FOR WHICH IAC SESSION ARE YOU MAKING?**')
          options = dfdemo2['IAC'].unique()
-         iac = st.selectbox('**CHOOSE FROM HERE**', options, index = None)
+         col1, col2 = st.columns(1,2)
+         iac = col1.selectbox('**CHOOSE FROM HERE**', options, index = None)
          if not iac:
               st.stop()
          else:
@@ -299,12 +300,14 @@ elif check == 'MAKE UPDATES':
               dfdemo = dfdemo2[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'RESULTS', 'DOB','AGE', 'SEX', 'PMTCT', 'DISTRI', 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD','htn', 'dm', 'AS', 'MH']].copy()
               dfiss = dfdemo2[['FACILITY', 'ART NO', 'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH','SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS','VL', 'REASON', 'NAME', 'NAME2', 'DATE']].copy()
               dftest  = dfdemo2[['FACILITY', 'ART NO', 'CD4', 'VISITECT', 'LAM', 'TBLAM','TB RX', 'CRAG', 'PARTNERS', 'ELLIG', 'CHILD', 'TESTED', 'POS','LINKED', 'POST', 'SCREENED', 'PRESUMED', 'PICKED']].copy()
+              iac = dfedom2.iloc[0,12]
+              artn = dfedom2.iloc[0,24]
     else:
          dfdemo = dfdemo2[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'RESULTS', 'DOB','AGE', 'SEX', 'PMTCT', 'DISTRI', 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD','htn', 'dm', 'AS', 'MH']].copy()
          dfiss = dfdemo2[['FACILITY', 'ART NO', 'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH','SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS','VL', 'REASON', 'NAME', 'NAME2', 'DATE']].copy()
          dftest  = dfdemo2[['FACILITY', 'ART NO', 'CD4', 'VISITECT', 'LAM', 'TBLAM','TB RX', 'CRAG', 'PARTNERS', 'ELLIG', 'CHILD', 'TESTED', 'POS','LINKED', 'POST', 'SCREENED', 'PRESUMED', 'PICKED']].copy()
-         # iac = dfedomz.iloc[
-         # artn =
+         iac = dfedom2.iloc[0,12]
+         artn = dfedom2.iloc[0,24]
      
     dftest= dftest[dftest['ART NO'] == art].copy()
     #dftest['PARTNERS'] = pd.to_numeric(dftest['PARTNERS'], errors = 'coerce')
@@ -637,9 +640,11 @@ elif check == 'MAKE UPDATES':
              st.info('**NO VL SAMPLE WAS PICKED, PROCEED TO SUBMIT**')
     col1, col2, col3 = st.columns(3)
     submit = col1.button('SUBMIT')
+    todi = dt.date.today()
+    todi = str(todi)
     
     row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
-                                                    tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup]
+                                                    tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup,iac, artn, todi]
      
     if not submit:
          st.stop()
