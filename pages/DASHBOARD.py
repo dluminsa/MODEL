@@ -299,7 +299,7 @@ duethis = thisq[((thisq['BYEAR'] < 2024 )| ((thisq['BYEAR']==2024) & (thisq['BMO
 
 #THOSE due visted this Q
 lastq[['BYEAR', 'BMONTH', 'BDAY']]  = lastq[['BYEAR', 'BMONTH', 'BDAY']].apply(pd.to_numeric, errors ='coerce')
-duelast = lastq[((thisq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMONTH'] <9)))].copy()
+duelast = lastq[((lastq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMONTH'] <9)))].copy()
 
 due = pd.concat([duelast, duethis])
 duetotal = due.shape[0]
