@@ -327,7 +327,7 @@ with col2:
 with col3:
      st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %) 😢**')
 st.divider()
-col1, col2 = st.columns([1,2])
+col1, col2 = st.columns(2)
 
 with col1:
      iac_counts = due['IAC'].value_counts().reset_index()
@@ -344,11 +344,15 @@ with col2:
      bledy = bled.groupby('USE').size().reset_index(name='BLED')
      bledr['USE'] = bledr['USE'].astype(str)
      bledy['USE'] = bledy['USE'].astype(str)
-     bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
-     bledr['TOTAL'] = bledr['BLED'] + bledr['NOT BLED']
-     bledr['%-AGE'] = round((bledr['NOT BLED']/bledr['TOTAL']*100))
-     bledr = bledr[['USE', 'TOTAL','NOT BLED', '%-AGE']].copy()
-     bledr = bledr.rename(columns = {'USE': word})
+     
+     bledt = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
+     bledt['NOT BLED'] = pd.to_numeric(bledt['NOT BLED'],errors='coerce')
+     bledt['BLED'] = pd.to_numeric(bledt['BLED'],errors='coerce')
+     
+     bledt['TOTAL'] = bledt['BLED'] + bledt['NOT BLED']
+     bledt['%-AGE'] = round((bledt['NOT BLED']/bledt['TOTAL']*100))
+     bledt = bledt[['USE', 'TOTAL','NOT BLED', '%-AGE']].copy()
+     bledt = bledt.rename(columns = {'USE': word})
      def kusiiga(x):
           if x >60:
               return 'background-color: red'
@@ -357,8 +361,8 @@ with col2:
           else:
               return 'background-color: blue'
      styler = (
-                  bledr.style
-                  .format("{:.0f}", subset = ['NOT BLED', '%-AGE'])  # Format 'VL COV' to one decimal place
+                  bledt.style
+                  .format("{:.0f}", subset = ['NOT BLED', '%-AGE', 'TOTAL'])  # Format 'VL COV' to one decimal place
                   .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
               )
       #st.stop()
