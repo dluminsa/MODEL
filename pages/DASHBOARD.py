@@ -346,6 +346,7 @@ with col2:
      bledy['USE'] = bledy['USE'].astype(str)
      
      bledt = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
+     st.write(bledt)
      bledt['NOT BLED'] = pd.to_numeric(bledt['NOT BLED'],errors='coerce')
      bledt['BLED'] = pd.to_numeric(bledt['BLED'],errors='coerce')
      
