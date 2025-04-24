@@ -310,11 +310,11 @@ notbled = due[due['VL']!='YES'].copy()
 notbledtotal = notbled.shape[0]
 col1, col2, col3 = st.columns(3)
 with col1:
-     st.success(f'TOTAL DUE : {int(duetotal)}')
+     st.success(f'**DUE : {int(duetotal)}**')
 with col2:
-     st.info(f'TOTAL BLED : {int(bledtotal)}')
+     st.info(f'**BLED : {int(bledtotal)}**')
 with col2:
-     st.warning(f'TOTAL NOT BLED : {int(notbledtotal)}')
+     st.warning(f'**NOT BLED : {int(notbledtotal)}**')
 st.divider()
 col1, col2, col3 = st.columns([2,1,2])
 
