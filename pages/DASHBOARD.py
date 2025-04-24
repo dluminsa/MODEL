@@ -343,7 +343,7 @@ with col3:
      bledr = notbled.groupby('USE').size().reset_index()
      bledy = bled.groupby('USE').size().reset_index()
      bledr = bledr.rename(columns ={'USE': word, '0': 'NOT BLED'})
-     bledy = bledy.rename(columns ={'USE': word, '0', 'BLED'})
+     bledy = bledy.rename(columns ={'USE': word, '0': 'BLED'})
      bledr['USE'] = bledr['USE'].astype(str)
      bledy['USE'] = bledy['USE'].astype(str)
      bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
