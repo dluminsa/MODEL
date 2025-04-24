@@ -344,6 +344,7 @@ with col3:
      bledy = bled.groupby('USE').size().reset_index()
      bledr = bledr.rename(columns ={'0': 'NOT BLED'})
      bledy = bledy.rename(columns ={'0': 'BLED'})
+     st.write(bledy)
      bledr['USE'] = bledr['USE'].astype(str)
      bledy['USE'] = bledy['USE'].astype(str)
      bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
