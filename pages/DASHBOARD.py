@@ -340,6 +340,8 @@ with col1:
      #st.title("IAC DISTR")
      st.plotly_chart(figp)
 with col2:
+     st.write(f'**NS NOT BLED BY {word}**')
+     st.write('')
      bledr = notbled.groupby('USE').size().reset_index(name='NOT BLED')
      bledy = bled.groupby('USE').size().reset_index(name='BLED')
      bledr['USE'] = bledr['USE'].astype(str)
