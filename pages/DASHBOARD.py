@@ -325,7 +325,7 @@ with col1:
 with col2:
      st.info(f'**BLED : {int(bledtotal)} ({pb} %) 🌹🌹**')
 with col3:
-     st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %) 😢😢**')
+     st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %) 😢**')
 st.divider()
 col1, col2, col3 = st.columns([2,1,2])
 
@@ -340,8 +340,8 @@ with col1:
      #st.title("IAC DISTR")
      st.plotly_chart(figp)
 with col3:
-     bledr = bled.groupby('USE').size().reset_index()
-     st.write(bledr)
+     bledr = notbled.groupby('USE').size().reset_index()
+     st.write(bledr.columns)
 
 
 st.divider()
