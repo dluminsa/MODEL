@@ -284,6 +284,55 @@ st.divider()
 st.write('**APN CASCADE**')
 st.divider()
 st.write('**VL CASCADE**')
+st.info('Eligibility is based on  5 months or more from the date of bleeding to the date of the visit')
+vl = dfuse[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'DOB','YEAR', 'MONTH', 'DAY', 'VL', 'REASON', 'IAC']].copy()
+
+vl['DB'] = vl['DOB'].astype(str)
+vl[['BYEAR', 'BMONTH', 'BDAY']] = vl['DOB'].str.split('-', expand=True)
+vl[['YEAR', 'MONTH', 'DAY']] = vl[['YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors ='coerce')
+thisq = vl[((vl['YEAR']==2025) & (vl['MONTH']>3))].copy()
+lastq = vl[((vl['YEAR']==2025) & (vl['MONTH']<4))].copy()
+
+#those due visited this Q
+thisq[['BYEAR', 'BMONTH', 'BDAY']]  = thisq[['BYEAR', 'BMONTH', 'BDAY']].apply(pd.to_numeric, errors ='coerce')
+duethis = thisq[((thisq['BYEAR'] < 2024 )| ((thisq['BYEAR']==2024) & (thisq['BMONTH'] <12)))].copy()
+
+#THOSE due visted this Q
+lastq[['BYEAR', 'BMONTH', 'BDAY']]  = lastq[['BYEAR', 'BMONTH', 'BDAY']].apply(pd.to_numeric, errors ='coerce')
+duelast = lastq[((thisq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMONTH'] <9)))].copy()
+
+due = pd.concat([duelast, duethis])
+duetotal = due.shape[0]
+due['VL'] = due['VL'].astype(int)
+bled = due[due['VL']=='YES'].copy()
+bledtotal = bled.shape[0]
+notbled = due[due['VL']!='YES'].copy()
+notbledtotal = notbled.shape[0]
+col1, col2, col3 = st.columns(3)
+with col1:
+     st.success(f'TOTAL DUE : {int(duetotal)}')
+with col2:
+     st.info(f'TOTAL BLED : {int(bledtotal)}')
+with col2:
+     st.warning(f'TOTAL NOT BLED : {int(notbledtotal)}')
+st.divider()
+col1, col2, col3 = st.columns([2,1,2])
+
+with col1:
+     iac_counts = due['IAC'].value_counts().reset_index()
+     iac_counts.columns = ['IAC', 'Count']
+
+     # Create pie chart
+     figp = px.pie(iac_counts, names='IAC', values='Count', title='Levels of IAC among the unbled')
+
+     # Streamlit app
+     #st.title("IAC DISTR")
+     st.plotly_chart(figp)
+
+
+
+
+
 st.divider()
 st.write('**TB CASCADE**')
 st.divider()
