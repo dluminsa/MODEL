@@ -354,9 +354,9 @@ with col2:
      bledt = bledt[['USE', 'NOT BLED', '%-AGE']].copy()
      bledt = bledt.rename(columns = {'USE': word})
      if len (check) ==1:
-          bedt = bedt.set_index('FACILITY')
+          bledt = bledt.set_index('FACILITY')
      else:
-          bedt = bedt.set_index('DISTRICT')
+          bledt = bledt.set_index('DISTRICT')
      def kusiiga(x):
           if x >60:
               return 'background-color: red'
