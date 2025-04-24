@@ -303,6 +303,7 @@ duelast = lastq[((lastq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMO
 
 due = pd.concat([duelast, duethis])
 showvl = vl.shape[0]
+st.write(showvl)
 if showvl == 0:
      st.warning('**NO DNS IS DUE FOR THIS SELECTION HENCE NO DATA TO DISPLAY**')
 else:
