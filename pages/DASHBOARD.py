@@ -346,7 +346,6 @@ with col2:
      bledy['USE'] = bledy['USE'].astype(str)
      
      bledt = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
-     st.write(bledt)
      bledt['NOT BLED'] = pd.to_numeric(bledt['NOT BLED'],errors='coerce')
      bledt['BLED'] = pd.to_numeric(bledt['BLED'],errors='coerce')
      
@@ -359,8 +358,10 @@ with col2:
               return 'background-color: red'
           elif x >50:
               return 'background-color: yellow'
+          elif x>0:
+               return 'background-color: red'
           else:
-              return 'background-color: blue'
+              return 'background-color: red'
      styler = (
                   bledt.style
                   .format("{:.0f}", subset = ['NOT BLED', '%-AGE', 'TOTAL'])  # Format 'VL COV' to one decimal place
