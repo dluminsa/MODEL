@@ -1,4 +1,4 @@
-import pandas as pd 
+ import pandas as pd 
 import streamlit as st 
 import os
 import gspread
@@ -284,7 +284,7 @@ st.divider()
 st.write('**APN CASCADE**')
 st.divider()
 st.write('**VL CASCADE**')
-st.info('Eligibility is based on  5 months or more from the date of bleeding to the date of the visit')
+
 vl = dfuse[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'DOB','YEAR', 'MONTH', 'DAY', 'VL', 'REASON', 'IAC', 'USE']].copy()
 
 vl['DB'] = vl['DOB'].astype(str)
@@ -306,6 +306,7 @@ showvl = vl.shape[0]
 if showvl == 0:
      st.warning('**NO DNS IS DUE FOR THIS SELECTION HENCE NO DATA TO DISPLAY**')
 else:
+     st.info('Eligibility is based on  5 months or more from the date of bleeding to the date of the visit')
      duetotal = due.shape[0]
      due['VL'] = due['VL'].astype(str)
      bled = due[due['VL']=='YES'].copy()
