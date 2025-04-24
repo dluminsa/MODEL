@@ -277,6 +277,47 @@ fig.update_layout(yaxis=dict(tickfont=dict(size=12)), xaxis_title='NUMBER VISITE
 
 # Show plot
 st.plotly_chart(fig, use_container_width=True)
+
+st.divider()          
+html_table = """
+<h6><b><u style="color: blue;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
+
+ager = dfuse[['USE', 'ART NO', 'AGE']].copy()
+ager['AGE'] = pd.to_numeric(ager['AGE'], errors='coerce')
+
+def band(x):
+   if x < 10:
+       return '0 to 9'
+   elif x < 20:
+       return '10 to 19'
+   elif x < 30:
+       return '20 to 29'
+   elif x < 40:
+       return '30 to 39'
+   elif x < 50:
+       return '40 to 49'
+   else:
+       return 'Above 50'
+       
+
+ager['BAND'] = ager['AGE'].apply(band)
+ager = ager.sort_values(by = 'AGE')
+
+fig = px.histogram(ager, x='BAND', text_auto=True,
+                   title="Distribution of NS by their Age Bands",
+                   labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
+
+# Customize layout
+fig.update_layout(xaxis_title="Age Band",
+                  yaxis_title="Count of NS",
+                  bargap=0.1)
+
+# Show the figure
+st.plotly_chart(fig)
+st.divider()   
+
 st.divider()
 st.write('**AHD CASCADE**')
 #####
