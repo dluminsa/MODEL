@@ -313,7 +313,7 @@ with col1:
      st.success(f'**DUE : {int(duetotal)}**')
 with col2:
      st.info(f'**BLED : {int(bledtotal)}**')
-with col2:
+with col3:
      st.warning(f'**NOT BLED : {int(notbledtotal)}**')
 st.divider()
 col1, col2, col3 = st.columns([2,1,2])
@@ -328,9 +328,6 @@ with col1:
      # Streamlit app
      #st.title("IAC DISTR")
      st.plotly_chart(figp)
-
-
-
 
 
 st.divider()
