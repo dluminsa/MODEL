@@ -347,7 +347,7 @@ with col2:
      bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
      bledr['TOTAL'] = bledr['BLED'] + bledr['NOT BLED']
      bledr['%-AGE'] = round((bledr['NOT BLED']/bledr['TOTAL']*100))
-     bledr = bledr[['USE', 'TOTAL','NOT BLED' '%-AGE']].copy()
+     bledr = bledr[['USE', 'TOTAL','NOT BLED', '%-AGE']].copy()
      bledr = bledr.rename(columns = {'USE': word})
      def kusiiga(x):
           if x >60:
