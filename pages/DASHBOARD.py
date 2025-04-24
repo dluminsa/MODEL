@@ -368,7 +368,7 @@ with col2:
               return 'background-color: red'
      styler = (
                   bledt.style
-                  .format("{:.0f}", subset = ['NOT BLED', '%-AGE', 'TOTAL'])  # Format 'VL COV' to one decimal place
+                  .format("{:.0f}", subset = ['NOT BLED', '%-AGE'])  # Format 'VL COV' to one decimal place
                   .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
               )
       #st.stop()
