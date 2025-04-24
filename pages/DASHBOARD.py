@@ -289,7 +289,7 @@ st.write('**TB CASCADE***')
 st.divider()
 
 with st.expander('**DOWNLOAD DATASET HERE**'):
-         csv_data = dfdemo2.copy()
+         dat = dfdemo2.copy()
          csv_data = dat.to_csv(index=False)
          tot = dat.shape[0]
          st.write(f'**CONTAINS {tot} VISITS**')
