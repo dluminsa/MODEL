@@ -302,7 +302,7 @@ elif check == 'MAKE UPDATES':
               dftest  = dfdemo2[['FACILITY', 'ART NO', 'CD4', 'VISITECT', 'LAM', 'TBLAM','TB RX', 'CRAG', 'PARTNERS', 'ELLIG', 'CHILD', 'TESTED', 'POS','LINKED', 'POST', 'SCREENED', 'PRESUMED', 'PICKED']].copy()
               st.write(dfdemo2.head(5))
               iac = dfdemo2.iloc[0,12]
-              artn = dfedom2.iloc[0,24]
+              artn = dfdemo2.iloc[0,24]
     else:
          dfdemo = dfdemo2[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'RESULTS', 'DOB','AGE', 'SEX', 'PMTCT', 'DISTRI', 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD','htn', 'dm', 'AS', 'MH']].copy()
          dfiss = dfdemo2[['FACILITY', 'ART NO', 'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH','SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS','VL', 'REASON', 'NAME', 'NAME2', 'DATE']].copy()
