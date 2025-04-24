@@ -308,13 +308,24 @@ bled = due[due['VL']=='YES'].copy()
 bledtotal = bled.shape[0]
 notbled = due[due['VL']!='YES'].copy()
 notbledtotal = notbled.shape[0]
+
+try:
+     pnb = round(((bledtotal/duetotal)*100))
+except:
+     pnb = 0
+
+try:
+     pb = round(((notbledtotal/duetotal)*100))
+except:
+     pb = 0
+     
 col1, col2, col3 = st.columns(3)
 with col1:
      st.success(f'**DUE : {int(duetotal)}**')
 with col2:
-     st.info(f'**BLED : {int(bledtotal)}**')
+     st.info(f'**BLED : {int(bledtotal)} ({pb} %)**')
 with col3:
-     st.warning(f'**NOT BLED : {int(notbledtotal)}**')
+     st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %)**')
 st.divider()
 col1, col2, col3 = st.columns([2,1,2])
 
