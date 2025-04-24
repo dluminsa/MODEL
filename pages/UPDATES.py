@@ -344,154 +344,157 @@ elif check == 'MAKE UPDATES':
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,8]
-    if partners > 0:
-         if partners ==1:
-              st.write(f'**Client with ART NO {art} had {partners:,.0f} partner ellicited**')
-              col1,col2,col3 = st.columns(3)
-              notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
-              if not notif:
-                   st.stop()
-              elif notif == 'NOT YET':
-                   st.warning('**KINDLY FOLLOW UP ON THIS PARTNER PLEASE**')
-              elif notif == 'UPDATE ALREADY MADE':
-                   pass
-              elif notif == 'YES':
-                   notif = 1
-                   testapn = col2.radio('**WAS SHE/HE TESTED**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
-                   if not testapn:
-                        st.stop()
-                   elif testapn == 'NOT YET':
-                        st.warning('**ENSURE THIS CLIENT IS TESTED**')
-                        pass
-                   elif testapn == 'UPDATE ALREADY MADE':
-                        pass
-                   elif testapn == 'YES':
-                        tested = 1
-                        posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS', 'KNOWN POS'], horizontal= True, index=None)
-                        if not posapn:
-                             st.stop()
-                        elif posapn in ['NEG', 'KNOWN POS']:
-                             if posapn == 'NEG':
-                                  neg = 1
-                             elif posapn == 'KNOWN POS':
-                                  alread = 1
-                             pass
-                        elif posapn =='POS':
-                             pos = 1
-                             col1, col2 = st.columns([1,2])
-                             linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
-                             if linkedapn == 'YES':
-                                  linked = 1
-                             if not linkedapn:
-                                  st.stop()
-                             else:
-                                  pass
-                             recent = col2.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONG TERM', 'NOT DONE'], index=None, horizontal=True)
-                             if not recent:
-                                  st.stop()
-                             else:
-                                  pass
-         if partners > 1:
-              st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
-              updateparts =  col2.radio('**HAS NOTIFICATION BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
-              if not updateparts:
-                   st.stop()
-              elif updateparts == 'NOT YET':
-                   pass
-              elif updateparts == 'UPDATE ALREADY MADE':
-                   pass
-              elif updateparts == 'YES':
-                   st.write(f'**OF THESE {partners:,.0f} partners, how many have been:**')
-                   col1,col2, col3 = st.columns([2,1,2])
-                   notif = col1.number_input('**NOTIFIED**', value=None, step=1, key=2)
+    if partners or partners == 0:
+         if partners > 0:
+              if partners ==1:
+                   st.write(f'**Client with ART NO {art} had {partners:,.0f} partner ellicited**')
+                   col1,col2,col3 = st.columns(3)
+                   notif = col1.radio('**HAS HE/SHE BEEN NOTIFIED**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
                    if not notif:
                         st.stop()
-                   if notif > partners:
-                        st.warning("**YOU CAN'T NOTIFY MORE THAN THOSE ELLICITED**")
-                   else:
-                        col1,col2 = st.columns(2)
-                        updatetest =  col2.radio('**HAS TESTING BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE', 'NONE ELLIGIBLE'], horizontal= True, index=None)
-                        if not updatetest:
+                   elif notif == 'NOT YET':
+                        st.warning('**KINDLY FOLLOW UP ON THIS PARTNER PLEASE**')
+                   elif notif == 'UPDATE ALREADY MADE':
+                        pass
+                   elif notif == 'YES':
+                        notif = 1
+                        testapn = col2.radio('**WAS SHE/HE TESTED**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
+                        if not testapn:
                              st.stop()
-                        elif updatetest in ['UPDATE ALREADY MADE', 'NONE ELLIGIBLE']:
+                        elif testapn == 'NOT YET':
+                             st.warning('**ENSURE THIS CLIENT IS TESTED**')
                              pass
-                        elif updatetest == 'NOT YET':
-                             st.warning('**PARTNERS SHOULD BE FOLLOWED UP FOR TESTING**')
-                        elif updatetest == 'YES':
-                             col1,col2,col3 = st.columns(3)
-                             tested = col3.number_input('**HOW MANY WERE TESTED**', value=None, step=1, key=3)
-                             if tested or tested ==0:
-                                       pass
-                             else:
+                        elif testapn == 'UPDATE ALREADY MADE':
+                             pass
+                        elif testapn == 'YES':
+                             tested = 1
+                             posapn = col3.radio('**WHAT WAS THE RESULT**', options=['NEG', 'POS', 'KNOWN POS'], horizontal= True, index=None)
+                             if not posapn:
                                   st.stop()
-                             if notif == tested:
+                             elif posapn in ['NEG', 'KNOWN POS']:
+                                  if posapn == 'NEG':
+                                       neg = 1
+                                  elif posapn == 'KNOWN POS':
+                                       alread = 1
                                   pass
-                             elif notif > tested:
+                             elif posapn =='POS':
+                                  pos = 1
+                                  col1, col2 = st.columns([1,2])
+                                  linkedapn = col1.radio('**WAS HE/SHE LINKED TO CARE**', options=['YES', 'NO'], horizontal= True, index=None)
+                                  if linkedapn == 'YES':
+                                       linked = 1
+                                  if not linkedapn:
+                                       st.stop()
+                                  else:
+                                       pass
+                                  recent = col2.radio('**WHAT WERE THE RECENCY RESULTS**', options=['RECENT', 'LONG TERM', 'NOT DONE'], index=None, horizontal=True)
+                                  if not recent:
+                                       st.stop()
+                                  else:
+                                       pass
+              if partners > 1:
+                   st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
+                   updateparts =  col2.radio('**HAS NOTIFICATION BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
+                   if not updateparts:
+                        st.stop()
+                   elif updateparts == 'NOT YET':
+                        pass
+                   elif updateparts == 'UPDATE ALREADY MADE':
+                        pass
+                   elif updateparts == 'YES':
+                        st.write(f'**OF THESE {partners:,.0f} partners, how many have been:**')
+                        col1,col2, col3 = st.columns([2,1,2])
+                        notif = col1.number_input('**NOTIFIED**', value=None, step=1, key=2)
+                        if not notif:
+                             st.stop()
+                        if notif > partners:
+                             st.warning("**YOU CAN'T NOTIFY MORE THAN THOSE ELLICITED**")
+                        else:
+                             col1,col2 = st.columns(2)
+                             updatetest =  col2.radio('**HAS TESTING BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE', 'NONE ELLIGIBLE'], horizontal= True, index=None)
+                             if not updatetest:
+                                  st.stop()
+                             elif updatetest in ['UPDATE ALREADY MADE', 'NONE ELLIGIBLE']:
+                                  pass
+                             elif updatetest == 'NOT YET':
+                                  st.warning('**PARTNERS SHOULD BE FOLLOWED UP FOR TESTING**')
+                             elif updatetest == 'YES':
                                   col1,col2,col3 = st.columns(3)
-                                  alread = col1.number_input('**KNOWN POSITIVE, (input 0 if none)**', value=None, step=1, key=4)
-                                  if alread or alread ==0:
-                                       pass
-                                  else:
-                                       st.stop()
-                                  if alread or alread ==0:
-                                       checkm = tested + alread
-                                       if checkm > notif:
-                                            st.warning("**TESTED AND KNOWN POS ARE MORE THAN THOSE NOTIFIED**")
-                                            st.stop()
-                             if not tested:
-                                  st.stop()
-                             elif tested > notif:
-                                  st.warning("**YOU CAN'T TEST MORE THAN THOSE NOTIFIED**")
-                             elif tested == 0:
-                                  pass
-                             else:
-                                  st.write('**TEST RESULTS**')
-                                  col1,col2, col3 = st.columns(3) 
-                                  neg = col1.number_input('**NUMBER NEGATIVE**', value=None, step=1, key = 5)
-                                  pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
-                                  if pos or pos ==0:
-                                       pass
-                                  else:
-                                       st.stop()
-                                  if neg or neg ==0:
-                                       pass
-                                  else:
-                                       st.warning('Total negative is required or put a 0 (zero)**')
-                                       st.stop()
-                                  if (neg + pos) > tested:
-                                       st.warning('**Number positive and negative is greater than number tested**')
-                                       st.stop()
-                                  if pos:
-                                       linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1, key=7)
-                                       if linked or linked ==0:
-                                            if linked > pos:
-                                                 st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
-                                                 st.stop()
-                                       elif not linked:
-                                            st.stop()
-                                       else:
+                                  tested = col3.number_input('**HOW MANY WERE TESTED**', value=None, step=1, key=3)
+                                  if tested or tested ==0:
                                             pass
-                                  if pos:
-                                       st.write(f'**RECENCY TESTING**')
-                                       col1,col2 = st.columns(2)
-                                       recent = col1.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
-                                       long = col2.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
-                                       if recent or recent ==0:
-                                             pass
+                                  else:
+                                       st.stop()
+                                  if notif == tested:
+                                       pass
+                                  elif notif > tested:
+                                       col1,col2,col3 = st.columns(3)
+                                       alread = col1.number_input('**KNOWN POSITIVE, (input 0 if none)**', value=None, step=1, key=4)
+                                       if alread or alread ==0:
+                                            pass
                                        else:
                                             st.stop()
-                                       if long or long == 0:
-                                             pass
+                                       if alread or alread ==0:
+                                            checkm = tested + alread
+                                            if checkm > notif:
+                                                 st.warning("**TESTED AND KNOWN POS ARE MORE THAN THOSE NOTIFIED**")
+                                                 st.stop()
+                                  if not tested:
+                                       st.stop()
+                                  elif tested > notif:
+                                       st.warning("**YOU CAN'T TEST MORE THAN THOSE NOTIFIED**")
+                                  elif tested == 0:
+                                       pass
+                                  else:
+                                       st.write('**TEST RESULTS**')
+                                       col1,col2, col3 = st.columns(3) 
+                                       neg = col1.number_input('**NUMBER NEGATIVE**', value=None, step=1, key = 5)
+                                       pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
+                                       if pos or pos ==0:
+                                            pass
                                        else:
-                                             st.stop()
-                                       if long or long ==0:
+                                            st.stop()
+                                       if neg or neg ==0:
+                                            pass
+                                       else:
+                                            st.warning('Total negative is required or put a 0 (zero)**')
+                                            st.stop()
+                                       if (neg + pos) > tested:
+                                            st.warning('**Number positive and negative is greater than number tested**')
+                                            st.stop()
+                                       if pos:
+                                            linked = col3.number_input('**HOW MANY WERE LINKED**', value=None, step=1, key=7)
+                                            if linked or linked ==0:
+                                                 if linked > pos:
+                                                      st.warning("**YOU CAN'T LINK MORE THAN THOSE TESTED**")
+                                                      st.stop()
+                                            elif not linked:
+                                                 st.stop()
+                                            else:
+                                                 pass
+                                       if pos:
+                                            st.write(f'**RECENCY TESTING**')
+                                            col1,col2 = st.columns(2)
+                                            recent = col1.number_input('**NUMBER WITH RECENT RESULT**', value=None, step=1, key=9)
+                                            long = col2.number_input('**NUMBER WITH LONGTERM RESULTS**', value=None, step=1, key=10)
                                             if recent or recent ==0:
-                                               checki = recent + long
-                                               if checki > pos:
-                                                   st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
-                                                   st.stop()
+                                                  pass
+                                            else:
+                                                 st.stop()
+                                            if long or long == 0:
+                                                  pass
+                                            else:
+                                                  st.stop()
+                                            if long or long ==0:
+                                                 if recent or recent ==0:
+                                                    checki = recent + long
+                                                    if checki > pos:
+                                                        st.warning('**TOTAL WITH RECENCY RESULTS IS GREATER THAN POSITIVES**')
+                                                        st.stop()
                          
-    ###TB
+    else:
+         st.info('**NO PARTNERS WERE ELICITED, PROCEED TO CD4 SECTION**')
+     ###TB
     cd4 = dftest.iloc[0,2]
     
     if cd4 !='CD4 SAMPLE PICKED':
