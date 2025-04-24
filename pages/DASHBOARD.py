@@ -341,7 +341,31 @@ with col1:
      st.plotly_chart(figp)
 with col3:
      bledr = notbled.groupby('USE').size().reset_index()
-     st.write(bledr.columns)
+     bledy = bled.groupby('USE').size().reset_index()
+     bledr = bledr.rename(columns ={'USE': word, '0', 'NOT BLED'})
+     bledy = bledy.rename(columns ={'USE': word, '0', 'BLED'})
+     bledr['USE'] = bledr['USE'].astype(str)
+     bledy['USE'] = bledy['USE'].astype(str)
+     bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
+     bledr['TOTAL'] = bledr['BLED'] + bled['NOT BLED']
+     bledr['%-AGE'] = round((bledr['NOT BLED']/bledr['TOTAL']*100))
+     st.write(bledr)
+     bledr = bledr[['USE', 'TOTAL', '%-AGE']].copy()
+      
+     def kusiiga(x):
+          if x >60:
+              return 'background-color: red'
+          elif x >50:
+              return 'background-color: yellow'
+          else:
+              return 'background-color: blue'
+      styler = (
+                  bledr.style
+                  .format("{:.0f}", subset = ['NOT BLED', '%-AGE'])  # Format 'VL COV' to one decimal place
+                  .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
+              )
+      #st.stop()
+                st.write(styler)
 
 
 st.divider()
