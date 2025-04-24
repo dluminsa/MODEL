@@ -294,9 +294,9 @@ with st.expander('**DOWNLOAD DATASET HERE**'):
          tot = dat.shape[0]
          st.write(f'**CONTAINS {tot} VISITS**')
          st.download_button(
-                      label="ALL DATA SET",
+                      label="⬇️ Download All Dataset",
                       data=csv_data,
-                      file_name=f"{facility} ICSDM.csv",
+                      file_name="ICSDM.csv",
                       mime="text/csv")
      
 
