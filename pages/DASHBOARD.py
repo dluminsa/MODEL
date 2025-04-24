@@ -302,8 +302,8 @@ lastq[['BYEAR', 'BMONTH', 'BDAY']]  = lastq[['BYEAR', 'BMONTH', 'BDAY']].apply(p
 duelast = lastq[((lastq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMONTH'] <9)))].copy()
 
 due = pd.concat([duelast, duethis])
-showvl = vl.shape[0]
-st.write(showvl)
+showvl = due.shape[0]
+
 if showvl == 0:
      st.warning('**NO DNS IS DUE FOR THIS SELECTION HENCE NO DATA TO DISPLAY**')
 else:
