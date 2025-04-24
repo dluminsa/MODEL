@@ -351,15 +351,19 @@ with col2:
      
      bledt['TOTAL'] = bledt['BLED'] + bledt['NOT BLED']
      bledt['%-AGE'] = round((bledt['NOT BLED']/bledt['TOTAL']*100))
-     bledt = bledt[['USE', 'TOTAL','NOT BLED', '%-AGE']].copy()
+     bledt = bledt[['USE', 'NOT BLED', '%-AGE']].copy()
      bledt = bledt.rename(columns = {'USE': word})
+     if len (check) ==1:
+          bedt = bedt.set_index('FACILITY')
+     else:
+          bedt = bedt.set_index('DISTRICT')
      def kusiiga(x):
           if x >60:
               return 'background-color: red'
           elif x >50:
               return 'background-color: yellow'
           elif x>0:
-               return 'background-color: red'
+               return 'background-color: green'
           else:
               return 'background-color: red'
      styler = (
