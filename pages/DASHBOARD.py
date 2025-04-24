@@ -279,10 +279,10 @@ fig.update_layout(yaxis=dict(tickfont=dict(size=12)), xaxis_title='NUMBER VISITE
 st.plotly_chart(fig, use_container_width=True)
 
 st.divider()          
-html_table = """
-<h6><b><u style="color: blue;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
+# html_table = """
+# <h6><b><u style="color: purple;">DISTRIBUTION OF NS VISITED BY THEIR AGE BANDS</u></b></h6>
+# """
+# st.markdown(html_table, unsafe_allow_html=True)
 
 ager = dfuse[['USE', 'ART NO', 'AGE']].copy()
 ager['AGE'] = pd.to_numeric(ager['AGE'], errors='coerce')
@@ -306,7 +306,7 @@ ager['BAND'] = ager['AGE'].apply(band)
 ager = ager.sort_values(by = 'AGE')
 
 figX = px.histogram(ager, x='BAND', text_auto=True,
-                   title="Distribution of NS by their Age Bands",
+                   title="",
                    labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
 
 # Customize layout
