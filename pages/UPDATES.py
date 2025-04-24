@@ -55,44 +55,7 @@ tbneg = ''
 sup = ''
 
 
-# st.write('**FOLLOW UP SECTION ON AREAS NOT COMPLETED FROM THE FIELD**')
-# if 'tx' not in st.session_state:     
-#      try:
-#         #cola,colb= st.columns(2)
-#         conn = st.connection('gsheets', type=GSheetsConnection)
-#         exist = conn.read(worksheet= 'DEMO', usecols=list(range(19)),ttl=5)
-#         tx = exist.dropna(how='all')
-#         st.session_state.tx = tx
-#      except:
-#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-#          st.stop()
-# dfdemo = st.session_state.tx.copy()
 
-# if 'txa' not in st.session_state:     
-#      try:
-#         #cola,colb= st.columns(2)
-#         conn = st.connection('gsheets', type=GSheetsConnection)
-#         exist = conn.read(worksheet= 'ISSUES', usecols=list(range(18)),ttl=5)
-#         txa = exist.dropna(how='all')
-#         st.session_state.txa = txa
-#      except:
-#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-#          st.stop()
-# dfiss = st.session_state.txa.copy()
-# #########################################################################################################
-
-# if 'txb' not in st.session_state:     
-#      try:
-#         #cola,colb= st.columns(2)
-#         conn = st.connection('gsheets', type=GSheetsConnection)
-#         exist = conn.read(worksheet= 'TESTS', usecols=list(range(18)),ttl=5)
-#         txb = exist.dropna(how='all')
-#         st.session_state.txb = txb
-#      except:
-#          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-#          st.stop()
-# dftest = st.session_state.txb.copy()
-###############################################################################################################
 if 'tx' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
@@ -344,6 +307,7 @@ elif check == 'MAKE UPDATES':
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,8]
+    st.write(partners)
     if partners or partners == 0:
          if partners > 0:
               if partners ==1:
