@@ -280,7 +280,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.divider()          
 html_table = """
-<h6><b><u style="color: purple;">DISTRIBUTION OF NS VISITED BY THEIR AGE BANDS</u></b></h6>
+<h6><b><u style="color: purple;">DISTRIBUTION OF NS VISITED BY THEIR AGE BANDS AND SEX</u></b></h6>
 """
 st.markdown(html_table, unsafe_allow_html=True)
 
