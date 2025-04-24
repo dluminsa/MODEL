@@ -1,4 +1,4 @@
-import pandas as pd 
+ import pandas as pd 
 import streamlit as st 
 import os
 import gspread
@@ -305,17 +305,17 @@ def band(x):
 ager['BAND'] = ager['AGE'].apply(band)
 ager = ager.sort_values(by = 'AGE')
 
-fig = px.histogram(ager, x='BAND', text_auto=True,
+figX = px.histogram(ager, x='BAND', text_auto=True,
                    title="Distribution of NS by their Age Bands",
                    labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
 
 # Customize layout
-fig.update_layout(xaxis_title="Age Band",
+figX.update_layout(xaxis_title="Age Band",
                   yaxis_title="Count of NS",
                   bargap=0.1)
 
 # Show the figure
-st.plotly_chart(fig)
+st.plotly_chart(figX)
 st.divider()   
 
 st.divider()
