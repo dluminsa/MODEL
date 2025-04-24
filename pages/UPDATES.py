@@ -291,7 +291,7 @@ elif check == 'MAKE UPDATES':
     elif dfdemo2.shape[0] > 1:
          st.info('**THIS CLIENT WAS REVISITED, UPDATES FOR WHICH IAC SESSION ARE YOU MAKING?**')
          options = dfdemo2['IAC'].unique()
-         col1, col2 = st.columns(1,2)
+         col1, col2 = st.columns(2)
          iac = col1.selectbox('**CHOOSE FROM HERE**', options, index = None)
          if not iac:
               st.stop()
