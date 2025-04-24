@@ -346,7 +346,7 @@ else:
           #st.title("IAC DISTR")
           st.plotly_chart(figp)
      with col2:
-          st.write(f'**NS NOT BLED BY {word}**')
+          st.write(f'**%-AGE OF NS DUE BUT NOT BLED BY {word}**')
           st.write('')
           bledr = notbled.groupby('USE').size().reset_index(name='NOT BLED')
           bledy = bled.groupby('USE').size().reset_index(name='BLED')
