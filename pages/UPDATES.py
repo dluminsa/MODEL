@@ -197,6 +197,7 @@ for fac in facilities:
      dfdemoz.append(dfd)
 
 dfdemo2 = pd.concat(dfdemoz)
+st.write(dfdemo2.columns)
 ################################################################################################################
 
 file = r'CLUSTERS.csv'
@@ -302,6 +303,9 @@ elif check == 'MAKE UPDATES':
          dfdemo = dfdemo2[['CLUSTER', 'DISTRICT', 'FACILITY', 'ART NO', 'RESULTS', 'DOB','AGE', 'SEX', 'PMTCT', 'DISTRI', 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD','htn', 'dm', 'AS', 'MH']].copy()
          dfiss = dfdemo2[['FACILITY', 'ART NO', 'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH','SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS','VL', 'REASON', 'NAME', 'NAME2', 'DATE']].copy()
          dftest  = dfdemo2[['FACILITY', 'ART NO', 'CD4', 'VISITECT', 'LAM', 'TBLAM','TB RX', 'CRAG', 'PARTNERS', 'ELLIG', 'CHILD', 'TESTED', 'POS','LINKED', 'POST', 'SCREENED', 'PRESUMED', 'PICKED']].copy()
+         # iac = dfedomz.iloc[
+         # artn =
+     
     dftest= dftest[dftest['ART NO'] == art].copy()
     #dftest['PARTNERS'] = pd.to_numeric(dftest['PARTNERS'], errors = 'coerce')
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
