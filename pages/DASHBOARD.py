@@ -279,10 +279,10 @@ fig.update_layout(yaxis=dict(tickfont=dict(size=12)), xaxis_title='NUMBER VISITE
 st.plotly_chart(fig, use_container_width=True)
 
 st.divider()          
-# html_table = """
-# <h6><b><u style="color: purple;">DISTRIBUTION OF NS VISITED BY THEIR AGE BANDS</u></b></h6>
-# """
-# st.markdown(html_table, unsafe_allow_html=True)
+html_table = """
+<h6><b><u style="color: purple;">DISTRIBUTION OF NS VISITED BY THEIR AGE BANDS</u></b></h6>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
 
 ager = dfuse[['USE', 'ART NO', 'AGE']].copy()
 ager['AGE'] = pd.to_numeric(ager['AGE'], errors='coerce')
