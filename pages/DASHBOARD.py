@@ -302,79 +302,83 @@ lastq[['BYEAR', 'BMONTH', 'BDAY']]  = lastq[['BYEAR', 'BMONTH', 'BDAY']].apply(p
 duelast = lastq[((lastq['BYEAR'] < 2024 )| ((lastq['BYEAR']==2024) & (lastq['BMONTH'] <9)))].copy()
 
 due = pd.concat([duelast, duethis])
-duetotal = due.shape[0]
-due['VL'] = due['VL'].astype(str)
-bled = due[due['VL']=='YES'].copy()
-bledtotal = bled.shape[0]
-notbled = due[due['VL']!='YES'].copy()
-notbledtotal = notbled.shape[0]
-
-try:
-     pnb = round(((bledtotal/duetotal)*100))
-except:
-     pnb = 0
-
-try:
-     pb = round(((notbledtotal/duetotal)*100))
-except:
-     pb = 0
+showvl = vl.shape[0]
+if showvl == 0:
+     st.warning('**NO DNS IS DUE FOR THIS SELECTION HENCE NO DATA TO DISPLAY**')
+else:
+     duetotal = due.shape[0]
+     due['VL'] = due['VL'].astype(str)
+     bled = due[due['VL']=='YES'].copy()
+     bledtotal = bled.shape[0]
+     notbled = due[due['VL']!='YES'].copy()
+     notbledtotal = notbled.shape[0]
      
-col1, col2, col3 = st.columns(3)
-with col1:
-     st.success(f'**DUE : {int(duetotal)}**')
-with col2:
-     st.info(f'**BLED : {int(bledtotal)} ({pb} %) 🌹🌹**')
-with col3:
-     st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %) 😢**')
-st.divider()
-col1, col2 = st.columns(2)
-
-with col1:
-     iac_counts = due['IAC'].value_counts().reset_index()
-     iac_counts.columns = ['IAC', 'Count']
-
-     # Create pie chart
-     figp = px.pie(iac_counts, names='IAC', values='Count', title='Levels of IAC among the unbled')
-
-     # Streamlit app
-     #st.title("IAC DISTR")
-     st.plotly_chart(figp)
-with col2:
-     st.write(f'**NS NOT BLED BY {word}**')
-     st.write('')
-     bledr = notbled.groupby('USE').size().reset_index(name='NOT BLED')
-     bledy = bled.groupby('USE').size().reset_index(name='BLED')
-     bledr['USE'] = bledr['USE'].astype(str)
-     bledy['USE'] = bledy['USE'].astype(str)
+     try:
+          pnb = round(((bledtotal/duetotal)*100))
+     except:
+          pnb = 0
      
-     bledt = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
-     bledt['NOT BLED'] = pd.to_numeric(bledt['NOT BLED'],errors='coerce')
-     bledt['BLED'] = pd.to_numeric(bledt['BLED'],errors='coerce')
+     try:
+          pb = round(((notbledtotal/duetotal)*100))
+     except:
+          pb = 0
+          
+     col1, col2, col3 = st.columns(3)
+     with col1:
+          st.success(f'**DUE : {int(duetotal)}**')
+     with col2:
+          st.info(f'**BLED : {int(bledtotal)} ({pb} %) 🌹🌹**')
+     with col3:
+          st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %) 😢**')
+     st.divider()
+     col1, col2 = st.columns(2)
      
-     bledt['TOTAL'] = bledt['BLED'] + bledt['NOT BLED']
-     bledt['%-AGE'] = round((bledt['NOT BLED']/bledt['TOTAL']*100))
-     bledt = bledt[['USE', 'NOT BLED', '%-AGE']].copy()
-     bledt = bledt.rename(columns = {'USE': word})
-     if len (check) ==1:
-          bledt = bledt.set_index('FACILITY')
-     else:
-          bledt = bledt.set_index('DISTRICT')
-     def kusiiga(x):
-          if x >60:
-              return 'background-color: red'
-          elif x >50:
-              return 'background-color: yellow'
-          elif x>0:
-               return 'background-color: green'
+     with col1:
+          iac_counts = due['IAC'].value_counts().reset_index()
+          iac_counts.columns = ['IAC', 'Count']
+     
+          # Create pie chart
+          figp = px.pie(iac_counts, names='IAC', values='Count', title='Levels of IAC among the unbled')
+     
+          # Streamlit app
+          #st.title("IAC DISTR")
+          st.plotly_chart(figp)
+     with col2:
+          st.write(f'**NS NOT BLED BY {word}**')
+          st.write('')
+          bledr = notbled.groupby('USE').size().reset_index(name='NOT BLED')
+          bledy = bled.groupby('USE').size().reset_index(name='BLED')
+          bledr['USE'] = bledr['USE'].astype(str)
+          bledy['USE'] = bledy['USE'].astype(str)
+          
+          bledt = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
+          bledt['NOT BLED'] = pd.to_numeric(bledt['NOT BLED'],errors='coerce')
+          bledt['BLED'] = pd.to_numeric(bledt['BLED'],errors='coerce')
+          
+          bledt['TOTAL'] = bledt['BLED'] + bledt['NOT BLED']
+          bledt['%-AGE'] = round((bledt['NOT BLED']/bledt['TOTAL']*100))
+          bledt = bledt[['USE', 'NOT BLED', '%-AGE']].copy()
+          bledt = bledt.rename(columns = {'USE': word})
+          if len (check) ==1:
+               bledt = bledt.set_index('FACILITY')
           else:
-              return 'background-color: red'
-     styler = (
-                  bledt.style
-                  .format("{:.0f}", subset = ['NOT BLED', '%-AGE'])  # Format 'VL COV' to one decimal place
-                  .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
-              )
-      #st.stop()
-     st.write(styler)
+               bledt = bledt.set_index('DISTRICT')
+          def kusiiga(x):
+               if x >60:
+                   return 'background-color: red'
+               elif x >50:
+                   return 'background-color: yellow'
+               elif x>0:
+                    return 'background-color: green'
+               else:
+                   return 'background-color: red'
+          styler = (
+                       bledt.style
+                       .format("{:.0f}", subset = ['NOT BLED', '%-AGE'])  # Format 'VL COV' to one decimal place
+                       .applymap(kusiiga, subset=['%-AGE'])  # Apply cell-wise styling
+                   )
+           #st.stop()
+          st.write(styler)
 
 
 st.divider()
