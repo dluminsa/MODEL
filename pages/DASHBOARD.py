@@ -194,7 +194,7 @@ else:
      dfuse2['DISTRICT'] = dfuse2['DISTRICT'].astype(str)
      dfuse3 = dfuse2[dfuse2['DISTRICT'].isin(district)].copy()
 
-facility = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfuse3['FACILITY'].unique(), key='M')
+facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dfuse3['FACILITY'].unique(), key='M')
 
 if not facility:
      dfuse4 = dfuse3.copy()
