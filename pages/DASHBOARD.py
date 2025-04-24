@@ -277,3 +277,41 @@ fig.update_layout(yaxis=dict(tickfont=dict(size=12)), xaxis_title='NUMBER VISITE
 
 # Show plot
 st.plotly_chart(fig, use_container_width=True)
+st.divider()
+st.write('**AHD CASCADE**')
+#####
+st.divider()
+st.write('**APN CASCADE**')
+st.divider()
+st.write('**VL CASCADE***')
+st.divider()
+st.write('**TB CASCADE***')
+st.divider()
+
+with st.expander('**DOWNLOAD DATASET HERE**'):
+         csv_data = dfdemo2.copy()
+         csv_data = dat.to_csv(index=False)
+         tot = dat.shape[0]
+         st.write(f'**CONTAINS {tot} VISITS**')
+         st.download_button(
+                      label="ALL DATA SET",
+                      data=csv_data,
+                      file_name=f"{facility} ICSDM.csv",
+                      mime="text/csv")
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
