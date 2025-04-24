@@ -305,7 +305,7 @@ due = pd.concat([duelast, duethis])
 showvl = due.shape[0]
 
 if showvl == 0:
-     st.warning('**NO DNS IS DUE FOR THIS SELECTION HENCE NO DATA TO DISPLAY**')
+     st.warning('**NO NS WAS DUE FOR VL, FOR THE SELECTION YOU HAVE MADE, HENCE NO DATA TO DISPLAY**')
 else:
      st.info('Eligibility is based on  5 months or more from the date of bleeding to the date of the visit')
      duetotal = due.shape[0]
