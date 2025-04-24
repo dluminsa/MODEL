@@ -327,7 +327,7 @@ with col2:
 with col3:
      st.warning(f'**NOT BLED : {int(notbledtotal)} ({pnb} %) 😢**')
 st.divider()
-col1, col2, col3 = st.columns([2,1,2])
+col1, col2 = st.columns([1,2])
 
 with col1:
      iac_counts = due['IAC'].value_counts().reset_index()
@@ -339,18 +339,14 @@ with col1:
      # Streamlit app
      #st.title("IAC DISTR")
      st.plotly_chart(figp)
-with col3:
+with col2:
      bledr = notbled.groupby('USE').size().reset_index(name='NOT BLED')
      bledy = bled.groupby('USE').size().reset_index(name='BLED')
-     st.write(bledy)
      bledr['USE'] = bledr['USE'].astype(str)
      bledy['USE'] = bledy['USE'].astype(str)
      bledr = pd.merge(bledy,bledr, how = 'outer', on = 'USE')
-     st.write(bledr)
-     st.stop()
      bledr['TOTAL'] = bledr['BLED'] + bledr['NOT BLED']
      bledr['%-AGE'] = round((bledr['NOT BLED']/bledr['TOTAL']*100))
-     st.write(bledr)
      bledr = bledr[['USE', 'TOTAL', '%-AGE']].copy()
      bledr = bledr.rename(columns = {'USE': word})
      def kusiiga(x):
