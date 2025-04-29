@@ -431,7 +431,7 @@ st.divider()
 
 with st.expander('**DOWNLOAD DATASET HERE**'):
          dat = dfuse.drop(columns = ['USE', 'DT', 'YEAR', 'MONTH', 'DAY', 'ART'])
-         dat = dat[[['CLUSTER', 'DISTRICT', 'FACILITY','DATE', 'ART NO', 'RESULTS', 'DOB', 'AGE',
+         dat = dat[['CLUSTER', 'DISTRICT', 'FACILITY','DATE', 'ART NO', 'RESULTS', 'DOB', 'AGE',
                            'SEX', 'PMTCT', 'DISTRI', 'VILLAGE', 'CORDS', 'IAC', 'ADH', 'AD', 'htn',
                            'dm', 'AS', 'MH',  'SOCIALS', 'ECONS', 'HEALTH', 'PSYCH',
                            'SPIRS', 'OTHERISSUES', 'ACT', 'PREVS', 'CONDOMS', 'VMMC', 'ECONIS',
