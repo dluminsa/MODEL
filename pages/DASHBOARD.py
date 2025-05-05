@@ -428,7 +428,7 @@ else:
 st.divider()
 st.write('**TB CASCADE**')
 st.divider()
-
+st.write(dfuse)
 with st.expander('**DOWNLOAD DATASET HERE**'):
          dat = dfuse.drop(columns = ['USE', 'DT', 'YEAR', 'MONTH', 'DAY', 'ART'])
          dat = dat[['CLUSTER', 'DISTRICT', 'FACILITY','DATE', 'ART NO', 'RESULTS', 'DOB', 'AGE',
