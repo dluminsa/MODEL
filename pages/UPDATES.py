@@ -426,8 +426,8 @@ elif check == 'MAKE UPDATES':
                                        col1,col2, col3 = st.columns(3) 
                                        neg = col1.number_input('**NUMBER NEGATIVE**', value=None, step=1, key = 5)
                                        if neg or neg == 0:
-                                            if neg == tested:
-                                                 pos == 0
+                                            # if neg == tested:
+                                            #      pos == 0
      
                                             if neg < tested:
                                                 pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
@@ -446,7 +446,7 @@ elif check == 'MAKE UPDATES':
                                        # else:
                                        #      st.warning('Total negative is required or put a 0 (zero)**')
                                        #      st.stop()
-                                       st.write(pos)
+                                       
                                        if (neg + pos) > tested:
                                             st.warning('**Number positive and negative is greater than number tested**')
                                             st.stop()
