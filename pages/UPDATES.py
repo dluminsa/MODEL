@@ -54,8 +54,6 @@ tbtreat = ''
 tbneg = ''
 sup = ''
 
-
-
 if 'tx' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
@@ -197,6 +195,8 @@ for fac in facilities:
      dfdemoz.append(dfd)
 
 dfdemo2 = pd.concat(dfdemoz)
+st.write(dfdemo2.head(5))
+st.write('here')
 
 ################################################################################################################
 
@@ -577,17 +577,7 @@ elif check == 'MAKE UPDATES':
                   st.write('**HOW MANY WERE (PUT A ZERO WHERE APPLICABLE):**')
                   col1,col2,col3 = st.columns(3)
                   tbrest = col1.number_input('**POSTIVE**', value=None, step=1, key = 'a11')
-                  # if tbrest or tbrest==0:
-                  #      if tbrest >0:
-                  #           tbtreat = col2.number_input('**TREATED**', value=None, step=1, key = 'a13')
-                  #           if tbtreat or tbtreat == 0:
-                  #                if tbtreat > tbrest:
-                  #                     st.warning("TREATED CAN'T BE GREATER THAN THOSE POS")
-                  #                     st.stop()
-                  #           else:
-                  #                st.stop()  
-                  # else:
-                  #      st.stop()
+
                   if tbrest or tbrest==0:
                       if tbrest < tbsamples or tbrest==0:
                             col1,col2,col3 = st.columns(3)
