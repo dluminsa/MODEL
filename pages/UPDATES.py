@@ -429,17 +429,21 @@ elif check == 'MAKE UPDATES':
      
                                             if neg < tested:
                                                 pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
+                                                if pos or pos == 0:
+                                                     pass
+                                                else:
+                                                     st.stop()
                                        else:
                                             st.stop()
-                                       if pos or pos ==0:
-                                            pass
-                                       else:
-                                            st.stop()
-                                       if neg or neg ==0:
-                                            pass
-                                       else:
-                                            st.warning('Total negative is required or put a 0 (zero)**')
-                                            st.stop()
+                                       # if pos or pos ==0:
+                                       #      pass
+                                       # else:
+                                       #      st.stop()
+                                       # if neg or neg ==0:
+                                       #      pass
+                                       # else:
+                                       #      st.warning('Total negative is required or put a 0 (zero)**')
+                                       #      st.stop()
                                        if (neg + pos) > tested:
                                             st.warning('**Number positive and negative is greater than number tested**')
                                             st.stop()
