@@ -395,7 +395,7 @@ elif check == 'MAKE UPDATES':
                                   st.warning('**PARTNERS SHOULD BE FOLLOWED UP FOR TESTING**')
                              elif updatetest == 'YES':
                                   col1,col2,col3 = st.columns(3)
-                                  tested = col3.number_input('**HOW MANY WERE TESTED**', value=None, step=1, key=3)
+                                  tested = col1.number_input('**HOW MANY WERE TESTED**', value=None, step=1, key=3)
                                   if tested or tested ==0:
                                             pass
                                   else:
@@ -403,8 +403,8 @@ elif check == 'MAKE UPDATES':
                                   if notif == tested:
                                        pass
                                   elif notif > tested:
-                                       col1,col2,col3 = st.columns(3)
-                                       alread = col1.number_input('**KNOWN POSITIVE, (input 0 if none)**', value=None, step=1, key=4)
+                                       # col1,col2,col3 = st.columns(3)
+                                       alread = col2.number_input('**KNOWN POSITIVE, (input 0 if none)**', value=None, step=1, key=4)
                                        if alread or alread ==0:
                                             pass
                                        else:
