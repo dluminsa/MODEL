@@ -426,6 +426,8 @@ elif check == 'MAKE UPDATES':
                                        col1,col2, col3 = st.columns(3) 
                                        neg = col1.number_input('**NUMBER NEGATIVE**', value=None, step=1, key = 5)
                                        if neg or neg == 0:
+                                            if neg == tested:
+                                                 pos == 0
      
                                             if neg < tested:
                                                 pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
