@@ -378,14 +378,14 @@ elif check == 'MAKE UPDATES':
                         pass
                    elif updateparts == 'YES':
                         st.write(f'**OF THESE {partners:,.0f} partners, how many have been:**')
-                        col1,col2, col3 = st.columns([2,1,2])
+                        col1,col2 = st.columns([1,2])
                         notif = col1.number_input('**NOTIFIED**', value=None, step=1, key=2)
                         if not notif:
                              st.stop()
                         if notif > partners:
                              st.warning("**YOU CAN'T NOTIFY MORE THAN THOSE ELLICITED**")
                         else:
-                             col1,col2 = st.columns(2)
+                             # col1,col2 = st.columns(2)
                              updatetest =  col2.radio('**HAS TESTING BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE', 'NONE ELLIGIBLE'], horizontal= True, index=None)
                              if not updatetest:
                                   st.stop()
