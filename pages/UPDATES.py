@@ -447,7 +447,9 @@ elif check == 'MAKE UPDATES':
                                        #      st.warning('Total negative is required or put a 0 (zero)**')
                                        #      st.stop()
                                        
-                                       if (neg + pos) > tested:
+                                       if neg == tested:
+                                            pass
+                                       elif (neg + pos) > tested:
                                             st.warning('**Number positive and negative is greater than number tested**')
                                             st.stop()
                                        if pos:
