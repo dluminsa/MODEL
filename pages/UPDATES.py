@@ -378,7 +378,7 @@ elif check == 'MAKE UPDATES':
                         pass
                    elif updateparts == 'YES':
                         st.write(f'**OF THESE {partners:,.0f} partners, how many have been:**')
-                        col1,col2 = st.columns([1,2])
+                        col1,col2 = st.columns([1,4])
                         notif = col1.number_input('**NOTIFIED**', value=None, step=1, key=2)
                         if not notif:
                              st.stop()
