@@ -369,7 +369,7 @@ elif check == 'MAKE UPDATES':
               if partners > 1:
                    st.write(f'**Client with ART NO {art} had {partners:,.0f} partners ellicited**')
                    col1,col2,col3 = st.columns(3)
-                   updateparts =  col2.radio('**HAS NOTIFICATION BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
+                   updateparts =  col1.radio('**HAS NOTIFICATION BEEN DONE**', options=['YES', 'NOT YET', 'UPDATE ALREADY MADE'], horizontal= True, index=None)
                    if not updateparts:
                         st.stop()
                    elif updateparts == 'NOT YET':
