@@ -195,8 +195,7 @@ for fac in facilities:
      dfdemoz.append(dfd)
 
 dfdemo2 = pd.concat(dfdemoz)
-st.write(dfdemo2.head(5))
-st.write('here')
+
 
 ################################################################################################################
 
@@ -251,6 +250,8 @@ for facx in factz:
      dfdemof = dfdemof.drop_duplicates(subset = 'ART NO', keep='last')
      dfdemoz.append(dfdemof)
 dfdemo = pd.concat(dfdemoz)
+st.write(dfdemo.head(5))
+st.write('here')
 
 dfissuez =[]
 for facx in factz:
