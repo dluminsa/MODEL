@@ -15,7 +15,6 @@ import datetime as dt
 from docx import Document
 from docx.shared import Inches
 from io import BytesIO
-st.write('HER')
 
 
 cluster = ''
@@ -427,9 +426,8 @@ elif check == 'MAKE UPDATES':
                                        col1,col2, col3 = st.columns(3) 
                                        neg = col1.number_input('**NUMBER NEGATIVE**', value=None, step=1, key = 5)
                                        if neg or neg == 0:
-                                            if neg == tested:
-                                                 pass
-                                            else:
+     
+                                            if neg < tested:
                                                 pos = col2.number_input('**NEWLY POSTIVE**', value=None, step=1, key=6)
                                        else:
                                             st.stop()
