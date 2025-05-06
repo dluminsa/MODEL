@@ -437,18 +437,9 @@ elif check == 'MAKE UPDATES':
                                                      st.stop()
                                        else:
                                             st.stop()
-                                       # if pos or pos ==0:
-                                       #      pass
-                                       # else:
-                                       #      st.stop()
-                                       # if neg or neg ==0:
-                                       #      pass
-                                       # else:
-                                       #      st.warning('Total negative is required or put a 0 (zero)**')
-                                       #      st.stop()
                                        
                                        if neg == tested:
-                                            pass
+                                            col2.warning ('All were negative, proceed to CD4 section')
                                        elif (neg + pos) > tested:
                                             st.warning('**Number positive and negative is greater than number tested**')
                                             st.stop()
@@ -483,7 +474,7 @@ elif check == 'MAKE UPDATES':
                                                         st.stop()
                          
     else:
-         st.info('**NO PARTNERS WERE ELICITED, PROCEED TO CD4 SECTION**')
+         st.warning('**NO PARTNERS WERE ELICITED, PROCEED TO CD4 SECTION**')
      ###TB
     cd4 = dftest.iloc[0,2]
     
