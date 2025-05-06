@@ -238,8 +238,8 @@ dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss = dfiss[dfiss['FACILITY'] == facility].copy()
 
 dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
-dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
-dfdemo2['FACILITY'] = dfdemo2['FACILITY'].astype(str)
+# dfdemo = dfdemo[dfdemo['FACILITY'] == facility].copy()
+# dfdemo2['FACILITY'] = dfdemo2['FACILITY'].astype(str)
 dfdemo2 = dfdemo2[dfdemo2['FACILITY'] == facility].copy()
 factz = dfdemo['FACILITY'].unique()
 num = dfdemo.shape[0]
