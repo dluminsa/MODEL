@@ -642,11 +642,11 @@ elif check == 'MAKE UPDATES':
     submit = col1.button('SUBMIT')
     todi = dt.date.today()
     todi = str(todi)
-    partners = str(partners)
+    
     
     row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup,iac, artn, todi]
-    st.write(row1) 
+    st.write(row1[4]) 
     if not submit:
          st.stop()
     else:   
