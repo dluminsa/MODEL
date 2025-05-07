@@ -645,6 +645,10 @@ elif check == 'MAKE UPDATES':
     submit = col1.button('SUBMIT')
     todi = dt.date.today()
     todi = str(todi)
+    if partners is None:
+         partners = 400
+         st.write(partners)
+         st.stop()
     
     
     row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
