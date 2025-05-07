@@ -649,6 +649,7 @@ elif check == 'MAKE UPDATES':
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup,iac, artn, todi]
     
     st.write(row1[4])
+    st.write(row1)
     if not submit:
          st.stop()
     else:   
