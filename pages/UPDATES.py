@@ -650,7 +650,7 @@ elif check == 'MAKE UPDATES':
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup,iac, artn, todi]
     
     st.write(row1[4])
-     if not submit:
+    if not submit:
          st.stop()
     else:   
          secrets = st.secrets["connections"]["gsheets"]
