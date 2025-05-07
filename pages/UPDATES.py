@@ -650,7 +650,7 @@ elif check == 'MAKE UPDATES':
          partners = ''
     row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup,iac, artn, todi]
-    st.write(row1)
+
     if not submit:
          st.stop()
     else:   
