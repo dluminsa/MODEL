@@ -645,6 +645,7 @@ elif check == 'MAKE UPDATES':
     submit = col1.button('SUBMIT')
     todi = dt.date.today()
     todi = str(todi)
+    st.wr
     if partners is None:
          partners = 400
          st.write(partners)
