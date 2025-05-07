@@ -320,7 +320,7 @@ elif check == 'MAKE UPDATES':
     partners = dftest.iloc[0,8]
     if partners is None:
          partners = 400
-
+    st.stop()
     if partners or partners == 0:
          if partners > 0:
               if partners ==1:
