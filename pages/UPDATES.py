@@ -21,7 +21,7 @@ cluster = ''
 consent = ''
 district = ''
 facility = ''
-partners = 400
+partners = ''
 age = ''
 name = ''
 htn = ''
@@ -318,8 +318,6 @@ elif check == 'MAKE UPDATES':
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,8]
-    if partners is None or np.isnan(partners):
-         partners = 400
 
     if partners or partners == 0:
          if partners > 0:
@@ -476,7 +474,6 @@ elif check == 'MAKE UPDATES':
                                                         st.stop()
                          
     else:
-         partners = 400
          st.warning('**NO PARTNERS WERE ELICITED, PROCEED TO CD4 SECTION**')
      ###TB
     cd4 = dftest.iloc[0,2]
@@ -651,7 +648,8 @@ elif check == 'MAKE UPDATES':
          st.write(partners)
          st.stop()
     
-    
+    if partners is None or np.isnan(partners):
+         partners = ''
     row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
                                                     tblamrx, crag, crares, ccmres, csf, tbsamples, tbtest, tbrest, tbtreat, tbneg,sup,iac, artn, todi]
     st.write(row1)
