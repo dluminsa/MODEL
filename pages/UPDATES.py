@@ -474,6 +474,7 @@ elif check == 'MAKE UPDATES':
                                                         st.stop()
                          
     else:
+         partners = 400
          st.warning('**NO PARTNERS WERE ELICITED, PROCEED TO CD4 SECTION**')
      ###TB
     cd4 = dftest.iloc[0,2]
@@ -642,8 +643,6 @@ elif check == 'MAKE UPDATES':
     submit = col1.button('SUBMIT')
     todi = dt.date.today()
     todi = str(todi)
-    if not partners:
-         partners = 'none'
     
     
     row1 = [cluster, district, facility, art, partners, notif, pos, neg, alread, linked, recent, cd4, cd4results, tblamdone, tblamres,
