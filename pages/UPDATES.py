@@ -318,6 +318,7 @@ elif check == 'MAKE UPDATES':
     dfiss = dfiss[dfiss['ART NO'] == art].copy()
     st.write('**APN SECTION**')
     partners = dftest.iloc[0,8]
+    st.write(partners)
 
     if partners or partners == 0:
          if partners > 0:
