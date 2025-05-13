@@ -1,4 +1,4 @@
-ibmport pandas as pd 
+import pandas as pd 
 import streamlit as st 
 import os
 import numpy as np
