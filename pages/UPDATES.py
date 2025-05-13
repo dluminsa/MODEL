@@ -1,4 +1,4 @@
-import pandas as pd 
+ibmport pandas as pd 
 import streamlit as st 
 import os
 import numpy as np
@@ -71,17 +71,20 @@ dfdemo['FACILITY'] = dfdemo['FACILITY'].astype(str)
 dfdemo['DT'] = dfdemo['DATE'].astype(str)
 facilities = dfdemo['FACILITY'].unique()
 
-dfdemoz = []
-for facil in facilities:
-     dfissa = dfdemo[dfdemo['FACILITY']==facil].copy()
-     dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
-     dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
-     dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
-     dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
-     dfdemoz.append(dfissa)
-dfdemo = pd.concat(dfdemoz)
-dfdemo[['ART NO', 'DAY', 'MONTH']] = dfdemo[['ART NO', 'DAY', 'MONTH']].astype(str)
-dfdemo['ART'] = dfdemo['MONTH'] + dfdemo['DAY'] + dfdemo['ART NO'] 
+if 'txdf' not in st.session_state:
+     dfdemoz = []
+     for facil in facilities:
+          dfissa = dfdemo[dfdemo['FACILITY']==facil].copy()
+          dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
+          dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+          dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+          dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+          dfdemoz.append(dfissa)
+     dfdemo = pd.concat(dfdemoz)
+     dfdemo[['ART NO', 'DAY', 'MONTH']] = dfdemo[['ART NO', 'DAY', 'MONTH']].astype(str)
+     dfdemo['ART'] = dfdemo['MONTH'] + dfdemo['DAY'] + dfdemo['ART NO'] 
+     st.session_state.txdf = dfdemo.copy()
+dfdemo = st.session_state.txdf.copy() 
 
 
 if 'txa' not in st.session_state:     
@@ -100,26 +103,30 @@ dfiss['FACILITY'] = dfiss['FACILITY'].astype(str)
 dfiss['DT'] = dfiss['DATE'].astype(str)
 facilities = dfiss['FACILITY'].unique()
 
-dfissz = []
-for facil in facilities:
-     dfissa = dfiss[dfiss['FACILITY']==facil].copy()
-     dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
-     try:
-          distr = dfdemu.iloc[0,1]
-          clus = dfdemu.iloc[0,0]
-     except:
-           distr = ''
-           clus = ''
-     dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
-     dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
-     dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
-     dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
-     dfissa['DISTRICT'] = distr
-     dfissa['CLUSTER'] = clus
-     dfissz.append(dfissa)
-dfiss = pd.concat(dfissz)
-dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
-dfiss['ART'] = dfiss['MONTH'] + dfiss['DAY'] + dfiss['ART NO'] 
+if 'txdfa' not in st.session_state:
+     dfissz = []
+     for facil in facilities:
+          dfissa = dfiss[dfiss['FACILITY']==facil].copy()
+          dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
+          try:
+               distr = dfdemu.iloc[0,1]
+               clus = dfdemu.iloc[0,0]
+          except:
+                distr = ''
+                clus = ''
+          dfissa[['YEAR','MONTH','DAY']] = dfissa['DT'].str.split('-', expand=True)
+          dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dfissa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+          dfissa = dfissa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+          dfissa = dfissa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+          dfissa['DISTRICT'] = distr
+          dfissa['CLUSTER'] = clus
+          dfissz.append(dfissa)
+     dfiss = pd.concat(dfissz)
+     dfiss[['ART NO', 'DAY', 'MONTH']] = dfiss[['ART NO', 'DAY', 'MONTH']].astype(str)
+     dfiss['ART'] = dfiss['MONTH'] + dfiss['DAY'] + dfiss['ART NO'] 
+     st.session_state.txdfa = dfiss.copy()
+dfiss = st.session_state.txdfa.copy() 
+     
 
 
 #########################################################################################################
@@ -140,62 +147,70 @@ dftest['FACILITY'] = dftest['FACILITY'].astype(str)
 dftest['DT'] = dftest['DATE'].astype(str)
 facilities = dftest['FACILITY'].unique()
 
-dftestz = []
-for facil in facilities:
-     dftisa = dftest[dftest['FACILITY']==facil].copy()
-     dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
-     try:
-          distr = dfdemu.iloc[0,1]
-          clus = dfdemu.iloc[0,0]
-     except:
-           distr = ''
-           clus = ''
-     dftisa[['YEAR','MONTH','DAY']] = dftisa['DT'].str.split('-', expand=True)
-     dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
-     dftisa = dftisa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
-     dftisa = dftisa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
-     dftisa['DISTRICT'] = distr
-     dftisa['CLUSTER'] = clus
-     dftestz.append(dftisa)
-     
-dftest = pd.concat(dftestz)
-dftest[['DAY', 'MONTH']] = dftest[['DAY', 'MONTH']].astype(int)
-dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
-dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
+if 'txdfb' not in st.session_state:
+     dftestz = []
+     for facil in facilities:
+          dftisa = dftest[dftest['FACILITY']==facil].copy()
+          dfdemu = dfdemo[dfdemo['FACILITY'] == facil].copy()
+          try:
+               distr = dfdemu.iloc[0,1]
+               clus = dfdemu.iloc[0,0]
+          except:
+                distr = ''
+                clus = ''
+          dftisa[['YEAR','MONTH','DAY']] = dftisa['DT'].str.split('-', expand=True)
+          dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']] = dftisa[['ART NO', 'YEAR', 'MONTH', 'DAY']].apply(pd.to_numeric, errors='coerce')
+          dftisa = dftisa.sort_values(by = ['YEAR', 'MONTH', 'DAY'], ascending = [False, False, False])
+          dftisa = dftisa.drop_duplicates(subset = ['ART NO', 'YEAR', 'MONTH', 'DAY'])
+          dftisa['DISTRICT'] = distr
+          dftisa['CLUSTER'] = clus
+          dftestz.append(dftisa)
+          
+     dftest = pd.concat(dftestz)
+     dftest[['DAY', 'MONTH']] = dftest[['DAY', 'MONTH']].astype(int)
+     dftest[['ART NO', 'DAY', 'MONTH']] = dftest[['ART NO', 'DAY', 'MONTH']].astype(str)
+     dftest['ART'] = dftest['MONTH'] + dftest['DAY'] + dftest['ART NO'] 
+     st.session_state.txdfb = dftest.copy()
+dftest = st.session_state.txdfb.copy() 
 ################################################################################################################
+
 #ONE MERGED ONE
 facilities = dfdemo['FACILITY'].unique()
-
-dfdemz = []
-dfissx = dfiss.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
-for fac in facilities:
-     dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
-     dfissu = dfissx[dfissx['FACILITY']==fac].copy()
-     dfissu = dfissu.drop(columns ='FACILITY')
-     dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
-     dfissu['ART'] = pd.to_numeric(dfissu['ART'], errors = 'coerce')
-     dfd = pd.merge(dfdemu, dfissu, on = 'ART', how = 'inner')
-     dfdemz.append(dfd)
-     
-dfdemo1 = pd.concat(dfdemz)
+if 'txdfc' not in st.session_state:
+     dfdemz = []
+     dfissx = dfiss.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
+     for fac in facilities:
+          dfdemu = dfdemo[dfdemo['FACILITY']==fac].copy()
+          dfissu = dfissx[dfissx['FACILITY']==fac].copy()
+          dfissu = dfissu.drop(columns ='FACILITY')
+          dfdemu['ART'] = pd.to_numeric(dfdemu['ART'], errors = 'coerce')
+          dfissu['ART'] = pd.to_numeric(dfissu['ART'], errors = 'coerce')
+          dfd = pd.merge(dfdemu, dfissu, on = 'ART', how = 'inner')
+          dfdemz.append(dfd)
+          
+     dfdemo1 = pd.concat(dfdemz)
+     st.session_state.txdfc = dfdemo1.copy()
+dfdemo1 = st.session_state.txdfc.copy() 
 
 ############################################################################
 #last merged
-
-dfdemoz = []
-
-dfissy = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
-
-for fac in facilities:
-     dfdemux = dfdemo1[dfdemo1['FACILITY']==fac].copy()
-     dfissh = dfissy[dfissy['FACILITY']==fac].copy()
-     dfissh = dfissh.drop(columns ='FACILITY')
-     dfdemux['ART'] = pd.to_numeric(dfdemux['ART'], errors = 'coerce')
-     dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce') 
-     dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
-     dfdemoz.append(dfd)
-
-dfdemo2 = pd.concat(dfdemoz)
+if 'txdfd' not in st.session_state:
+     dfdemoz = []
+     
+     dfissy = dftest.drop(columns = ['DT', 'DISTRICT', 'CLUSTER', 'YEAR', 'MONTH', 'DAY', 'ART NO', 'DATE'])
+     
+     for fac in facilities:
+          dfdemux = dfdemo1[dfdemo1['FACILITY']==fac].copy()
+          dfissh = dfissy[dfissy['FACILITY']==fac].copy()
+          dfissh = dfissh.drop(columns ='FACILITY')
+          dfdemux['ART'] = pd.to_numeric(dfdemux['ART'], errors = 'coerce')
+          dfissh['ART'] = pd.to_numeric(dfissh['ART'], errors = 'coerce') 
+          dfd = pd.merge(dfdemux, dfissh, on = 'ART', how = 'inner')
+          dfdemoz.append(dfd)
+     
+     dfdemo2 = pd.concat(dfdemoz)
+     st.session_state.txdfd = dfdemo2.copy()
+dfdemo2 = st.session_state.txdfd.copy() 
 
 
 ################################################################################################################
