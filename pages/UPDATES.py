@@ -1,4 +1,4 @@
-import pandass as pd 
+import pandas as pd 
 import streamlit as st 
 import os
 import numpy as np
@@ -54,6 +54,7 @@ tbrest = ''
 tbtreat = ''
 tbneg = ''
 sup = ''
+st.stop()
 
 if 'tx' not in st.session_state:     
      try:
