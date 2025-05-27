@@ -10,7 +10,6 @@ import traceback
 import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
-st.stop()
 
 
 if 'tx' not in st.session_state:     
