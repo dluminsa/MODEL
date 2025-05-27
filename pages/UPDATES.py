@@ -54,7 +54,7 @@ tbrest = ''
 tbtreat = ''
 tbneg = ''
 sup = ''
-st.stop()
+# st.stop()
 
 if 'tx' not in st.session_state:     
      try:
