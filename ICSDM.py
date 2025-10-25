@@ -15,7 +15,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
 import datetime as dt
-# st.stop()
+st.stop()
 
 
 if 'but' not in st.session_state:
